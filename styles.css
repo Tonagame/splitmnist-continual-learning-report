@@ -1,0 +1,396 @@
+:root {
+  color-scheme: light;
+  --ink: #162033;
+  --muted: #617083;
+  --line: #d8dee7;
+  --paper: #f7f5ef;
+  --panel: #ffffff;
+  --soft: #eef4f1;
+  --blue: #2457c5;
+  --green: #08745f;
+  --orange: #b95d1d;
+  --purple: #6f42c1;
+  --shadow: 0 18px 50px rgba(25, 35, 55, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Arial, "Noto Sans Hebrew", "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(22, 32, 51, 0.12);
+  background: rgba(247, 245, 239, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.nav {
+  display: flex;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+  border: 1px solid transparent;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.nav a:hover,
+.nav a:focus {
+  color: var(--ink);
+  border-color: var(--line);
+  background: #fff;
+}
+
+.hero {
+  min-height: 78vh;
+  display: grid;
+  align-items: end;
+  padding: 120px 24px 64px;
+  background:
+    linear-gradient(180deg, rgba(6, 24, 38, 0.35), rgba(247, 245, 239, 0.97)),
+    url("assets/all-methods-by-scenario.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  max-width: 980px;
+  margin: 0 auto;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 920px;
+  font-size: clamp(42px, 7vw, 88px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.lead {
+  max-width: 760px;
+  margin: 24px 0 0;
+  font-size: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #1d6d63;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero .eyebrow {
+  color: #d8fff7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.button,
+.download-grid a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+  text-shadow: none;
+  font-weight: 700;
+}
+
+.button.primary {
+  background: #1d6d63;
+  border-color: #1d6d63;
+  color: #fff;
+}
+
+.section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.section h2 {
+  margin: 0 0 18px;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.08;
+}
+
+.section h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.section p {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.metric-grid,
+.method-grid,
+.graph-grid,
+.download-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.metric-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric,
+.method,
+.info-panel,
+.table-wrap,
+.downloads .download-grid a {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.metric {
+  padding: 22px;
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.metric strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.metric p,
+.method p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.info-panel {
+  padding: 24px;
+  background: var(--soft);
+}
+
+.info-panel ul {
+  margin: 0;
+  padding: 0 20px 0 0;
+  color: var(--muted);
+}
+
+.info-panel li {
+  margin: 0 0 12px;
+}
+
+.method-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.method {
+  padding: 22px;
+}
+
+.method.highlight {
+  border-color: rgba(8, 116, 95, 0.45);
+  background: #f2fbf7;
+}
+
+.lsr-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: center;
+}
+
+pre {
+  direction: ltr;
+  text-align: left;
+  margin: 0;
+  padding: 22px;
+  overflow-x: auto;
+  color: #f8fafc;
+  background: #142033;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+code {
+  direction: ltr;
+  unicode-bidi: plaintext;
+  font-family: Consolas, "Liberation Mono", monospace;
+  font-size: 0.95em;
+}
+
+.table-wrap {
+  overflow: auto;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+  background: #fff;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--ink);
+  background: #eef4f7;
+}
+
+td {
+  color: #26354a;
+}
+
+.graph-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+figure {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #edf0f4;
+  border-radius: 6px;
+}
+
+figcaption {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.conclusions ol {
+  margin: 0;
+  padding: 0 24px 0 0;
+  color: var(--muted);
+}
+
+.conclusions li {
+  margin-bottom: 12px;
+}
+
+.download-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.download-grid a {
+  border-color: var(--line);
+  color: var(--ink);
+  min-height: 70px;
+  text-align: center;
+}
+
+.download-grid a:hover {
+  border-color: var(--green);
+  background: #f2fbf7;
+}
+
+.steps {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.steps p {
+  margin-bottom: 10px;
+}
+
+.footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 24px 56px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  .metric-grid,
+  .method-grid,
+  .graph-grid,
+  .download-grid,
+  .two-column,
+  .lsr-box {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: 72vh;
+    padding-top: 88px;
+  }
+
+  .lead {
+    font-size: 17px;
+  }
+}

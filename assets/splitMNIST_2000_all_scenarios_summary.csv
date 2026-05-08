@@ -1,0 +1,29 @@
+scenario,method,accuracy,status
+Class-CL,None,0.198184568835,success
+Class-CL,EWC,0.274173792241,success
+Class-CL,LwF,0.202669753817,success
+Class-CL,A-GEM,0.558040196118,success
+Class-CL,LSR-lite,0.92426338632,success
+Class-CL,LSR-lite + Fourier,0.926380129616,success
+Class-CL,LSR-lite + ASW,0.924066724543,success
+Class-CL,LSR-lite + Fourier + ASW,0.928429556667,success
+Class-CL,Joint,0.981539333732,success
+Domain-CL,None,0.543520629591,success
+Domain-CL,EWC,0.646448070349,success
+Domain-CL,LwF,0.786349797226,success
+Domain-CL,A-GEM,0.881927615399,success
+Domain-CL,LSR-lite,0.965120944781,success
+Domain-CL,LSR-lite + Fourier,0.96272063006,success
+Domain-CL,LSR-lite + ASW,0.95737448563,success
+Domain-CL,LSR-lite + Fourier + ASW,0.959330203408,success
+Domain-CL,Joint,0.987887982492,success
+Task-CL,None,0.876479771225,success
+Task-CL,EWC,0.995187875597,success
+Task-CL,LwF,0.997807480775,success
+Task-CL,A-GEM,0.990363317602,success
+Task-CL,Separate Networks,0.997387109645,success
+Task-CL,LSR-lite,0.993284595278,success
+Task-CL,LSR-lite + Fourier,0.992605058992,success
+Task-CL,LSR-lite + ASW,0.991900409832,success
+Task-CL,LSR-lite + Fourier + ASW,0.993993519775,success
+Task-CL,Joint,0.998094072273,success

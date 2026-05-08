@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Split MNIST Continual Learning Results</title>
+  <meta name="description" content="סיכום ניסויי Continual Learning על Split MNIST: Class-CL, Domain-CL, Task-CL, LSR-lite ושיטות בסיס." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a href="#overview">סקירה</a>
+      <a href="#how-it-works">איך הלמידה עובדת</a>
+      <a href="#methods">שיטות</a>
+      <a href="#results">תוצאות</a>
+      <a href="#graphs">גרפים</a>
+      <a href="#pages">GitHub Pages</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="hero-content">
+        <p class="eyebrow">Continual Learning | Split MNIST | RTX 3070</p>
+        <h1>ניסוי למידה מתמשכת על Split MNIST</h1>
+        <p class="lead">
+          הרצה מקומית של מאגר GMvandeVen/continual-learning על Windows עם GPU,
+          כולל השוואה בין שיטות בסיס, שיטות קלאסיות, ווריאנטים ניסיוניים של LSR-lite.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#results">לראות תוצאות</a>
+          <a class="button" href="assets/summary_hebrew_splitMNIST_2000.docx">להוריד דוח Word</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="metric-grid">
+        <article class="metric">
+          <span>Class-CL</span>
+          <strong>0.9284</strong>
+          <p>השיטה הטובה ביותר שאינה Joint: LSR-lite + Fourier + ASW</p>
+        </article>
+        <article class="metric">
+          <span>Domain-CL</span>
+          <strong>0.9651</strong>
+          <p>השיטה הטובה ביותר שאינה Joint: LSR-lite</p>
+        </article>
+        <article class="metric">
+          <span>Task-CL</span>
+          <strong>0.9978</strong>
+          <p>השיטה הטובה ביותר שאינה Joint: LwF</p>
+        </article>
+        <article class="metric">
+          <span>הגדרות</span>
+          <strong>5x2000</strong>
+          <p>5 contexts, 2000 iterations, batch 128, acc-n 1024</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section two-column" id="how-it-works">
+      <div>
+        <p class="eyebrow">הרעיון</p>
+        <h2>איך המכונה לומדת כאן?</h2>
+        <p>
+          המודל הוא רשת נוירונים שמקבלת תמונת MNIST ומחזירה ציון לכל מחלקה.
+          בזמן אימון רגיל, היא רואה דוגמאות, מחשבת טעות מול התשובה הנכונה,
+          ומעדכנת את המשקולות בעזרת backpropagation ו-Adam optimizer.
+        </p>
+        <p>
+          ב-continual learning הבעיה קשה יותר: המודל לא מקבל את כל הדאטה בבת אחת.
+          הוא לומד רצף של contexts, למשל זוגות ספרות שונים בכל שלב. אחרי שהוא עובר
+          לשלב חדש, הוא עלול לשכוח את מה שלמד קודם. זה נקרא catastrophic forgetting.
+        </p>
+      </div>
+      <div class="info-panel">
+        <h3>שלושת התרחישים</h3>
+        <ul>
+          <li><strong>Class-CL:</strong> אין זהות משימה בזמן הערכה. המודל צריך לבחור בין כל 10 הספרות. זה התרחיש הקשה ביותר.</li>
+          <li><strong>Domain-CL:</strong> אותן מחלקות חוזרות תחת שינוי דומיין או חלוקה אחרת. קשה, אבל פחות מ-Class-CL.</li>
+          <li><strong>Task-CL:</strong> בזמן הערכה יודעים איזו משימה נבדקת, ולכן מגבילים את המחלקות המותרות. זה מקל מאוד.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="methods">
+      <p class="eyebrow">השיטות</p>
+      <h2>מה כל שיטה מנסה לעשות?</h2>
+      <div class="method-grid">
+        <article class="method">
+          <h3>None</h3>
+          <p>אימון רגיל על context נוכחי בלבד. אין הגנה מפני שכחה, ולכן ב-Class-CL הוא קורס.</p>
+        </article>
+        <article class="method">
+          <h3>Joint</h3>
+          <p>upper bound: אימון על כל הדאטה יחד. לא תרחיש continual אמיתי, אבל נותן יעד להשוואה.</p>
+        </article>
+        <article class="method">
+          <h3>EWC</h3>
+          <p>Elastic Weight Consolidation מענישה שינוי במשקולות שהיו חשובות למשימות קודמות.</p>
+        </article>
+        <article class="method">
+          <h3>LwF</h3>
+          <p>Learning without Forgetting משתמש ב-distillation: המודל החדש מנסה לשמר את התנהגות המודל הישן.</p>
+        </article>
+        <article class="method">
+          <h3>A-GEM</h3>
+          <p>שומר buffer קטן של דוגמאות עבר ומשתמש בהן כדי למנוע עדכון גרדיאנט שפוגע יותר מדי בעבר.</p>
+        </article>
+        <article class="method">
+          <h3>Separate Networks</h3>
+          <p>רשת נפרדת לכל task. מתאים בעיקר ל-Task-CL, שבו יודעים בזמן הערכה איזו משימה פעילה.</p>
+        </article>
+        <article class="method">
+          <h3>Generative Classifier</h3>
+          <p>מנסה ללמוד מודל גנרטיבי למחלקות ולהשתמש בו לסיווג. בניסויים שלנו הוא לא נתמך נקי בכל התרחישים, וב-Class-CL 2000 נכשל/נתקע.</p>
+        </article>
+        <article class="method highlight">
+          <h3>LSR-lite</h3>
+          <p>השיטה הניסיונית שלנו: replay של דוגמאות אמיתיות מהעבר, עם labels, teacher logits ו-feature anchoring.</p>
+        </article>
+        <article class="method">
+          <h3>Fourier auxiliary loss</h3>
+          <p>איבר עזר שמנסה לשמר מבנה ספקטרלי של ה-feature vector. הוא לא מחליף replay אמיתי.</p>
+        </article>
+        <article class="method">
+          <h3>ASW</h3>
+          <p>Adaptive Stability Weighting משנה דינמית את משקל ה-distillation וה-feature anchoring לפי יחס old/new loss.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section lsr-box">
+      <div>
+        <p class="eyebrow">LSR-lite</p>
+        <h2>המנגנון הניסיוני שבדקנו</h2>
+        <p>
+          LSR-lite שומר buffer הוגן של 100 דוגמאות למחלקה. כל דוגמה כוללת את התמונה,
+          התווית, logits של המורה בזמן ההכנסה ל-buffer, ווקטור feature פנימי מהשכבה שלפני הפלט.
+        </p>
+      </div>
+      <pre><code>L_total =
+  L_CE_current
++ L_CE_replay
++ lambda_kd   * L_KD_logits
++ lambda_feat * L_feature_anchor
++ lambda_fft  * L_Fourier_optional</code></pre>
+    </section>
+
+    <section class="section" id="results">
+      <p class="eyebrow">תוצאות</p>
+      <h2>דיוק סופי לפי תרחיש</h2>
+
+      <div class="table-wrap">
+        <h3>Class-CL</h3>
+        <table>
+          <thead><tr><th>שיטה</th><th>דיוק</th><th>פער מ-Joint</th><th>שיפור מעל None</th></tr></thead>
+          <tbody>
+            <tr><td>None</td><td>0.1982</td><td>0.7834</td><td>0.0000</td></tr>
+            <tr><td>EWC</td><td>0.2742</td><td>0.7074</td><td>0.0760</td></tr>
+            <tr><td>LwF</td><td>0.2027</td><td>0.7789</td><td>0.0045</td></tr>
+            <tr><td>A-GEM</td><td>0.5580</td><td>0.4235</td><td>0.3599</td></tr>
+            <tr><td>Generative Classifier</td><td>failed</td><td>-</td><td>-</td></tr>
+            <tr><td>LSR-lite</td><td>0.9243</td><td>0.0573</td><td>0.7261</td></tr>
+            <tr><td>LSR-lite + Fourier</td><td>0.9264</td><td>0.0552</td><td>0.7282</td></tr>
+            <tr><td>LSR-lite + ASW</td><td>0.9241</td><td>0.0575</td><td>0.7259</td></tr>
+            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9284</td><td>0.0531</td><td>0.7302</td></tr>
+            <tr><td>Joint</td><td>0.9815</td><td>0.0000</td><td>0.7834</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <h3>Domain-CL</h3>
+        <table>
+          <thead><tr><th>שיטה</th><th>דיוק</th><th>פער מ-Joint</th><th>שיפור מעל None</th></tr></thead>
+          <tbody>
+            <tr><td>None</td><td>0.5435</td><td>0.4444</td><td>0.0000</td></tr>
+            <tr><td>EWC</td><td>0.6464</td><td>0.3414</td><td>0.1029</td></tr>
+            <tr><td>LwF</td><td>0.7863</td><td>0.2015</td><td>0.2428</td></tr>
+            <tr><td>A-GEM</td><td>0.8819</td><td>0.1060</td><td>0.3384</td></tr>
+            <tr><td>LSR-lite</td><td>0.9651</td><td>0.0228</td><td>0.4216</td></tr>
+            <tr><td>LSR-lite + Fourier</td><td>0.9627</td><td>0.0252</td><td>0.4192</td></tr>
+            <tr><td>LSR-lite + ASW</td><td>0.9574</td><td>0.0305</td><td>0.4139</td></tr>
+            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9593</td><td>0.0286</td><td>0.4158</td></tr>
+            <tr><td>Joint</td><td>0.9879</td><td>0.0000</td><td>0.4444</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <h3>Task-CL</h3>
+        <table>
+          <thead><tr><th>שיטה</th><th>דיוק</th><th>פער מ-Joint</th><th>שיפור מעל None</th></tr></thead>
+          <tbody>
+            <tr><td>None</td><td>0.8765</td><td>0.1216</td><td>0.0000</td></tr>
+            <tr><td>EWC</td><td>0.9952</td><td>0.0029</td><td>0.1187</td></tr>
+            <tr><td>LwF</td><td>0.9978</td><td>0.0003</td><td>0.1213</td></tr>
+            <tr><td>A-GEM</td><td>0.9904</td><td>0.0077</td><td>0.1139</td></tr>
+            <tr><td>Separate Networks</td><td>0.9974</td><td>0.0007</td><td>0.1209</td></tr>
+            <tr><td>LSR-lite</td><td>0.9933</td><td>0.0048</td><td>0.1168</td></tr>
+            <tr><td>LSR-lite + Fourier</td><td>0.9926</td><td>0.0055</td><td>0.1161</td></tr>
+            <tr><td>LSR-lite + ASW</td><td>0.9919</td><td>0.0062</td><td>0.1154</td></tr>
+            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9940</td><td>0.0041</td><td>0.1175</td></tr>
+            <tr><td>Joint</td><td>0.9981</td><td>0.0000</td><td>0.1216</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="graphs">
+      <p class="eyebrow">ויזואליזציה</p>
+      <h2>הגרפים המרכזיים</h2>
+      <div class="graph-grid">
+        <figure>
+          <img src="assets/all-methods-by-scenario.png" alt="השוואת כל השיטות בכל התרחישים" />
+          <figcaption>השוואה כללית: Class-CL, Domain-CL ו-Task-CL.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/accuracy-heatmap.png" alt="Heatmap של דיוק סופי" />
+          <figcaption>Heatmap שמראה איפה כל שיטה חזקה או חלשה.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/lsr-ablation-by-scenario.png" alt="השוואת וריאנטים של LSR" />
+          <figcaption>השוואת LSR-lite, Fourier, ASW ו-Joint.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/selected-learning-curves.png" alt="עקומות למידה נבחרות" />
+          <figcaption>עקומות למידה נבחרות לאורך האימון.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section conclusions">
+      <p class="eyebrow">מה למדנו</p>
+      <h2>מסקנות קצרות</h2>
+      <ol>
+        <li><strong>Class-CL הוא המבחן האמיתי הקשה.</strong> בלי task identity, השיטות הקלאסיות מתקשות.</li>
+        <li><strong>LSR-lite הוא הכיוון המבטיח ביותר עבור Class-CL.</strong> הוא קפץ מ-0.1982 ב-None ליותר מ-0.92.</li>
+        <li><strong>Domain-CL גם מעדיף LSR-lite.</strong> plain LSR-lite היה הטוב ביותר מבין השיטות שאינן Joint.</li>
+        <li><strong>Task-CL מתנהג אחרת.</strong> בגלל allowed classes, LwF ו-Separate Networks כמעט מגיעים ל-Joint.</li>
+        <li><strong>Fourier ו-ASW הם ablations.</strong> הם מעניינים, אבל לא הלב של ההצלחה. הלב הוא replay אמיתי + distillation + feature anchoring.</li>
+      </ol>
+    </section>
+
+    <section class="section downloads">
+      <p class="eyebrow">קבצים</p>
+      <h2>הורדות וקבצי מקור</h2>
+      <div class="download-grid">
+        <a href="assets/summary_hebrew_splitMNIST_2000.docx">דוח Word בעברית</a>
+        <a href="assets/splitMNIST_2000_all_scenarios_summary.csv">טבלת CSV משולבת</a>
+        <a href="assets/all-methods-by-scenario.png">גרף כל השיטות</a>
+        <a href="assets/selected-learning-curves.png">גרף עקומות למידה</a>
+      </div>
+    </section>
+
+    <section class="section" id="pages">
+      <p class="eyebrow">פרסום</p>
+      <h2>איך להפעיל את זה ב-GitHub Pages</h2>
+      <div class="steps">
+        <p><strong>1.</strong> להעלות את התיקייה <code>docs/</code> ל-GitHub יחד עם הריפו.</p>
+        <p><strong>2.</strong> להיכנס ב-GitHub ל-<code>Settings → Pages</code>.</p>
+        <p><strong>3.</strong> לבחור <code>Deploy from a branch</code>.</p>
+        <p><strong>4.</strong> לבחור branch, בדרך כלל <code>main</code>, ותיקייה <code>/docs</code>.</p>
+        <p><strong>5.</strong> לשמור. אחרי דקה או שתיים GitHub יציג URL של האתר.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>נבנה מתוך הניסויים המקומיים על Split MNIST. התוצאות נשמרו תחת <code>results/</code>.</p>
+  </footer>
+</body>
+</html>
