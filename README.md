@@ -25,8 +25,22 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `index.html` - the main Hebrew report page
 - `styles.css` - page styling
 - `assets/` - graphs, CSV summary, and Word report
+- `takeaways.md` - reflective writing / project takeaways
+- `VIDEO.md` - short video checklist and placeholder link
 - `assets/summary_hebrew_splitMNIST_2000.docx` - Hebrew Word report
 - `assets/splitMNIST_2000_all_scenarios_summary.csv` - combined result table
+
+## Assignment Checklist
+
+This repository includes the required project documentation:
+
+- **Algorithmic thinking:** explained in the website and in `takeaways.md`.
+- **Project steps:** setup, baseline runs, selected methods, LSR-lite prototype, final 2000-iteration phases, graphs, and report.
+- **Testing at each stage:** smoke tests, CUDA checks, 100-iteration runs, 2000-iteration serious runs, final full-test evaluation, and learning-curve logging.
+- **Output conclusions:** summarized in the website, README, Word report, graphs, and CSV.
+- **AI links / AI usage:** documented below and in the website.
+- **Reflective writing:** `takeaways.md`.
+- **Video link:** see `VIDEO.md`. Replace the placeholder with a YouTube or similar video link after recording.
 
 ## Where Are The Graphs?
 
@@ -78,6 +92,53 @@ The core useful mechanism was:
 - feature anchoring
 
 Fourier and ASW were useful as ablations, but they were not the main reason the method worked.
+
+## Algorithmic Thinking
+
+The project is based on the idea that continual learning is not only about fitting the current data.
+The model must balance two competing goals:
+
+1. **Plasticity:** learn the new context.
+2. **Stability:** avoid forgetting old contexts.
+
+The algorithms tested here solve this tension in different ways:
+
+- EWC protects important parameters.
+- LwF preserves old model behavior through distillation.
+- A-GEM uses a memory buffer to constrain gradient updates.
+- Separate Networks avoids interference by using one network per task.
+- LSR-lite stores real old examples plus teacher signals and feature anchors.
+
+## Project Stages
+
+1. Set up Python, Conda, CUDA PyTorch, and the GMvandeVen repository locally.
+2. Verified GPU execution on an NVIDIA RTX 3070.
+3. Ran small Split MNIST smoke tests.
+4. Ran 100-iteration baseline and selected-method experiments.
+5. Implemented LSR-lite as a separate prototype without rewriting the original repository.
+6. Added optional Fourier and ASW ablations.
+7. Audited the protocol: no test data in training, fair buffer budget, correct Class-CL and Task-CL evaluation.
+8. Ran serious 2000-iteration experiments for Class-CL, Domain-CL, and Task-CL.
+9. Generated final graphs, CSV summaries, Word report, and this GitHub Pages website.
+
+## Testing And Validation
+
+- Smoke tests were run before long experiments.
+- CUDA availability and GPU identity were checked.
+- Evaluation history was logged during training.
+- Final accuracy was evaluated on the full test set.
+- Class-CL was evaluated without task identity.
+- Task-CL kept the repository's original allowed-classes protocol.
+- A-GEM and LSR-lite used the same memory budget: 100 samples per class.
+- If a method failed, the runner continued and the failure was recorded.
+
+## AI Usage
+
+AI assistance was used to help with setup, scripting, debugging, documentation, and report generation.
+
+- OpenAI ChatGPT / Codex: https://chatgpt.com/
+- GitHub Pages documentation: https://docs.github.com/en/pages
+- Original continual-learning repository: https://github.com/GMvandeVen/continual-learning
 
 ## How To Enable GitHub Pages
 
