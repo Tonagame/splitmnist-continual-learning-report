@@ -28,6 +28,7 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `code/` - experiment scripts and LSR-lite prototype code
 - `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
 - `METHODS_IMPLEMENTATION.md` - what was implemented by us vs reused from the original repository
+- `PAPER_COMPARISON.md` - comparison between the paper's Split MNIST results and our local results
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
 - `assets/summary_hebrew_splitMNIST_2000.docx` - Hebrew Word report
@@ -53,6 +54,7 @@ The graph files are inside the `assets/` folder:
 - `assets/accuracy-heatmap.png`
 - `assets/lsr-ablation-by-scenario.png`
 - `assets/selected-learning-curves.png`
+- `assets/paper_vs_ours_splitMNIST_common_methods.png`
 
 They are also embedded directly in the website.
 
@@ -71,6 +73,18 @@ They are also embedded directly in the website.
 ### Selected Learning Curves
 
 ![Selected learning curves](assets/selected-learning-curves.png)
+
+### Paper Results Vs Our Results
+
+The comparison uses Table 2 from van de Ven, Tuytelaars & Tolias, "Three types of incremental learning".
+The paper reports mean +/- SEM over 20 seeds, while our numbers are single local runs, so this is an approximate comparison rather than a full statistical reproduction.
+
+![Paper results vs our results](assets/paper_vs_ours_splitMNIST_common_methods.png)
+
+Detailed comparison:
+
+- `PAPER_COMPARISON.md`
+- `assets/paper_vs_ours_splitMNIST_common_methods.csv`
 
 ## Where Is The Code?
 

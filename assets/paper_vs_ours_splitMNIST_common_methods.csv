@@ -1,0 +1,18 @@
+scenario,method,paper_percent,paper_sem,ours_percent,ours_minus_paper,note
+Class-CL,None,19.89,0.02,19.82,-0.07,
+Class-CL,EWC,20.64,0.52,27.42,6.78,
+Class-CL,LwF,21.89,0.32,20.27,-1.62,
+Class-CL,A-GEM,65.10,3.64,55.80,-9.30,
+Class-CL,Generative Classifier,93.82,0.06,,,not run / failed in our run
+Class-CL,Joint,98.17,0.04,98.15,-0.02,
+Domain-CL,None,60.13,1.66,54.35,-5.78,
+Domain-CL,EWC,63.03,1.58,64.64,1.61,
+Domain-CL,LwF,71.18,1.42,78.63,7.45,
+Domain-CL,A-GEM,87.67,1.33,88.19,0.52,
+Domain-CL,Joint,98.59,0.05,98.79,0.20,
+Task-CL,None,84.32,0.99,87.65,3.33,
+Task-CL,EWC,99.06,0.15,99.52,0.46,
+Task-CL,LwF,99.60,0.03,99.78,0.18,
+Task-CL,A-GEM,98.54,0.10,99.04,0.50,
+Task-CL,Separate Networks,99.57,0.03,99.74,0.17,
+Task-CL,Joint,99.67,0.03,99.81,0.14,

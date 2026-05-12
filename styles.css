@@ -323,6 +323,10 @@ figure img {
   border-radius: 6px;
 }
 
+.wide-figure {
+  margin: 20px 0;
+}
+
 figcaption {
   color: var(--muted);
   font-size: 14px;
@@ -365,6 +369,10 @@ figcaption {
 
 .steps p {
   margin-bottom: 10px;
+}
+
+.source-links a {
+  font-weight: 700;
 }
 
 .footer {

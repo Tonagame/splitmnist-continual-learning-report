@@ -15,6 +15,7 @@
       <a href="#methods">שיטות</a>
       <a href="#results">תוצאות</a>
       <a href="#graphs">גרפים</a>
+      <a href="#paper-comparison">מול המאמר</a>
       <a href="#code">קוד</a>
       <a href="#assignment">דרישות הגשה</a>
       <a href="#pages">GitHub Pages</a>
@@ -235,6 +236,50 @@
       </div>
     </section>
 
+    <section class="section" id="paper-comparison">
+      <p class="eyebrow">השוואה למאמר</p>
+      <h2>תוצאות המאמר מול התוצאות שלנו</h2>
+      <p>
+        ההשוואה היא מול Table 2 במאמר
+        <a href="https://www.nature.com/articles/s42256-022-00568-3">Three types of incremental learning</a>.
+        חשוב לזכור: במאמר מדווחים ממוצע על 20 זרעים עם SEM, ואצלנו מדובר בריצות מקומיות בודדות על RTX 3070,
+        לכן זו השוואה איכותית ולא שחזור סטטיסטי מלא.
+      </p>
+      <figure class="wide-figure">
+        <img src="assets/paper_vs_ours_splitMNIST_common_methods.png" alt="השוואת תוצאות המאמר מול התוצאות שלנו ב-Split MNIST" />
+        <figcaption>השוואת אחוזי דיוק בין שיטות משותפות למאמר ולניסויים שלנו.</figcaption>
+      </figure>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>תרחיש</th><th>מה דומה למאמר?</th><th>מה שונה?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Class-CL</td>
+              <td>None ו-Joint כמעט זהים למאמר: בערך 20% ו-98%.</td>
+              <td>A-GEM אצלנו נמוך יותר: 55.80% לעומת 65.10%. Generative Classifier נכשל אצלנו ולכן אין שחזור מלא.</td>
+            </tr>
+            <tr>
+              <td>Domain-CL</td>
+              <td>A-GEM ו-Joint קרובים מאוד למאמר.</td>
+              <td>None נמוך יותר אצלנו, LwF ו-EWC מעט/הרבה גבוהים יותר.</td>
+            </tr>
+            <tr>
+              <td>Task-CL</td>
+              <td>כל השיטות המרכזיות קרובות מאוד לערכי המאמר, סביב 99% לשיטות החזקות.</td>
+              <td>None אצלנו מעט גבוה יותר מהמאמר.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source-links">
+        קבצים: <a href="PAPER_COMPARISON.md">PAPER_COMPARISON.md</a>,
+        <a href="assets/paper_vs_ours_splitMNIST_common_methods.csv">CSV</a>,
+        <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף PNG</a>.
+      </p>
+    </section>
+
     <section class="section conclusions">
       <p class="eyebrow">מה למדנו</p>
       <h2>מסקנות קצרות</h2>
@@ -294,6 +339,9 @@
         <a href="assets/splitMNIST_2000_all_scenarios_summary.csv">טבלת CSV משולבת</a>
         <a href="assets/all-methods-by-scenario.png">גרף כל השיטות</a>
         <a href="assets/selected-learning-curves.png">גרף עקומות למידה</a>
+        <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף מול המאמר</a>
+        <a href="PAPER_COMPARISON.md">השוואה למאמר</a>
+        <a href="assets/paper_vs_ours_splitMNIST_common_methods.csv">CSV מול המאמר</a>
         <a href="CODE_EXPLANATION.md">הסבר קוד</a>
         <a href="METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
         <a href="code/">תיקיית קוד</a>
