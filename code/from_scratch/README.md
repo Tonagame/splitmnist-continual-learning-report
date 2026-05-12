@@ -29,6 +29,7 @@ It implements:
 - LSR-lite + Fourier + ASW
 - CSV learning-curve logging
 - summary.csv and per-run metrics JSON files
+- combined summary and graph aggregation
 
 ## Smoke Test
 
@@ -47,6 +48,22 @@ E:\conda-envs\continual\python.exe .\code\from_scratch\splitmnist_cl.py `
 ```
 
 ## Serious Split MNIST Runs
+
+Run the classic methods for all scenarios, without LSR variants:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\code\from_scratch\run_all_classic_from_scratch.ps1 `
+  -Iters 2000 `
+  -EvalEvery 100
+```
+
+This creates:
+
+- `results_from_scratch/classic_no_lsr_2000/combined_summary.csv`
+- `results_from_scratch/classic_no_lsr_2000/combined_learning_curve.csv`
+- `results_from_scratch/classic_no_lsr_2000/from_scratch_classic_final_accuracy.png`
+- `results_from_scratch/classic_no_lsr_2000/from_scratch_classic_learning_curves.png`
+- `results_from_scratch/classic_no_lsr_2000/FROM_SCRATCH_CLASSIC_REPORT.md`
 
 Class-CL example:
 
