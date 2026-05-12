@@ -15,6 +15,7 @@
       <a href="#methods">שיטות</a>
       <a href="#results">תוצאות</a>
       <a href="#graphs">גרפים</a>
+      <a href="#code">קוד</a>
       <a href="#assignment">דרישות הגשה</a>
       <a href="#pages">GitHub Pages</a>
     </nav>
@@ -246,6 +247,41 @@
       </ol>
     </section>
 
+    <section class="section" id="code">
+      <p class="eyebrow">קוד</p>
+      <h2>הקוד שהתווסף לפרויקט</h2>
+      <p>
+        הריפו הזה כולל עכשיו גם את הקוד שנכתב עבור הניסוי, אבל בצורה נקייה:
+        ללא datasets, ללא raw results גדולים, וללא העתקה מלאה של הריפו המקורי.
+      </p>
+      <div class="method-grid">
+        <article class="method highlight">
+          <h3>train_lsr_lite.py</h3>
+          <p>מימוש LSR-lite: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
+        </article>
+        <article class="method">
+          <h3>Phase runners</h3>
+          <p>שלושה סקריפטים PowerShell שמריצים Class-CL, Domain-CL ו-Task-CL ל-2000 איטרציות.</p>
+        </article>
+        <article class="method">
+          <h3>Summary scripts</h3>
+          <p>סקריפטים שאוספים תוצאות, יוצרים summary.csv, עקומות למידה וגרפים סופיים.</p>
+        </article>
+        <article class="method">
+          <h3>Patch</h3>
+          <p>קובץ patch שמראה את השינויים הקטנים שנוספו לריפו המקורי עבור logging של learning curves.</p>
+        </article>
+        <article class="method">
+          <h3>הסבר מפורט</h3>
+          <p><a href="CODE_EXPLANATION.md">CODE_EXPLANATION.md</a> מסביר איך הקוד עובד ומה כל רכיב עושה.</p>
+        </article>
+        <article class="method">
+          <h3>תיקיית הקוד</h3>
+          <p><a href="code/">code/</a> מכילה את כל קבצי הקוד הרלוונטיים שנוספו בפרויקט.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="section downloads">
       <p class="eyebrow">קבצים</p>
       <h2>הורדות וקבצי מקור</h2>
@@ -254,6 +290,8 @@
         <a href="assets/splitMNIST_2000_all_scenarios_summary.csv">טבלת CSV משולבת</a>
         <a href="assets/all-methods-by-scenario.png">גרף כל השיטות</a>
         <a href="assets/selected-learning-curves.png">גרף עקומות למידה</a>
+        <a href="CODE_EXPLANATION.md">הסבר קוד</a>
+        <a href="code/">תיקיית קוד</a>
         <a href="takeaways.md">takeaways.md</a>
         <a href="VIDEO.md">קובץ סרטון</a>
       </div>

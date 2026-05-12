@@ -1,0 +1,113 @@
+﻿diff --git a/eval/callbacks.py b/eval/callbacks.py
+index 16e8b5f..0d89311 100644
+--- a/eval/callbacks.py
++++ b/eval/callbacks.py
+@@ -1,3 +1,6 @@
++import csv
++import os
++
+ from eval import evaluate
+ 
+ 
+@@ -58,6 +61,55 @@ def _eval_cb(log, test_datasets, visdom=None, plotting_dict=None, iters_per_cont
+     return eval_cb if (visdom is not None) or (plotting_dict is not None) else None
+ 
+ 
++def _eval_history_cb(log, test_datasets, file_path, method, iters_per_context=None, test_size=None,
++                     all_contexts=True, S='mean'):
++    """Write evaluation-history rows to CSV during training.
++
++    This callback is intentionally file-based so long Phase-1 runs leave a
++    recoverable learning curve even if a later method fails.
++    """
++    if file_path is None:
++        return None
++    os.makedirs(os.path.dirname(file_path), exist_ok=True)
++    if not os.path.exists(file_path):
++        with open(file_path, "w", newline="") as f:
++            writer = csv.DictWriter(f, fieldnames=["method", "iteration", "context", "accuracy"])
++            writer.writeheader()
++
++    def eval_cb(classifier, batch, context=1):
++        iteration = batch if (context is None or context == 1) else (context - 1) * iters_per_context + batch
++        if iteration % log != 0:
++            return
++        if (S is not None) and hasattr(classifier, 'S'):
++            classifier.S = S
++        n_contexts = len(test_datasets) if all_contexts else context
++        if getattr(classifier, "scenario", None) == "task":
++            n_contexts = context
++        accs = []
++        for i in range(n_contexts):
++            allowed_classes = None
++            if getattr(classifier, "scenario", None) == "task" and not getattr(classifier, "singlehead", False):
++                classes_per_context = getattr(classifier, "classes_per_context", None)
++                if classes_per_context is not None:
++                    allowed_classes = list(range(classes_per_context * i, classes_per_context * (i + 1)))
++            accs.append(
++                evaluate.test_acc(
++                    classifier, test_datasets[i], batch_size=128, test_size=test_size,
++                    verbose=False, context_id=i, allowed_classes=allowed_classes
++                )
++            )
++        with open(file_path, "a", newline="") as f:
++            writer = csv.DictWriter(f, fieldnames=["method", "iteration", "context", "accuracy"])
++            writer.writerow({
++                "method": method or getattr(classifier, "label", "model"),
++                "iteration": iteration,
++                "context": context,
++                "accuracy": sum(accs) / len(accs),
++            })
++
++    return eval_cb
++
++
+ ##------------------------------------------------------------------------------------------------------------------##
+ 
+ ########################################################################
+@@ -195,4 +247,4 @@ def _gen_classifier_loss_cb(log=1, classes=None, visdom=None, progress_bar=True)
+             )
+ 
+     # Return the callback-function
+-    return cb
+\ No newline at end of file
++    return cb
+diff --git a/main.py b/main.py
+index 067c9fc..5ca9abf 100755
+--- a/main.py
++++ b/main.py
+@@ -394,6 +394,12 @@ def run(args, verbose=False):
+         cb._eval_cb(log=args.acc_log, test_datasets=test_datasets, visdom=visdom, iters_per_context=args.iters,
+                     test_size=args.acc_n)
+     ] if (not checkattr(args, 'prototypes')) and (not checkattr(args, 'gen_classifier')) else [None]
++    if args.eval_history_file is not None:
++        eval_cbs.append(cb._eval_history_cb(
++            log=args.acc_log, test_datasets=test_datasets, file_path=args.eval_history_file,
++            method=args.eval_history_method, iters_per_context=args.iters, test_size=args.acc_n,
++            S=args.eval_s if hasattr(args, 'eval_s') else 1
++        ))
+     # -after each context, for plotting in pdf (when using prototypes / generative classifier, this is also for visdom)
+     context_cbs = [
+         cb._eval_cb(log=args.iters, test_datasets=test_datasets, plotting_dict=plotting_dict,
+@@ -544,4 +550,4 @@ if __name__ == '__main__':
+     # -load input-arguments
+     args = handle_inputs()
+     # -run experiment
+-    run(args, verbose=True)
+\ No newline at end of file
++    run(args, verbose=True)
+diff --git a/params/options.py b/params/options.py
+index 76d5559..2b8b67b 100644
+--- a/params/options.py
++++ b/params/options.py
+@@ -60,6 +60,10 @@ def add_eval_options(parser, main=False, comparison=False, pretrain=False, compa
+                                  help="# iters after which to plot accuracy (def: # iters)")
+     eval_params.add_argument('--acc-n', type=int, default=1024,
+                              help="# samples to evaluate accuracy (after each context)")
++    eval_params.add_argument('--eval-history-file', type=str, default=None,
++                             help="optional CSV file for evaluation history during training")
++    eval_params.add_argument('--eval-history-method', type=str, default=None,
++                             help="method name to write in --eval-history-file")
+     if (not no_boundaries) and (not comparison) and (not pretrain):
+         eval_params.add_argument('--sample-log', type=int, metavar="N",
+                                  help="# iters after which to plot samples (def: # iters)")

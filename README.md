@@ -25,6 +25,8 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `index.html` - the main Hebrew report page
 - `styles.css` - page styling
 - `assets/` - graphs, CSV summary, and Word report
+- `code/` - experiment scripts and LSR-lite prototype code
+- `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
 - `assets/summary_hebrew_splitMNIST_2000.docx` - Hebrew Word report
@@ -68,6 +70,33 @@ They are also embedded directly in the website.
 ### Selected Learning Curves
 
 ![Selected learning curves](assets/selected-learning-curves.png)
+
+## Where Is The Code?
+
+The code added for this project is in:
+
+`code/`
+
+Important files:
+
+- `code/train_lsr_lite.py` - the experimental LSR-lite method.
+- `code/run_phase1_splitmnist_class_2000.ps1` - Class-CL 2000 runner.
+- `code/run_phase2_splitmnist_domain_2000.ps1` - Domain-CL 2000 runner.
+- `code/run_phase3_splitmnist_task_2000.ps1` - Task-CL 2000 runner.
+- `code/phase1_summarize.py` - Class-CL summary and graph generator.
+- `code/phase2_summarize.py` - Domain-CL summary and graph generator.
+- `code/phase3_summarize.py` - Task-CL summary and graph generator.
+- `code/patches/eval_history_and_options.patch` - patch for the original repository.
+
+Detailed explanation:
+
+`CODE_EXPLANATION.md`
+
+Short code README:
+
+`code/README.md`
+
+The code folder does **not** include datasets, raw training outputs, Conda environments, or the full original repository.
 
 ## Main Result Summary
 
