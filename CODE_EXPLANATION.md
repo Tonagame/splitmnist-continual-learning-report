@@ -21,6 +21,26 @@ That repository already supports many continual-learning methods, including:
 The code added in this project was intentionally kept small and separate.
 The goal was to avoid rewriting the original repository.
 
+## What Was Implemented By Us?
+
+We did not reimplement the classic methods from the papers.
+The original repository already implements EWC, LwF, A-GEM, Separate Networks, Joint Training, and the supported Generative Classifier setup.
+Those methods were run through the original code using flags such as `--ewc`, `--lwf`, `--agem`, `--separate-networks`, and `--joint`.
+
+The code implemented specifically for this project was:
+
+- `train_lsr_lite.py`
+- LSR-lite + Fourier
+- LSR-lite + ASW
+- LSR-lite + Fourier + ASW
+- learning-curve CSV logging
+- PowerShell runners for the three 2000-iteration phases
+- summary scripts and graph generation
+
+For a direct table of implemented-vs-reused methods, see:
+
+`METHODS_IMPLEMENTATION.md`
+
 ## Evaluation-History Logging
 
 The original repository already evaluated accuracy during training, but the project needed raw learning-curve data saved to CSV.

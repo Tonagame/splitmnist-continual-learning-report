@@ -27,6 +27,7 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `assets/` - graphs, CSV summary, and Word report
 - `code/` - experiment scripts and LSR-lite prototype code
 - `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
+- `METHODS_IMPLEMENTATION.md` - what was implemented by us vs reused from the original repository
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
 - `assets/summary_hebrew_splitMNIST_2000.docx` - Hebrew Word report
@@ -97,6 +98,38 @@ Short code README:
 `code/README.md`
 
 The code folder does **not** include datasets, raw training outputs, Conda environments, or the full original repository.
+
+## Did We Implement All Methods From Scratch?
+
+No.
+
+The classic methods were already implemented in the original GMvandeVen repository.
+We ran them using the official code and command-line flags.
+
+Reused from the original repository:
+
+- None
+- Joint Training
+- EWC
+- LwF
+- A-GEM
+- Separate Networks
+- Generative Classifier where supported
+
+Implemented in this project:
+
+- LSR-lite
+- LSR-lite + Fourier
+- LSR-lite + ASW
+- LSR-lite + Fourier + ASW
+- learning-curve CSV logging
+- phase runners
+- summary and graph scripts
+- website and report files
+
+Full explanation:
+
+`METHODS_IMPLEMENTATION.md`
 
 ## Main Result Summary
 
