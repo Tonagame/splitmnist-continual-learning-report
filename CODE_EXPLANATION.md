@@ -1,186 +1,238 @@
 # Code Explanation
 
-This document explains the code added for the Split MNIST continual-learning project.
+## Current Rule
 
-## Original Repository
+The project must not submit code copied from GitHub.
+Therefore, the submission code is the clean-room implementation in:
 
-The project started from the GMvandeVen continual-learning repository:
+`code/from_scratch/splitmnist_cl.py`
 
-https://github.com/GMvandeVen/continual-learning
+The earlier GMvandeVen-based runners are kept only as historical reference
+material. They helped us understand the protocol and reference results, but the
+new implementation is the code path to use for the final project.
 
-That repository already supports many continual-learning methods, including:
+## Main From-Scratch Components
 
-- None / baseline sequential training
-- Joint Training
-- EWC
-- LwF
-- A-GEM
-- Separate Networks
-- Generative Classifier in supported settings
+### Dataset Construction
 
-The code added in this project was intentionally kept small and separate.
-The goal was to avoid rewriting the original repository.
+The script downloads MNIST through `torchvision` and builds Split MNIST itself.
+The five contexts are:
 
-## What Was Implemented By Us?
-
-We did not reimplement the classic methods from the papers.
-The original repository already implements EWC, LwF, A-GEM, Separate Networks, Joint Training, and the supported Generative Classifier setup.
-Those methods were run through the original code using flags such as `--ewc`, `--lwf`, `--agem`, `--separate-networks`, and `--joint`.
-
-The code implemented specifically for this project was:
-
-- `train_lsr_lite.py`
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
-- learning-curve CSV logging
-- PowerShell runners for the three 2000-iteration phases
-- summary scripts and graph generation
-
-For a direct table of implemented-vs-reused methods, see:
-
-`METHODS_IMPLEMENTATION.md`
-
-## Evaluation-History Logging
-
-The original repository already evaluated accuracy during training, but the project needed raw learning-curve data saved to CSV.
-
-The patch file:
-
-`code/patches/eval_history_and_options.patch`
-
-adds two command-line options:
-
-- `--eval-history-file`
-- `--eval-history-method`
-
-It also adds a callback that writes rows like:
-
-```csv
-method,iteration,context,accuracy
-LSR-lite,100,1,0.99
+```text
+(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)
 ```
 
-For Task-CL, the callback preserves the original Task-CL evaluation behavior by using allowed classes for the current task.
-For Class-CL, no task identity is used.
+Each dataset item returns:
 
-## LSR-lite
+```text
+image, training_label, original_digit
+```
 
-The main experimental code is:
+This lets the code keep a clean distinction between:
 
-`code/train_lsr_lite.py`
+- the label used for training,
+- the original digit class,
+- the replay-buffer key.
 
-LSR-lite is a prototype continual-learning method based on real replay.
+### Scenarios
 
-For old examples, it stores:
+`Class-CL`
 
-- image `x`
-- label `y`
-- teacher logits at insertion time
-- penultimate feature vector at insertion time
+- The model has 10 output units.
+- There is no task identity at evaluation.
+- Accuracy is measured over all 10 digit classes.
 
-During later contexts, each training step can mix the current batch with replay samples from the buffer.
+`Domain-CL`
 
-The total loss is:
+- Each context is mapped to a shared binary label space.
+- For example, in context `(4, 5)`, digit `4` maps to `0` and digit `5` maps to `1`.
+- The model has 2 output units.
+
+`Task-CL`
+
+- The model has 10 output units for the normal methods.
+- During evaluation, the code masks outputs to the two allowed classes of the active task.
+- Separate Networks uses one 2-output MLP per task.
+
+## Neural Network
+
+The default model is an MLP:
+
+```text
+784 input pixels
+-> hidden layer
+-> hidden layer
+-> output logits
+```
+
+The default hidden layers are:
+
+```text
+400, 400
+```
+
+The model also exposes a `features(x)` function. LSR-lite uses this penultimate
+feature vector for feature anchoring.
+
+## Implemented Methods
+
+### None
+
+Sequential fine-tuning.
+The model trains on context 1, then context 2, and so on.
+There is no explicit protection against forgetting.
+
+### Joint Training
+
+The code concatenates all training contexts and trains on the union.
+This is not a true continual-learning method; it is an upper-bound reference.
+
+### EWC
+
+Elastic Weight Consolidation is implemented with:
+
+```text
+loss = cross_entropy + 0.5 * lambda * sum(Fisher * (theta - theta_old)^2)
+```
+
+After each context, the script estimates a diagonal Fisher matrix from training
+examples of that context. The Fisher estimate and parameter snapshot are then
+used as a penalty during later contexts.
+
+### LwF
+
+Learning without Forgetting is implemented with a frozen teacher snapshot.
+After each context, the current model is copied as the teacher.
+During the next context, the student minimizes:
+
+```text
+cross_entropy(current labels) + lambda * KD(student logits, teacher logits)
+```
+
+The distillation loss uses temperature-scaled KL divergence.
+
+### A-GEM
+
+A-GEM uses a replay memory built only from training data.
+For each update:
+
+1. Compute the gradient on the current batch.
+2. Compute the gradient on a replay batch.
+3. If the current gradient conflicts with replay, project it:
+
+```text
+g_projected = g_current - dot(g_current, g_memory) / dot(g_memory, g_memory) * g_memory
+```
+
+Then the optimizer applies the projected gradient.
+
+### Separate Networks
+
+Separate Networks is implemented for Task-CL.
+The code creates one MLP per task, each with two output units.
+At evaluation time, the task identity selects the correct network.
+
+### Generative Classifier
+
+The clean-room Generative Classifier stores class statistics, not raw images.
+For each class it keeps:
+
+```text
+count, sum, sum of squares
+```
+
+It then classifies by diagonal Gaussian log-likelihood.
+This is a simple generative classifier and may not match the stronger generative
+model from the paper without further tuning.
+
+### LSR-lite
+
+LSR-lite stores a balanced replay buffer from training data only.
+For each stored example it keeps:
+
+```text
+image x
+label y
+teacher logits at insertion time
+penultimate feature vector at insertion time
+```
+
+The training loss is:
 
 ```text
 L_total =
-  L_CE_current
-+ L_CE_replay
-+ lambda_kd   * L_KD_logits
-+ lambda_feat * L_feature_anchor
-+ lambda_fft  * L_Fourier_optional
+  CE(current samples)
++ CE(replay samples)
++ lambda_kd * KD(replay logits, stored teacher logits)
++ lambda_feat * MSE(current replay features, stored features)
 ```
 
-### Cross Entropy
+### LSR-lite + Fourier
 
-Cross entropy trains the model to predict the correct label for current samples and replay samples.
-
-### Logit Distillation
-
-Logit distillation compares the current model's logits on a replay sample with the old teacher logits saved when the sample entered memory.
-
-This helps preserve old decision behavior.
-
-### Feature Anchoring
-
-Feature anchoring compares the current penultimate feature vector with the stored old feature vector.
-
-This encourages the model to keep a similar internal representation for old examples.
-
-### Fourier Auxiliary Loss
-
-The Fourier option adds a small auxiliary loss on the spectrum of the feature vector.
-
-It is an ablation, not the main memory mechanism.
-Real replay samples are still used.
-
-### Adaptive Stability Weighting
-
-ASW dynamically changes the effective weights of the distillation and feature losses:
+This adds an auxiliary Fourier feature-spectrum loss:
 
 ```text
-adaptive_factor = old_loss / (new_loss + epsilon)
-adaptive_factor is clamped between 0.5 and 2.0
+MSE(log(1 + abs(rFFT(current_features))),
+    log(1 + abs(rFFT(stored_features))))
+```
+
+It does not replace real replay samples.
+
+### LSR-lite + ASW
+
+Adaptive Stability Weighting adjusts the KD and feature-anchor weights:
+
+```text
+adaptive_factor = old_signal / (new_loss + epsilon)
+adaptive_factor = clamp(adaptive_factor, 0.5, 2.0)
 ```
 
 Then:
 
 ```text
-lambda_kd_eff   = lambda_kd   * adaptive_factor
+lambda_kd_eff = lambda_kd * adaptive_factor
 lambda_feat_eff = lambda_feat * adaptive_factor
 ```
 
-The goal is to increase stability when replay performance worsens and reduce it when the replay loss is already low.
+### LSR-lite + Fourier + ASW
 
-## Phase Runner Scripts
+This combines the Fourier auxiliary loss with ASW.
+The Fourier weight stays fixed.
 
-The PowerShell scripts automate the serious 2000-iteration experiments.
+## Outputs
 
-### Phase 1
-
-`code/run_phase1_splitmnist_class_2000.ps1`
-
-Runs Split MNIST Class-CL.
-This is the hardest scenario because there is no task identity during evaluation.
-
-### Phase 2
-
-`code/run_phase2_splitmnist_domain_2000.ps1`
-
-Runs Split MNIST Domain-CL.
-
-### Phase 3
-
-`code/run_phase3_splitmnist_task_2000.ps1`
-
-Runs Split MNIST Task-CL.
-This keeps the repository's original Task-CL allowed-classes evaluation protocol.
-
-## Summary Scripts
-
-The summary scripts collect result files and generate:
+Each run writes:
 
 - `summary.csv`
 - `learning_curve.csv`
-- final accuracy bar graphs
-- learning-curve graphs
-- short Markdown reports
+- one per-run learning-curve CSV
+- one per-run metrics JSON file
 
-Files:
+The plotting script:
 
-- `code/phase1_summarize.py`
-- `code/phase2_summarize.py`
-- `code/phase3_summarize.py`
+`code/from_scratch/plot_from_scratch_summary.py`
 
-## What The Code Demonstrates
+creates:
 
-The main algorithmic idea is the stability-plasticity tradeoff.
+`from_scratch_final_accuracy.png`
 
-The model must learn new contexts while keeping old knowledge.
-LSR-lite addresses this by storing real old examples and preserving both:
+## Smoke Tests
 
-- the old output behavior through logits
-- the old internal representation through feature anchoring
+Smoke tests were run successfully on the NVIDIA RTX 3070 for:
 
-The experiments showed that this approach is especially useful for Class-CL, where there is no task identity at evaluation time.
+- None
+- EWC
+- LwF
+- A-GEM
+- Generative Classifier
+- LSR-lite + Fourier + ASW
+- Separate Networks
+
+These tests used only one iteration per context, so they verify code execution,
+not final scientific accuracy.
+
+## Reproduction Target
+
+The original GMvandeVen repository and the paper results are now reference
+targets. To complete the reproduction under the new rule, the long experiments
+must be run with the from-scratch code and compared against those references.

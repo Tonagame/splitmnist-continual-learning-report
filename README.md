@@ -25,9 +25,9 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `index.html` - the main Hebrew report page
 - `styles.css` - page styling
 - `assets/` - graphs, CSV summary, and Word report
-- `code/` - experiment scripts and LSR-lite prototype code
+- `code/` - experiment scripts, legacy reference runners, and the new from-scratch implementation
 - `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
-- `METHODS_IMPLEMENTATION.md` - what was implemented by us vs reused from the original repository
+- `METHODS_IMPLEMENTATION.md` - implementation status and the new clean-room code path
 - `PAPER_COMPARISON.md` - comparison between the paper's Split MNIST results and our local results
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
@@ -41,6 +41,7 @@ This repository includes the required project documentation:
 - **Algorithmic thinking:** explained in the website and in `takeaways.md`.
 - **Project steps:** setup, baseline runs, selected methods, LSR-lite prototype, final 2000-iteration phases, graphs, and report.
 - **Testing at each stage:** smoke tests, CUDA checks, 100-iteration runs, 2000-iteration serious runs, final full-test evaluation, and learning-curve logging.
+- **From-scratch requirement:** the new `code/from_scratch/` path implements the continual-learning methods ourselves, without submitting copied GitHub code.
 - **Output conclusions:** summarized in the website, README, Word report, graphs, and CSV.
 - **AI links / AI usage:** documented below and in the website.
 - **Reflective writing:** `takeaways.md`.
@@ -92,7 +93,14 @@ The code added for this project is in:
 
 `code/`
 
-Important files:
+The implementation that matches the current assignment rule is:
+
+- `code/from_scratch/splitmnist_cl.py` - clean-room implementation of Split MNIST continual learning.
+- `code/from_scratch/run_splitmnist_from_scratch.ps1` - runs the long from-scratch experiments.
+- `code/from_scratch/plot_from_scratch_summary.py` - creates graphs from from-scratch results.
+- `code/from_scratch/README.md` - commands and protocol notes for the independent implementation.
+
+Historical / reference-run files from the earlier phase:
 
 - `code/train_lsr_lite.py` - the experimental LSR-lite method.
 - `code/run_phase1_splitmnist_class_2000.ps1` - Class-CL 2000 runner.
@@ -115,37 +123,34 @@ The code folder does **not** include datasets, raw training outputs, Conda envir
 
 ## Did We Implement All Methods From Scratch?
 
-No.
+For the original experimental phase, no: we used the GMvandeVen repository as the runnable reference for the classic methods.
 
-The classic methods were already implemented in the original GMvandeVen repository.
-We ran them using the official code and command-line flags.
+For the updated assignment rule, yes: a new clean-room implementation was added under `code/from_scratch/`.
 
-Reused from the original repository:
+Implemented from scratch there:
 
-- None
+- None / sequential baseline
 - Joint Training
 - EWC
 - LwF
 - A-GEM
 - Separate Networks
-- Generative Classifier where supported
-
-Implemented in this project:
-
+- Generative Classifier
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW
 - LSR-lite + Fourier + ASW
-- learning-curve CSV logging
-- phase runners
-- summary and graph scripts
-- website and report files
+- Split MNIST data construction and evaluation protocols
+- summary, learning-curve, and graph generation
 
 Full explanation:
 
 `METHODS_IMPLEMENTATION.md`
 
-## Main Result Summary
+## Reference-Run Result Summary
+
+These numbers came from the earlier controlled runs using the GMvandeVen repository as a reference implementation.
+They are useful as reproduction targets, but the assignment-compliant code path is now `code/from_scratch/`.
 
 | Scenario | None | Best non-Joint method | Joint |
 |---|---:|---:|---:|
@@ -196,6 +201,7 @@ The algorithms tested here solve this tension in different ways:
 7. Audited the protocol: no test data in training, fair buffer budget, correct Class-CL and Task-CL evaluation.
 8. Ran serious 2000-iteration experiments for Class-CL, Domain-CL, and Task-CL.
 9. Generated final graphs, CSV summaries, Word report, and this GitHub Pages website.
+10. Added a new clean-room implementation under `code/from_scratch/` because the assignment requires implementing the methods ourselves.
 
 ## Testing And Validation
 

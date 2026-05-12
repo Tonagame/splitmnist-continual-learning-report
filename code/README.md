@@ -1,52 +1,60 @@
 # Code Included In This Report Repository
 
-This folder contains the experiment code that was written or added during the project.
+## Final Submission Code
 
-It is **not** a full copy of the original GMvandeVen repository.
-The full upstream project is here:
+Use this folder:
 
-https://github.com/GMvandeVen/continual-learning
+`from_scratch/`
 
-## Files
+It contains the clean-room implementation required by the assignment.
+It does not import the GMvandeVen repository.
+
+Main files:
 
 | File | Purpose |
 |---|---|
-| `train_lsr_lite.py` | Experimental LSR-lite runner. Implements real replay, stored labels, stored teacher logits, stored feature vectors, optional Fourier loss, and optional Adaptive Stability Weighting. |
-| `run_phase1_splitmnist_class_2000.ps1` | Runs the serious Split MNIST Class-CL 2000 experiment. |
-| `run_phase2_splitmnist_domain_2000.ps1` | Runs the serious Split MNIST Domain-CL 2000 experiment. |
-| `run_phase3_splitmnist_task_2000.ps1` | Runs the serious Split MNIST Task-CL 2000 experiment. |
-| `phase1_summarize.py` | Generates Class-CL summary CSV, graphs, and report. |
-| `phase2_summarize.py` | Generates Domain-CL summary CSV, graphs, and report. |
-| `phase3_summarize.py` | Generates Task-CL summary CSV, graphs, and report. |
-| `README_LSR.md` | Short implementation notes for LSR-lite. |
-| `patches/eval_history_and_options.patch` | Patch showing the small changes made to the original repository for evaluation-history logging. |
+| `from_scratch/splitmnist_cl.py` | Independent Split MNIST continual-learning runner. |
+| `from_scratch/run_splitmnist_from_scratch.ps1` | Runs long experiments for Class-CL, Domain-CL, or Task-CL. |
+| `from_scratch/plot_from_scratch_summary.py` | Creates a final-accuracy graph from `summary.csv`. |
+| `from_scratch/README.md` | Commands, method list, and protocol notes. |
 
-## How To Use This Code
+Implemented from scratch:
 
-1. Clone the original repository:
+- None
+- Joint Training
+- EWC
+- LwF
+- A-GEM
+- Separate Networks
+- Generative Classifier
+- LSR-lite
+- LSR-lite + Fourier
+- LSR-lite + ASW
+- LSR-lite + Fourier + ASW
 
-   ```powershell
-   git clone https://github.com/GMvandeVen/continual-learning.git
-   ```
+## Legacy Reference Files
 
-2. Copy the files from this `code/` folder into the root of the cloned repository.
+The other files in this folder come from the earlier phase of the project, when
+we used the GMvandeVen repository as a runnable reference implementation.
 
-3. Apply the patch in `code/patches/eval_history_and_options.patch`, or manually reproduce the changes.
+They are kept for transparency, but they are not the final answer to the
+assignment requirement that every method be implemented by us.
 
-4. Run one of the phase scripts from the repository root:
+| File | Purpose |
+|---|---|
+| `train_lsr_lite.py` | Earlier LSR-lite prototype that reused repository utilities. |
+| `run_phase1_splitmnist_class_2000.ps1` | Earlier Class-CL runner for the GMvandeVen repo. |
+| `run_phase2_splitmnist_domain_2000.ps1` | Earlier Domain-CL runner for the GMvandeVen repo. |
+| `run_phase3_splitmnist_task_2000.ps1` | Earlier Task-CL runner for the GMvandeVen repo. |
+| `phase1_summarize.py` | Earlier Class-CL summary and graph generator. |
+| `phase2_summarize.py` | Earlier Domain-CL summary and graph generator. |
+| `phase3_summarize.py` | Earlier Task-CL summary and graph generator. |
+| `patches/eval_history_and_options.patch` | Earlier patch for learning-curve logging in the GMvandeVen repo. |
 
-   ```powershell
-   powershell -NoProfile -ExecutionPolicy Bypass -File .\run_phase1_splitmnist_class_2000.ps1
-   powershell -NoProfile -ExecutionPolicy Bypass -File .\run_phase2_splitmnist_domain_2000.ps1
-   powershell -NoProfile -ExecutionPolicy Bypass -File .\run_phase3_splitmnist_task_2000.ps1
-   ```
+## Protocol Notes For The New Code
 
-## Important Protocol Notes
-
-- Test data is used only for evaluation, not for training.
-- LSR-lite builds its replay buffer from training data only.
-- A-GEM and LSR-lite use the same memory budget where applicable: 100 samples per class.
-- Class-CL evaluation does not use task identity.
-- Task-CL evaluation keeps the original repository allowed-classes protocol.
-- Generative Classifier was skipped where it was not cleanly supported.
-
+- Test data is used only for evaluation.
+- Replay buffers are built only from train data.
+- Class-CL evaluates over all 10 classes without task identity.
+- Task-CL uses task identity through allowed-class masking.
+- A-GEM and LSR variants use the same default memory budget: 100 samples per original digit class.

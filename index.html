@@ -301,6 +301,18 @@
       </p>
       <div class="method-grid">
         <article class="method highlight">
+          <h3>from_scratch/splitmnist_cl.py</h3>
+          <p>המימוש החדש להגשה: קוד PyTorch עצמאי ל-None, Joint, EWC, LwF, A-GEM, Separate Networks, Generative Classifier וכל וריאנטי LSR-lite, בלי תלות בקוד של GMvandeVen.</p>
+        </article>
+        <article class="method highlight">
+          <h3>run_splitmnist_from_scratch.ps1</h3>
+          <p>סקריפט שמריץ את הניסויים הארוכים מהקוד העצמאי ושומר logs, summary.csv ו-learning_curve.csv.</p>
+        </article>
+        <article class="method">
+          <h3>הערה חשובה להגשה</h3>
+          <p>הנתיב הישן שהריץ את הריפו המקורי נשאר כרפרנס בלבד. לפי הדרישה החדשה, מגישים ומשחזרים תוצאות דרך <a href="code/from_scratch/">code/from_scratch/</a>.</p>
+        </article>
+        <article class="method highlight">
           <h3>train_lsr_lite.py</h3>
           <p>מימוש LSR-lite: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
         </article>
@@ -345,6 +357,7 @@
         <a href="CODE_EXPLANATION.md">הסבר קוד</a>
         <a href="METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
         <a href="code/">תיקיית קוד</a>
+        <a href="code/from_scratch/">קוד עצמאי from scratch</a>
         <a href="takeaways.md">takeaways.md</a>
         <a href="VIDEO.md">קובץ סרטון</a>
       </div>

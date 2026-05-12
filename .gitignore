@@ -1,0 +1,4 @@
+results_from_scratch/
+results_from_scratch_smoke/
+*.pyc
+__pycache__/
