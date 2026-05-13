@@ -29,6 +29,7 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
 - `METHODS_IMPLEMENTATION.md` - implementation status and the new clean-room code path
 - `IMPLEMENTATION_AUDIT.md` - audit of what is assignment-compliant and what remains a partial reproduction
+- `LSR_LITE_EXPLANATION.md` - explanation of LSR-lite, Fourier, ASW, and their ablation results
 - `PAPER_COMPARISON.md` - comparison between the paper's Split MNIST results and our local results
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
@@ -184,6 +185,11 @@ They are useful as reproduction targets, but the assignment-compliant code path 
 
 LSR-lite is most promising for the hardest setting: Class-Incremental Learning without task identity.
 
+LSR-lite should be described as a hybrid of replay/memory and distillation ideas:
+it uses real exemplar replay like memory-based methods such as A-GEM, and it uses
+LwF-style teacher-logit distillation. It is not truly a Generative Classifier
+hybrid, because it does not learn a generator and does not synthesize old data.
+
 The core useful mechanism was:
 
 - real replay samples from train data
@@ -195,6 +201,10 @@ The core useful mechanism was:
 - feature anchoring
 
 Fourier and ASW were useful as ablations, but they were not the main reason the method worked.
+
+Detailed LSR-lite explanation:
+
+`LSR_LITE_EXPLANATION.md`
 
 ## Algorithmic Thinking
 

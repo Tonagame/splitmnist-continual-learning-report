@@ -149,6 +149,15 @@ model from the paper without further tuning.
 ### LSR-lite
 
 LSR-lite stores a balanced replay buffer from training data only.
+It is a hybrid of exemplar replay and distillation ideas:
+
+- like memory/replay methods such as A-GEM, it keeps a small buffer of old real examples;
+- like LwF, it preserves old output behavior through teacher-logit distillation;
+- additionally, it anchors the penultimate feature representation.
+
+It is not a true Generative Classifier hybrid, because it does not learn a
+generative model and does not synthesize old examples.
+
 For each stored example it keeps:
 
 ```text

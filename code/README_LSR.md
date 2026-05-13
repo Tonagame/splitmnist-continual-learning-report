@@ -16,6 +16,12 @@ The Fourier ablation is enabled only with:
 
 `train_lsr_lite.py` is intentionally separate from the original `main.py` method switches. It reuses the repository's data loading, classifier definition, optimizer style, and evaluation helpers, but keeps the prototype isolated.
 
+Conceptually, LSR-lite combines memory/replay and distillation ideas:
+
+- like A-GEM / replay methods, it keeps a small buffer of real old training examples;
+- like LwF, it uses teacher-logit distillation to preserve old output behavior;
+- unlike a Generative Classifier, it does not learn a generator and does not synthesize old samples.
+
 LSR-lite uses a real exemplar replay buffer. For each stored sample it keeps:
 
 - image tensor `x`

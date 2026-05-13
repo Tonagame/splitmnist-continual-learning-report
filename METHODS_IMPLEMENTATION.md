@@ -58,6 +58,29 @@ https://github.com/GMvandeVen/continual-learning
 We can compare our results against its reported/reference behavior, but the
 submitted implementation should be the code in `code/from_scratch/`.
 
+## LSR-lite Variants
+
+LSR-lite is our experimental prototype. It combines:
+
+- exemplar replay / memory ideas, similar in spirit to A-GEM;
+- LwF-style teacher-logit distillation;
+- feature anchoring on penultimate representations.
+
+It should not be described as a direct Generative Classifier hybrid. A
+Generative Classifier learns a generative model or class-conditional density.
+LSR-lite keeps real old training examples and does not synthesize samples.
+
+The four LSR variants tested were:
+
+- `LSR-lite`
+- `LSR-lite + Fourier`
+- `LSR-lite + ASW`
+- `LSR-lite + Fourier + ASW`
+
+Detailed explanation:
+
+`LSR_LITE_EXPLANATION.md`
+
 ## Current Verification
 
 Smoke tests passed on the RTX 3070 for:

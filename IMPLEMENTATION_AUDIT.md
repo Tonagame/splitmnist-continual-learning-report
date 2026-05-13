@@ -48,6 +48,33 @@ Implemented from scratch:
 | CSV logging | Done | `summary.csv`, `learning_curve.csv`, metrics JSON |
 | Graph generation | Done | Aggregation and comparison scripts |
 
+## LSR-lite Positioning
+
+LSR-lite should be described carefully.
+
+Correct:
+
+> LSR-lite combines exemplar replay, LwF-style distillation, and feature
+> anchoring.
+
+Partly correct but needs nuance:
+
+> It is related to A-GEM because both use memory/replay.
+
+Incorrect / too strong:
+
+> It is a hybrid of Generative Classifier.
+
+Reason:
+
+LSR-lite does not train a generative model and does not generate synthetic old
+samples. It stores real old training examples. Therefore, it should be compared
+against Generative Classifier, but not described as being built from it.
+
+Detailed explanation:
+
+`LSR_LITE_EXPLANATION.md`
+
 ## What We Fixed
 
 ### Task-CL Training Protocol

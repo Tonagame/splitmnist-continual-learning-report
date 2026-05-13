@@ -122,7 +122,7 @@
         </article>
         <article class="method highlight">
           <h3>LSR-lite</h3>
-          <p>השיטה הניסיונית שלנו: replay של דוגמאות אמיתיות מהעבר, עם labels, teacher logits ו-feature anchoring.</p>
+          <p>השיטה הניסיונית שלנו: replay של דוגמאות אמיתיות מהעבר, עם labels, teacher logits ו-feature anchoring. היא משלבת replay בסגנון שיטות memory כמו A-GEM עם distillation בסגנון LwF.</p>
         </article>
         <article class="method">
           <h3>Fourier auxiliary loss</h3>
@@ -142,6 +142,8 @@
         <p>
           LSR-lite שומר buffer הוגן של 100 דוגמאות למחלקה. כל דוגמה כוללת את התמונה,
           התווית, logits של המורה בזמן ההכנסה ל-buffer, ווקטור feature פנימי מהשכבה שלפני הפלט.
+          חשוב לדייק: זו לא שיטה גנרטיבית כמו Generative Classifier, כי היא לא מייצרת דוגמאות חדשות;
+          היא שומרת דוגמאות train אמיתיות ומשתמשת בהן כ-replay.
         </p>
       </div>
       <pre><code>L_total =
@@ -296,6 +298,7 @@
         <li><strong>Domain-CL גם מעדיף LSR-lite.</strong> plain LSR-lite היה הטוב ביותר מבין השיטות שאינן Joint.</li>
         <li><strong>Task-CL מתנהג אחרת.</strong> בגלל allowed classes, LwF ו-Separate Networks כמעט מגיעים ל-Joint.</li>
         <li><strong>Fourier ו-ASW הם ablations.</strong> הם מעניינים, אבל לא הלב של ההצלחה. הלב הוא replay אמיתי + distillation + feature anchoring.</li>
+        <li><strong>LSR-lite אינו Generative Classifier.</strong> הוא קרוב יותר לשילוב של replay כמו A-GEM ו-distillation כמו LwF, עם feature anchoring.</li>
       </ol>
     </section>
 
@@ -372,6 +375,7 @@
         <a href="CODE_EXPLANATION.md">הסבר קוד</a>
         <a href="METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
         <a href="IMPLEMENTATION_AUDIT.md">בדיקת תקינות המימוש</a>
+        <a href="LSR_LITE_EXPLANATION.md">הסבר LSR-lite והווריאנטים</a>
         <a href="code/">תיקיית קוד</a>
         <a href="code/from_scratch/">קוד עצמאי from scratch</a>
         <a href="takeaways.md">takeaways.md</a>
