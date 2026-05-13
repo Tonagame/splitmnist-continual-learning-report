@@ -1,13 +1,14 @@
-# Code Included In This Report Repository
+# Code Folder
+
+This folder is split into two parts so the submission is easier to understand.
 
 ## Final Submission Code
 
-Use this folder:
+Use:
 
 `from_scratch/`
 
-It contains the clean-room implementation required by the assignment.
-It does not import the GMvandeVen repository.
+This is the clean-room implementation required by the assignment. It does not import the GMvandeVen repository.
 
 Main files:
 
@@ -37,22 +38,24 @@ Implemented from scratch:
 
 ## Legacy Reference Files
 
-The other files in this folder come from the earlier phase of the project, when
-we used the GMvandeVen repository as a runnable reference implementation.
+Use:
 
-They are kept for transparency, but they are not the final answer to the
-assignment requirement that every method be implemented by us.
+`legacy_reference/`
+
+These files come from the earlier phase of the project, when we used the GMvandeVen repository as a runnable reference implementation and added small helper scripts around it.
+
+They are kept for transparency, but they are not the final answer to the assignment requirement that every method be implemented by us.
 
 | File | Purpose |
 |---|---|
-| `train_lsr_lite.py` | Earlier LSR-lite prototype that reused repository utilities. |
-| `run_phase1_splitmnist_class_2000.ps1` | Earlier Class-CL runner for the GMvandeVen repo. |
-| `run_phase2_splitmnist_domain_2000.ps1` | Earlier Domain-CL runner for the GMvandeVen repo. |
-| `run_phase3_splitmnist_task_2000.ps1` | Earlier Task-CL runner for the GMvandeVen repo. |
-| `phase1_summarize.py` | Earlier Class-CL summary and graph generator. |
-| `phase2_summarize.py` | Earlier Domain-CL summary and graph generator. |
-| `phase3_summarize.py` | Earlier Task-CL summary and graph generator. |
-| `patches/eval_history_and_options.patch` | Earlier patch for learning-curve logging in the GMvandeVen repo. |
+| `legacy_reference/train_lsr_lite.py` | Earlier LSR-lite prototype that reused repository utilities. |
+| `legacy_reference/run_phase1_splitmnist_class_2000.ps1` | Earlier Class-CL runner for the GMvandeVen repo. |
+| `legacy_reference/run_phase2_splitmnist_domain_2000.ps1` | Earlier Domain-CL runner for the GMvandeVen repo. |
+| `legacy_reference/run_phase3_splitmnist_task_2000.ps1` | Earlier Task-CL runner for the GMvandeVen repo. |
+| `legacy_reference/phase1_summarize.py` | Earlier Class-CL summary and graph generator. |
+| `legacy_reference/phase2_summarize.py` | Earlier Domain-CL summary and graph generator. |
+| `legacy_reference/phase3_summarize.py` | Earlier Task-CL summary and graph generator. |
+| `legacy_reference/patches/eval_history_and_options.patch` | Earlier patch for learning-curve logging in the GMvandeVen repo. |
 
 ## Protocol Notes For The New Code
 

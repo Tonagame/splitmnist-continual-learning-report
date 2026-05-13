@@ -6,7 +6,7 @@ Source: https://www.nature.com/articles/s42256-022-00568-3
 
 Important caveat: the paper reports mean +/- SEM over 20 random seeds. Our project results are single local runs, so this is an approximate comparison, not a statistically matched reproduction.
 
-![Paper vs ours](assets/paper_vs_ours_splitMNIST_common_methods.png)
+![Paper vs ours](../assets/paper_vs_ours_splitMNIST_common_methods.png)
 
 ## Updated Reproduction Comparison
 
@@ -17,11 +17,11 @@ The graph below compares three sources:
 2. Our earlier run of the GMvandeVen code.
 3. Our new from-scratch implementation.
 
-![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+![Paper vs GMvandeVen vs from-scratch](../assets/paper_vs_gmvandeven_vs_from_scratch.png)
 
 Raw CSV:
 
-`assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+`../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
 
 Note: the Task-CL `None` and `EWC` values for the from-scratch code use the
 corrected Task-CL protocol, where the supervised training loss is restricted to

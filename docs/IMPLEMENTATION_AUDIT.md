@@ -184,11 +184,11 @@ Documentation:
 
 Graphs and CSVs:
 
-- `assets/paper_vs_gmvandeven_vs_from_scratch.png`
-- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `assets/from_scratch_classic_no_lsr_2000_summary.csv`
-- `assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
-- `assets/from_scratch_classic_no_lsr_2000_learning_curves.png`
+- `../assets/paper_vs_gmvandeven_vs_from_scratch.png`
+- `../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+- `../assets/from_scratch_classic_no_lsr_2000_summary.csv`
+- `../assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
+- `../assets/from_scratch_classic_no_lsr_2000_learning_curves.png`
 
 ## Final Assessment
 

@@ -280,7 +280,7 @@
         </table>
       </div>
       <p class="source-links">
-        קבצים: <a href="PAPER_COMPARISON.md">PAPER_COMPARISON.md</a>,
+        קבצים: <a href="docs/PAPER_COMPARISON.md">PAPER_COMPARISON.md</a>,
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.csv">CSV</a>,
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף PNG</a>,
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.csv">CSV השוואה משולשת</a>,
@@ -323,24 +323,24 @@
           <p>הנתיב הישן שהריץ את הריפו המקורי נשאר כרפרנס בלבד. לפי הדרישה החדשה, מגישים ומשחזרים תוצאות דרך <a href="code/from_scratch/">code/from_scratch/</a>.</p>
         </article>
         <article class="method highlight">
-          <h3>train_lsr_lite.py</h3>
-          <p>מימוש LSR-lite: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
+          <h3>legacy_reference/train_lsr_lite.py</h3>
+          <p>מימוש LSR-lite מוקדם מהשלב שבו הרצנו את הריפו המקורי כרפרנס: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
         </article>
         <article class="method">
-          <h3>Phase runners</h3>
-          <p>שלושה סקריפטים PowerShell שמריצים Class-CL, Domain-CL ו-Task-CL ל-2000 איטרציות.</p>
+          <h3>legacy_reference phase runners</h3>
+          <p>שלושה סקריפטים PowerShell היסטוריים שהריצו Class-CL, Domain-CL ו-Task-CL ל-2000 איטרציות מול הריפו המקורי כרפרנס.</p>
         </article>
         <article class="method">
-          <h3>Summary scripts</h3>
-          <p>סקריפטים שאוספים תוצאות, יוצרים summary.csv, עקומות למידה וגרפים סופיים.</p>
+          <h3>legacy_reference summary scripts</h3>
+          <p>סקריפטים היסטוריים שאוספים תוצאות, יוצרים summary.csv, עקומות למידה וגרפים סופיים.</p>
         </article>
         <article class="method">
-          <h3>Patch</h3>
+          <h3>legacy_reference patch</h3>
           <p>קובץ patch שמראה את השינויים הקטנים שנוספו לריפו המקורי עבור logging של learning curves.</p>
         </article>
         <article class="method">
           <h3>הסבר מפורט</h3>
-          <p><a href="CODE_EXPLANATION.md">CODE_EXPLANATION.md</a> מסביר איך הקוד עובד ומה כל רכיב עושה.</p>
+          <p><a href="docs/CODE_EXPLANATION.md">CODE_EXPLANATION.md</a> מסביר איך הקוד עובד ומה כל רכיב עושה.</p>
         </article>
         <article class="method">
           <h3>תיקיית הקוד</h3>
@@ -348,11 +348,11 @@
         </article>
         <article class="method">
           <h3>מה מומש ומה הורץ</h3>
-          <p><a href="METHODS_IMPLEMENTATION.md">METHODS_IMPLEMENTATION.md</a> מסביר אילו שיטות היו מוכנות בריפו המקורי ואילו שיטות מימשנו בעצמנו.</p>
+          <p><a href="docs/METHODS_IMPLEMENTATION.md">METHODS_IMPLEMENTATION.md</a> מסביר אילו שיטות היו מוכנות בריפו המקורי ואילו שיטות מימשנו בעצמנו.</p>
         </article>
         <article class="method">
           <h3>בדיקת תקינות</h3>
-          <p><a href="IMPLEMENTATION_AUDIT.md">IMPLEMENTATION_AUDIT.md</a> מסכם מה עומד בדרישת המימוש העצמאי, מה תוקן, ומה עדיין מוגדר כשחזור חלקי.</p>
+          <p><a href="docs/IMPLEMENTATION_AUDIT.md">IMPLEMENTATION_AUDIT.md</a> מסכם מה עומד בדרישת המימוש העצמאי, מה תוקן, ומה עדיין מוגדר כשחזור חלקי.</p>
         </article>
       </div>
     </section>
@@ -361,6 +361,9 @@
       <p class="eyebrow">קבצים</p>
       <h2>הורדות וקבצי מקור</h2>
       <div class="download-grid">
+        <a href="docs/README.md">אינדקס תיעוד</a>
+        <a href="docs/PROJECT_SCOPE.md">היקף הפרויקט</a>
+        <a href="docs/REPRODUCTION_REPORT.md">דוח שחזור תוצאות</a>
         <a href="assets/summary_hebrew_splitMNIST_2000.docx">דוח Word בעברית</a>
         <a href="assets/splitMNIST_2000_all_scenarios_summary.csv">טבלת CSV משולבת</a>
         <a href="assets/all-methods-by-scenario.png">גרף כל השיטות</a>
@@ -368,18 +371,19 @@
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף מול המאמר</a>
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.png">גרף מאמר מול קוד מול מימוש עצמאי</a>
         <a href="assets/from_scratch_classic_no_lsr_2000_final_accuracy.png">גרף הקוד העצמאי</a>
-        <a href="PAPER_COMPARISON.md">השוואה למאמר</a>
+        <a href="docs/PAPER_COMPARISON.md">השוואה למאמר</a>
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.csv">CSV מול המאמר</a>
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.csv">CSV השוואה משולשת</a>
         <a href="assets/from_scratch_classic_no_lsr_2000_summary.csv">CSV הקוד העצמאי</a>
-        <a href="CODE_EXPLANATION.md">הסבר קוד</a>
-        <a href="METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
-        <a href="IMPLEMENTATION_AUDIT.md">בדיקת תקינות המימוש</a>
-        <a href="LSR_LITE_EXPLANATION.md">הסבר LSR-lite והווריאנטים</a>
+        <a href="docs/CODE_EXPLANATION.md">הסבר קוד</a>
+        <a href="docs/METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
+        <a href="docs/IMPLEMENTATION_AUDIT.md">בדיקת תקינות המימוש</a>
+        <a href="docs/LSR_LITE_EXPLANATION.md">הסבר LSR-lite והווריאנטים</a>
+        <a href="docs/AI_WORK_LOG.md">תיעוד עבודה עם AI</a>
         <a href="code/">תיקיית קוד</a>
         <a href="code/from_scratch/">קוד עצמאי from scratch</a>
-        <a href="takeaways.md">takeaways.md</a>
-        <a href="VIDEO.md">קובץ סרטון</a>
+        <a href="docs/takeaways.md">takeaways.md</a>
+        <a href="docs/VIDEO.md">קובץ סרטון</a>
       </div>
     </section>
 
@@ -405,11 +409,11 @@
         </article>
         <article class="method">
           <h3>Reflective Writing</h3>
-          <p>קובץ הרפלקציה נמצא כאן: <a href="takeaways.md">takeaways.md</a>. הוא כתוב באנגלית ולכן מתאים לדרישת takeaways.md.</p>
+          <p>קובץ הרפלקציה נמצא כאן: <a href="docs/takeaways.md">takeaways.md</a>. הוא כתוב באנגלית ולכן מתאים לדרישת takeaways.md.</p>
         </article>
         <article class="method">
           <h3>סרטון</h3>
-          <p>קובץ הנחיות וקישור placeholder נמצא כאן: <a href="VIDEO.md">VIDEO.md</a>. אחרי הקלטת הסרטון צריך להחליף את ה-placeholder בקישור YouTube או דומה.</p>
+          <p>קובץ הנחיות וקישור placeholder נמצא כאן: <a href="docs/VIDEO.md">VIDEO.md</a>. אחרי הקלטת הסרטון צריך להחליף את ה-placeholder בקישור YouTube או דומה.</p>
         </article>
         <article class="method">
           <h3>קישורי AI</h3>
@@ -426,10 +430,10 @@
       <p class="eyebrow">פרסום</p>
       <h2>איך להפעיל את זה ב-GitHub Pages</h2>
       <div class="steps">
-        <p><strong>1.</strong> להעלות את התיקייה <code>docs/</code> ל-GitHub יחד עם הריפו.</p>
+        <p><strong>1.</strong> לוודא שהקובץ <code>index.html</code> נמצא בשורש הריפו.</p>
         <p><strong>2.</strong> להיכנס ב-GitHub ל-<code>Settings → Pages</code>.</p>
         <p><strong>3.</strong> לבחור <code>Deploy from a branch</code>.</p>
-        <p><strong>4.</strong> לבחור branch, בדרך כלל <code>main</code>, ותיקייה <code>/docs</code>.</p>
+        <p><strong>4.</strong> לבחור branch, בדרך כלל <code>main</code>, ותיקייה <code>/ root</code>.</p>
         <p><strong>5.</strong> לשמור. אחרי דקה או שתיים GitHub יציג URL של האתר.</p>
       </div>
     </section>

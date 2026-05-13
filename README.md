@@ -1,273 +1,90 @@
-# Split MNIST Continual Learning Report
+# Split MNIST Continual Learning Reproduction
 
-This repository contains a static GitHub Pages report for the Split MNIST continual-learning experiments.
+This repository is the cleaned submission package for our project on catastrophic forgetting and continual learning with Split MNIST.
 
-Website, after GitHub Pages is enabled:
+It contains a GitHub Pages report, graphs, result tables, and a clean-room PyTorch implementation of the methods we tested. The original GMvandeVen repository was used as a reference target, but the submission code is under `code/from_scratch/`.
+
+Website after GitHub Pages is enabled:
 
 `https://tonagame.github.io/splitmnist-continual-learning-report/`
 
-The report is written in Hebrew and summarizes experiments comparing:
+## Start Here
 
-- None
-- EWC
-- LwF
-- A-GEM
-- Separate Networks
-- Generative Classifier, where supported
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
-- Joint Training
+| File / folder | Purpose |
+|---|---|
+| `index.html` | Main Hebrew GitHub Pages report. |
+| `code/from_scratch/` | Independent PyTorch implementation for the assignment. |
+| `docs/PROJECT_SCOPE.md` | What we reproduced, what we did not fully reproduce, and why. |
+| `docs/REPRODUCTION_REPORT.md` | Main paper-vs-reference-vs-our-code result summary. |
+| `docs/IMPLEMENTATION_AUDIT.md` | Honest status check of the implementation and limitations. |
+| `docs/LSR_LITE_EXPLANATION.md` | Explanation of LSR-lite, Fourier, ASW, and the ablations. |
+| `assets/` | Graphs, CSV files, and the Hebrew Word report. |
 
-## What Is Included
+## Main Graphs
 
-- `index.html` - the main Hebrew report page
-- `styles.css` - page styling
-- `assets/` - graphs, CSV summary, and Word report
-- `code/` - experiment scripts, legacy reference runners, and the new from-scratch implementation
-- `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
-- `METHODS_IMPLEMENTATION.md` - implementation status and the new clean-room code path
-- `IMPLEMENTATION_AUDIT.md` - audit of what is assignment-compliant and what remains a partial reproduction
-- `LSR_LITE_EXPLANATION.md` - explanation of LSR-lite, Fourier, ASW, and their ablation results
-- `PAPER_COMPARISON.md` - comparison between the paper's Split MNIST results and our local results
-- `takeaways.md` - reflective writing / project takeaways
-- `VIDEO.md` - short video checklist and placeholder link
-- `assets/summary_hebrew_splitMNIST_2000.docx` - Hebrew Word report
-- `assets/splitMNIST_2000_all_scenarios_summary.csv` - combined result table
+The most important comparison graph is:
 
-## Assignment Checklist
+![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
 
-This repository includes the required project documentation:
-
-- **Algorithmic thinking:** explained in the website and in `takeaways.md`.
-- **Project steps:** setup, baseline runs, selected methods, LSR-lite prototype, final 2000-iteration phases, graphs, and report.
-- **Testing at each stage:** smoke tests, CUDA checks, 100-iteration runs, 2000-iteration serious runs, final full-test evaluation, and learning-curve logging.
-- **From-scratch requirement:** the new `code/from_scratch/` path implements the continual-learning methods ourselves, without submitting copied GitHub code.
-- **Output conclusions:** summarized in the website, README, Word report, graphs, and CSV.
-- **AI links / AI usage:** documented below and in the website.
-- **Reflective writing:** `takeaways.md`.
-- **Video link:** see `VIDEO.md`. Replace the placeholder with a YouTube or similar video link after recording.
-
-## Where Are The Graphs?
-
-The graph files are inside the `assets/` folder:
+Other useful figures:
 
 - `assets/all-methods-by-scenario.png`
 - `assets/accuracy-heatmap.png`
 - `assets/lsr-ablation-by-scenario.png`
 - `assets/selected-learning-curves.png`
-- `assets/paper_vs_ours_splitMNIST_common_methods.png`
-- `assets/paper_vs_gmvandeven_vs_from_scratch.png`
 - `assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
+- `assets/from_scratch_classic_no_lsr_2000_learning_curves.png`
 
-They are also embedded directly in the website.
+## What Was Implemented
 
-### All Methods By Scenario
+The clean-room implementation in `code/from_scratch/splitmnist_cl.py` includes:
 
-![All methods by scenario](assets/all-methods-by-scenario.png)
-
-### Accuracy Heatmap
-
-![Accuracy heatmap](assets/accuracy-heatmap.png)
-
-### LSR Ablation By Scenario
-
-![LSR ablation by scenario](assets/lsr-ablation-by-scenario.png)
-
-### Selected Learning Curves
-
-![Selected learning curves](assets/selected-learning-curves.png)
-
-### Paper Results Vs Our Results
-
-The comparison uses Table 2 from van de Ven, Tuytelaars & Tolias, "Three types of incremental learning".
-The paper reports mean +/- SEM over 20 seeds, while our numbers are single local runs, so this is an approximate comparison rather than a full statistical reproduction.
-
-![Paper results vs our results](assets/paper_vs_ours_splitMNIST_common_methods.png)
-
-### Paper Vs GMvandeVen Code Vs Our From-Scratch Code
-
-This is the most important reproduction graph for the updated assignment rule.
-It compares:
-
-- the paper values,
-- our earlier run of the GMvandeVen code,
-- our independent clean-room implementation in `code/from_scratch/`.
-
-![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
-
-Detailed comparison:
-
-- `PAPER_COMPARISON.md`
-- `assets/paper_vs_ours_splitMNIST_common_methods.csv`
-- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `assets/from_scratch_classic_no_lsr_2000_summary.csv`
-
-## Where Is The Code?
-
-The code added for this project is in:
-
-`code/`
-
-The implementation that matches the current assignment rule is:
-
-- `code/from_scratch/splitmnist_cl.py` - clean-room implementation of Split MNIST continual learning.
-- `code/from_scratch/run_splitmnist_from_scratch.ps1` - runs the long from-scratch experiments.
-- `code/from_scratch/run_all_classic_from_scratch.ps1` - ran all classic methods for Class-CL, Domain-CL, and Task-CL without rerunning LSR.
-- `code/from_scratch/compare_reproduction_sources.py` - creates the paper / GMvandeVen / from-scratch comparison graph.
-- `code/from_scratch/plot_from_scratch_summary.py` - creates graphs from from-scratch results.
-- `code/from_scratch/README.md` - commands and protocol notes for the independent implementation.
-
-Historical / reference-run files from the earlier phase:
-
-- `code/train_lsr_lite.py` - the experimental LSR-lite method.
-- `code/run_phase1_splitmnist_class_2000.ps1` - Class-CL 2000 runner.
-- `code/run_phase2_splitmnist_domain_2000.ps1` - Domain-CL 2000 runner.
-- `code/run_phase3_splitmnist_task_2000.ps1` - Task-CL 2000 runner.
-- `code/phase1_summarize.py` - Class-CL summary and graph generator.
-- `code/phase2_summarize.py` - Domain-CL summary and graph generator.
-- `code/phase3_summarize.py` - Task-CL summary and graph generator.
-- `code/patches/eval_history_and_options.patch` - patch for the original repository.
-
-Detailed explanation:
-
-`CODE_EXPLANATION.md`
-
-Short code README:
-
-`code/README.md`
-
-The code folder does **not** include datasets, raw training outputs, Conda environments, or the full original repository.
-
-## Did We Implement All Methods From Scratch?
-
-For the original experimental phase, no: we used the GMvandeVen repository as the runnable reference for the classic methods.
-
-For the updated assignment rule, yes: a new clean-room implementation was added under `code/from_scratch/`.
-
-Implemented from scratch there:
-
-- None / sequential baseline
+- Split MNIST construction
+- Class-CL, Domain-CL, and Task-CL evaluation protocols
+- None / sequential fine-tuning
 - Joint Training
 - EWC
 - LwF
 - A-GEM
-- Separate Networks
-- Generative Classifier
+- Separate Networks for Task-CL
+- a simple Generative Classifier
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW
 - LSR-lite + Fourier + ASW
-- Split MNIST data construction and evaluation protocols
-- summary, learning-curve, and graph generation
+- CSV logging and graph aggregation
 
-Full explanation:
+Important: the older scripts in `code/` are kept for transparency from the earlier reference-run phase. The assignment-compliant implementation is `code/from_scratch/`.
 
-`METHODS_IMPLEMENTATION.md`
+## Result Files
 
-Audit / status check:
+- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+- `assets/from_scratch_classic_no_lsr_2000_summary.csv`
+- `assets/splitMNIST_2000_all_scenarios_summary.csv`
+- `assets/summary_hebrew_splitMNIST_2000.docx`
 
-`IMPLEMENTATION_AUDIT.md`
+## Documentation
 
-## Reference-Run Result Summary
+- `docs/README.md` - documentation index
+- `docs/PROJECT_SCOPE.md` - project boundaries and chosen paper
+- `docs/REPRODUCTION_REPORT.md` - summary of what the experiments showed
+- `docs/CODE_EXPLANATION.md` - code and method explanations
+- `docs/METHODS_IMPLEMENTATION.md` - what was implemented and what was reference-run
+- `docs/PAPER_COMPARISON.md` - detailed comparison with the paper
+- `docs/IMPLEMENTATION_AUDIT.md` - protocol and reproduction audit
+- `docs/LSR_LITE_EXPLANATION.md` - LSR-lite explanation
+- `docs/AI_WORK_LOG.md` - short log of AI-assisted work
+- `docs/takeaways.md` - reflective writing
+- `docs/VIDEO.md` - video checklist / placeholder
 
-These numbers came from the earlier controlled runs using the GMvandeVen repository as a reference implementation.
-They are useful as reproduction targets, but the assignment-compliant code path is now `code/from_scratch/`.
+## GitHub Pages
 
-| Scenario | None | Best non-Joint method | Joint |
-|---|---:|---:|---:|
-| Class-CL | 0.1982 | LSR-lite + Fourier + ASW: 0.9284 | 0.9815 |
-| Domain-CL | 0.5435 | LSR-lite: 0.9651 | 0.9879 |
-| Task-CL | 0.8765 | LwF: 0.9978 | 0.9981 |
+This repository is configured as a static site from the repository root:
 
-## Main Conclusion
+1. Open `Settings -> Pages`.
+2. Choose `Deploy from a branch`.
+3. Select branch `main`.
+4. Select folder `/ root`.
+5. Save.
 
-LSR-lite is most promising for the hardest setting: Class-Incremental Learning without task identity.
-
-LSR-lite should be described as a hybrid of replay/memory and distillation ideas:
-it uses real exemplar replay like memory-based methods such as A-GEM, and it uses
-LwF-style teacher-logit distillation. It is not truly a Generative Classifier
-hybrid, because it does not learn a generator and does not synthesize old data.
-
-The core useful mechanism was:
-
-- real replay samples from train data
-- labels
-- stored teacher logits
-- stored penultimate feature vectors
-- replay cross entropy
-- logit distillation
-- feature anchoring
-
-Fourier and ASW were useful as ablations, but they were not the main reason the method worked.
-
-Detailed LSR-lite explanation:
-
-`LSR_LITE_EXPLANATION.md`
-
-## Algorithmic Thinking
-
-The project is based on the idea that continual learning is not only about fitting the current data.
-The model must balance two competing goals:
-
-1. **Plasticity:** learn the new context.
-2. **Stability:** avoid forgetting old contexts.
-
-The algorithms tested here solve this tension in different ways:
-
-- EWC protects important parameters.
-- LwF preserves old model behavior through distillation.
-- A-GEM uses a memory buffer to constrain gradient updates.
-- Separate Networks avoids interference by using one network per task.
-- LSR-lite stores real old examples plus teacher signals and feature anchors.
-
-## Project Stages
-
-1. Set up Python, Conda, CUDA PyTorch, and the GMvandeVen repository locally.
-2. Verified GPU execution on an NVIDIA RTX 3070.
-3. Ran small Split MNIST smoke tests.
-4. Ran 100-iteration baseline and selected-method experiments.
-5. Implemented LSR-lite as a separate prototype without rewriting the original repository.
-6. Added optional Fourier and ASW ablations.
-7. Audited the protocol: no test data in training, fair buffer budget, correct Class-CL and Task-CL evaluation.
-8. Ran serious 2000-iteration experiments for Class-CL, Domain-CL, and Task-CL.
-9. Generated final graphs, CSV summaries, Word report, and this GitHub Pages website.
-10. Added a new clean-room implementation under `code/from_scratch/` because the assignment requires implementing the methods ourselves.
-
-## Testing And Validation
-
-- Smoke tests were run before long experiments.
-- CUDA availability and GPU identity were checked.
-- Evaluation history was logged during training.
-- Final accuracy was evaluated on the full test set.
-- Class-CL was evaluated without task identity.
-- Task-CL kept the repository's original allowed-classes protocol.
-- A-GEM and LSR-lite used the same memory budget: 100 samples per class.
-- If a method failed, the runner continued and the failure was recorded.
-
-## AI Usage
-
-AI assistance was used to help with setup, scripting, debugging, documentation, and report generation.
-
-- OpenAI ChatGPT / Codex: https://chatgpt.com/
-- GitHub Pages documentation: https://docs.github.com/en/pages
-- Original continual-learning repository: https://github.com/GMvandeVen/continual-learning
-
-## How To Enable GitHub Pages
-
-Because this repository already has `index.html` at the repository root, use the root folder:
-
-1. Open the repository on GitHub.
-2. Go to `Settings -> Pages`.
-3. Under `Build and deployment`, choose `Deploy from a branch`.
-4. Choose branch `main`.
-5. Choose folder `/ root`.
-6. Click `Save`.
-
-GitHub will publish the site after a short build.
-
-## Notes
-
-This repository contains only the static report site.
-It does not include the full training code, datasets, Conda environment, or raw experiment folders.
+The root must be used because `index.html` is in the repository root.
