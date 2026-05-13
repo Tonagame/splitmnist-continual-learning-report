@@ -28,6 +28,7 @@ The report is written in Hebrew and summarizes experiments comparing:
 - `code/` - experiment scripts, legacy reference runners, and the new from-scratch implementation
 - `CODE_EXPLANATION.md` - detailed explanation of the code and algorithms
 - `METHODS_IMPLEMENTATION.md` - implementation status and the new clean-room code path
+- `IMPLEMENTATION_AUDIT.md` - audit of what is assignment-compliant and what remains a partial reproduction
 - `PAPER_COMPARISON.md` - comparison between the paper's Split MNIST results and our local results
 - `takeaways.md` - reflective writing / project takeaways
 - `VIDEO.md` - short video checklist and placeholder link
@@ -163,6 +164,10 @@ Implemented from scratch there:
 Full explanation:
 
 `METHODS_IMPLEMENTATION.md`
+
+Audit / status check:
+
+`IMPLEMENTATION_AUDIT.md`
 
 ## Reference-Run Result Summary
 
