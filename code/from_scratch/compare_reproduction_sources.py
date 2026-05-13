@@ -17,9 +17,11 @@ FROM_SCRATCH = ROOT / "results_from_scratch" / "classic_no_lsr_2000"
 PAPER_CSV = ASSETS / "paper_vs_ours_splitMNIST_common_methods.csv"
 GM_CSV = ASSETS / "splitMNIST_2000_all_scenarios_summary.csv"
 OUR_CSV = FROM_SCRATCH / "combined_summary.csv"
+TASK_FIX_CSV = ROOT / "results_from_scratch" / "task_protocol_fix_2000" / "summary.csv"
 
 OUT_CSV = ASSETS / "paper_vs_gmvandeven_vs_from_scratch.csv"
 OUT_PNG = ASSETS / "paper_vs_gmvandeven_vs_from_scratch.png"
+OUT_MERGED_OUR_CSV = ASSETS / "from_scratch_classic_no_lsr_2000_summary.csv"
 
 SCENARIO_ORDER = ["Class-CL", "Domain-CL", "Task-CL"]
 METHOD_ORDER = [
@@ -78,6 +80,7 @@ def build_comparison() -> pd.DataFrame:
             add_row(rows, row.scenario, row.method, "GMvandeVen code run", np.nan, "failed or skipped")
 
     our_df = pd.read_csv(OUR_CSV, keep_default_na=False)
+    our_df = apply_task_protocol_fix(our_df)
     for row in our_df.itertuples():
         add_row(rows, row.scenario, row.method, "Our from-scratch code", float(row.final_accuracy) * 100.0)
 
@@ -86,6 +89,34 @@ def build_comparison() -> pd.DataFrame:
     df["method"] = pd.Categorical(df["method"], METHOD_ORDER, ordered=True)
     df["source"] = pd.Categorical(df["source"], SOURCE_ORDER, ordered=True)
     return df.sort_values(["scenario", "method", "source"])
+
+
+def apply_task_protocol_fix(our_df: pd.DataFrame) -> pd.DataFrame:
+    """Use corrected Task-CL None/EWC runs when available.
+
+    The initial all-methods run used full 10-class CE during Task-CL training.
+    The corrected runs use the active task's allowed classes during training.
+    """
+
+    if not TASK_FIX_CSV.exists():
+        return our_df
+
+    fixed = pd.read_csv(TASK_FIX_CSV, keep_default_na=False)
+    fixed = fixed[fixed["method"].isin(["None", "EWC"])].copy()
+    if "command" in fixed.columns:
+        fixed = fixed[~fixed["command"].str.contains("--ewc-lambda", regex=False)]
+    fixed = fixed.drop_duplicates(subset=["scenario", "method"], keep="last")
+
+    merged = our_df.copy()
+    for row in fixed.itertuples():
+        scenario = normalize_scenario(str(row.scenario)).replace("-CL", "").lower()
+        mask = (merged["scenario"].astype(str).str.lower() == scenario) & (merged["method"] == row.method)
+        if mask.any():
+            merged.loc[mask, "final_accuracy"] = row.final_accuracy
+            merged.loc[mask, "runtime_seconds"] = row.runtime_seconds
+        else:
+            merged = pd.concat([merged, pd.DataFrame([row._asdict()])], ignore_index=True)
+    return merged
 
 
 def plot(df: pd.DataFrame) -> None:
@@ -168,8 +199,11 @@ def plot(df: pd.DataFrame) -> None:
 def main() -> None:
     df = build_comparison()
     df.to_csv(OUT_CSV, index=False)
+    merged_ours = apply_task_protocol_fix(pd.read_csv(OUR_CSV, keep_default_na=False))
+    merged_ours.to_csv(OUT_MERGED_OUR_CSV, index=False)
     plot(df)
     print(f"Saved {OUT_CSV}")
+    print(f"Saved {OUT_MERGED_OUR_CSV}")
     print(f"Saved {OUT_PNG}")
 
 

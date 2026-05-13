@@ -386,6 +386,26 @@ def mask_task_logits(logits: torch.Tensor, context_index: int) -> torch.Tensor:
     return masked
 
 
+def supervised_context_loss(
+    logits: torch.Tensor,
+    labels: torch.Tensor,
+    args: argparse.Namespace,
+    context_index: int,
+) -> torch.Tensor:
+    """Cross-entropy for the active scenario.
+
+    In Task-CL, the task identity is part of the protocol. Training therefore
+    uses only the two active classes, matching the allowed-classes evaluation.
+    """
+
+    if args.scenario != "task":
+        return F.cross_entropy(logits, labels)
+    allowed = DIGIT_CONTEXTS[context_index]
+    active_logits = logits[:, [allowed[0], allowed[1]]]
+    active_labels = labels - allowed[0]
+    return F.cross_entropy(active_logits, active_labels)
+
+
 def evaluate_neural(
     model: MLP,
     test_contexts: Sequence[SplitMNISTContext],
@@ -514,6 +534,7 @@ def estimate_fisher(
     dataset: SplitMNISTContext,
     args: argparse.Namespace,
     device: torch.device,
+    context_index: int,
 ) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
     model.eval()
     params = [p for p in model.parameters() if p.requires_grad]
@@ -523,7 +544,7 @@ def estimate_fisher(
     for batch in make_loader(dataset, args.batch, shuffle=True, drop_last=False):
         x, y, _original = move_batch(batch, device)
         model.zero_grad(set_to_none=True)
-        loss = F.cross_entropy(model(x), y)
+        loss = supervised_context_loss(model(x), y, args, context_index)
         grads = torch.autograd.grad(loss, params, retain_graph=False)
         for fisher, grad in zip(fishers, grads):
             fisher += grad.detach().pow(2)
@@ -712,7 +733,7 @@ def train_sequential(
 
             if args.method == "agem" and len(replay) > 0:
                 optimizer.zero_grad(set_to_none=True)
-                loss_current = F.cross_entropy(model(x), y)
+                loss_current = supervised_context_loss(model(x), y, args, context_index)
                 loss_current.backward()
                 grad_current = grad_vector(params)
 
@@ -733,7 +754,7 @@ def train_sequential(
             else:
                 optimizer.zero_grad(set_to_none=True)
                 logits = model(x)
-                loss = F.cross_entropy(logits, y)
+                loss = supervised_context_loss(logits, y, args, context_index)
 
                 if args.method == "ewc" and ewc_tasks:
                     loss = loss + 0.5 * args.ewc_lambda * ewc_penalty(model, ewc_tasks)
@@ -776,7 +797,7 @@ def train_sequential(
                 record_eval(history, args, method_name, global_step, context_index + 1, acc)
 
         if args.method == "ewc":
-            ewc_tasks.append(estimate_fisher(model, train_dataset, args, device))
+            ewc_tasks.append(estimate_fisher(model, train_dataset, args, device, context_index))
         elif args.method == "lwf":
             teacher = copy.deepcopy(model).to(device).eval()
             for param in teacher.parameters():

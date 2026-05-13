@@ -52,6 +52,7 @@ This lets the code keep a clean distinction between:
 
 - The model has 10 output units for the normal methods.
 - During evaluation, the code masks outputs to the two allowed classes of the active task.
+- During sequential training, the supervised loss also uses only the active task's two allowed classes.
 - Separate Networks uses one 2-output MLP per task.
 
 ## Neural Network
@@ -230,6 +231,21 @@ Smoke tests were run successfully on the NVIDIA RTX 3070 for:
 
 These tests used only one iteration per context, so they verify code execution,
 not final scientific accuracy.
+
+## Task-CL Protocol Fix
+
+The first from-scratch Task-CL run trained `None` and `EWC` with a full 10-class
+cross-entropy loss. That did not match the Task-CL protocol, because Task-CL
+uses task identity / allowed classes.
+
+The code was corrected so the Task-CL supervised loss trains only on the active
+task's two classes. After this fix:
+
+- Task-CL `None` improved from 67.14% to 84.91%.
+- Task-CL `EWC` improved from 64.75% to 88.06%.
+
+This fixed most of the `None` gap. EWC still remains below the GMvandeVen result,
+so the EWC implementation is marked as only a partial reproduction.
 
 ## Reproduction Target
 

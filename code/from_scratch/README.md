@@ -117,6 +117,7 @@ separate
 - A-GEM and LSR variants use the same default budget: 100 samples per original digit class.
 - Class-CL evaluates over all 10 classes with no task identity.
 - Task-CL uses task identity by masking to the two allowed classes for the current task.
+- Task-CL training also uses only the active task's two allowed classes for the supervised loss.
 - Domain-CL maps each digit pair to a shared binary label space.
 
 ## Current Status

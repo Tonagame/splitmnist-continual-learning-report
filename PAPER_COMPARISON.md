@@ -23,6 +23,12 @@ Raw CSV:
 
 `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
 
+Note: the Task-CL `None` and `EWC` values for the from-scratch code use the
+corrected Task-CL protocol, where the supervised training loss is restricted to
+the active task's two allowed classes. This brought `None` close to the paper and
+GMvandeVen reference. `EWC` improved, but still remains below the reference
+implementation.
+
 ## Common Methods
 
 | Scenario | Method | Paper % | Paper SEM | Our % | Our - Paper | Note |
