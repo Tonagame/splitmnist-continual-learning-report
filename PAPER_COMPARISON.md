@@ -8,6 +8,21 @@ Important caveat: the paper reports mean +/- SEM over 20 random seeds. Our proje
 
 ![Paper vs ours](assets/paper_vs_ours_splitMNIST_common_methods.png)
 
+## Updated Reproduction Comparison
+
+After the assignment requirement changed, a clean-room implementation was added under `code/from_scratch/`.
+The graph below compares three sources:
+
+1. Paper Table 2.
+2. Our earlier run of the GMvandeVen code.
+3. Our new from-scratch implementation.
+
+![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+
+Raw CSV:
+
+`assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+
 ## Common Methods
 
 | Scenario | Method | Paper % | Paper SEM | Our % | Our - Paper | Note |

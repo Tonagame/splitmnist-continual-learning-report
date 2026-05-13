@@ -56,6 +56,8 @@ The graph files are inside the `assets/` folder:
 - `assets/lsr-ablation-by-scenario.png`
 - `assets/selected-learning-curves.png`
 - `assets/paper_vs_ours_splitMNIST_common_methods.png`
+- `assets/paper_vs_gmvandeven_vs_from_scratch.png`
+- `assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
 
 They are also embedded directly in the website.
 
@@ -82,10 +84,23 @@ The paper reports mean +/- SEM over 20 seeds, while our numbers are single local
 
 ![Paper results vs our results](assets/paper_vs_ours_splitMNIST_common_methods.png)
 
+### Paper Vs GMvandeVen Code Vs Our From-Scratch Code
+
+This is the most important reproduction graph for the updated assignment rule.
+It compares:
+
+- the paper values,
+- our earlier run of the GMvandeVen code,
+- our independent clean-room implementation in `code/from_scratch/`.
+
+![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+
 Detailed comparison:
 
 - `PAPER_COMPARISON.md`
 - `assets/paper_vs_ours_splitMNIST_common_methods.csv`
+- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+- `assets/from_scratch_classic_no_lsr_2000_summary.csv`
 
 ## Where Is The Code?
 
@@ -97,6 +112,8 @@ The implementation that matches the current assignment rule is:
 
 - `code/from_scratch/splitmnist_cl.py` - clean-room implementation of Split MNIST continual learning.
 - `code/from_scratch/run_splitmnist_from_scratch.ps1` - runs the long from-scratch experiments.
+- `code/from_scratch/run_all_classic_from_scratch.ps1` - ran all classic methods for Class-CL, Domain-CL, and Task-CL without rerunning LSR.
+- `code/from_scratch/compare_reproduction_sources.py` - creates the paper / GMvandeVen / from-scratch comparison graph.
 - `code/from_scratch/plot_from_scratch_summary.py` - creates graphs from from-scratch results.
 - `code/from_scratch/README.md` - commands and protocol notes for the independent implementation.
 

@@ -17,6 +17,7 @@ Main files:
 | `from_scratch/run_all_classic_from_scratch.ps1` | Runs all classic methods over Class-CL, Domain-CL, and Task-CL without rerunning LSR. |
 | `from_scratch/run_splitmnist_from_scratch.ps1` | Runs long experiments for Class-CL, Domain-CL, or Task-CL. |
 | `from_scratch/aggregate_from_scratch.py` | Creates combined CSV files and graphs. |
+| `from_scratch/compare_reproduction_sources.py` | Compares paper results, GMvandeVen-code runs, and our from-scratch runs. |
 | `from_scratch/plot_from_scratch_summary.py` | Creates a final-accuracy graph from `summary.csv`. |
 | `from_scratch/README.md` | Commands, method list, and protocol notes. |
 

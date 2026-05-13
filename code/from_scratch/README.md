@@ -65,6 +65,18 @@ This creates:
 - `results_from_scratch/classic_no_lsr_2000/from_scratch_classic_learning_curves.png`
 - `results_from_scratch/classic_no_lsr_2000/FROM_SCRATCH_CLASSIC_REPORT.md`
 
+To create the reproduction comparison against the paper and the earlier
+GMvandeVen-code run:
+
+```powershell
+E:\conda-envs\continual\python.exe .\code\from_scratch\compare_reproduction_sources.py
+```
+
+This creates:
+
+- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
+- `assets/paper_vs_gmvandeven_vs_from_scratch.png`
+
 Class-CL example:
 
 ```powershell
