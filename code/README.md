@@ -14,7 +14,9 @@ Main files:
 
 | File | Purpose |
 |---|---|
-| `from_scratch/splitmnist_cl.py` | Independent Split MNIST continual-learning runner. |
+| `from_scratch/splitmnist_cl.py` | CLI entry point and method dispatch. |
+| `from_scratch/core.py` | Shared dataset, model, replay, evaluation, and output helpers. |
+| `from_scratch/methods/` | Method-specific implementation files. |
 | `from_scratch/run_all_classic_from_scratch.ps1` | Runs all classic methods over Class-CL, Domain-CL, and Task-CL without rerunning LSR. |
 | `from_scratch/run_splitmnist_from_scratch.ps1` | Runs long experiments for Class-CL, Domain-CL, or Task-CL. |
 | `from_scratch/aggregate_from_scratch.py` | Creates combined CSV files and graphs. |

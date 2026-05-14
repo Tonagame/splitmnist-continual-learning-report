@@ -7,11 +7,24 @@ The original repository can still be used as a reference target for expected
 results, but the code in this folder is the implementation that should be used
 when the assignment requires us to implement the methods ourselves.
 
-## Main File
+## Code Layout
 
-`splitmnist_cl.py`
+The code is split by responsibility so every method has a clear home:
 
-It implements:
+| Path | Purpose |
+|---|---|
+| `splitmnist_cl.py` | CLI entry point, argument parsing, method dispatch, result writing. |
+| `core.py` | Split MNIST construction, MLP, replay buffer, evaluation, CSV/JSON helpers. |
+| `methods/joint.py` | Joint Training upper-bound method. |
+| `methods/sequential.py` | Shared sequential loop for None, EWC, LwF, A-GEM, and LSR-lite variants. |
+| `methods/ewc.py` | EWC Fisher estimate and quadratic penalty. |
+| `methods/lwf.py` | LwF teacher snapshot and distillation loss. |
+| `methods/agem.py` | A-GEM gradient projection update. |
+| `methods/lsr_lite.py` | LSR-lite replay, KD, feature anchoring, Fourier, and ASW losses. |
+| `methods/generative.py` | Diagonal Gaussian Generative Classifier. |
+| `methods/separate.py` | Separate Networks for Task-CL. |
+
+Together these files implement:
 
 - Split MNIST dataset construction
 - Class-CL, Domain-CL, and Task-CL evaluation protocols
@@ -130,7 +143,8 @@ Smoke tests passed for:
 - A-GEM
 - Generative Classifier
 - LSR-lite + Fourier + ASW
+- Joint
 - Separate Networks on Task-CL
 
-The long 2000-iteration from-scratch reproduction still needs to be run and
-compared against the previous GMvandeVen reference results.
+The refactored method layout was also smoke-tested on the RTX 3070 with
+`iters=1`, `batch=16`, `acc-n=64`, and CUDA enabled.

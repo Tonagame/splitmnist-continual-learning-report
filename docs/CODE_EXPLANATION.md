@@ -5,11 +5,32 @@
 The project must not submit code copied from GitHub.
 Therefore, the submission code is the clean-room implementation in:
 
-`code/from_scratch/splitmnist_cl.py`
+`code/from_scratch/`
 
 The earlier GMvandeVen-based runners are kept only as historical reference
 material. They helped us understand the protocol and reference results, but the
 new implementation is the code path to use for the final project.
+
+## Current Code Structure
+
+The implementation was refactored so the methods are no longer hidden inside one
+large file.
+
+| File | Responsibility |
+|---|---|
+| `code/from_scratch/splitmnist_cl.py` | Command-line interface and method dispatch. |
+| `code/from_scratch/core.py` | Shared dataset, model, replay, evaluation, and output helpers. |
+| `code/from_scratch/methods/joint.py` | Joint Training. |
+| `code/from_scratch/methods/sequential.py` | Shared sequential training loop. |
+| `code/from_scratch/methods/ewc.py` | EWC-specific Fisher and penalty code. |
+| `code/from_scratch/methods/lwf.py` | LwF teacher and distillation code. |
+| `code/from_scratch/methods/agem.py` | A-GEM gradient projection code. |
+| `code/from_scratch/methods/lsr_lite.py` | LSR-lite, Fourier, and ASW losses. |
+| `code/from_scratch/methods/generative.py` | Generative Classifier. |
+| `code/from_scratch/methods/separate.py` | Separate Networks. |
+
+This layout is meant to make the defense easier: each method can be opened and
+explained directly.
 
 ## Main From-Scratch Components
 

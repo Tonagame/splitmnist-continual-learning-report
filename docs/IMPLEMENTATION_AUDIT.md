@@ -24,9 +24,17 @@ should not be presented as the final implementation.
 
 ## What Is Implemented By Us
 
-Main file:
+Main implementation folder:
 
-`code/from_scratch/splitmnist_cl.py`
+`code/from_scratch/`
+
+The refactored layout is:
+
+| Path | Purpose |
+|---|---|
+| `splitmnist_cl.py` | CLI entry point and method dispatch |
+| `core.py` | shared data/model/evaluation/replay helpers |
+| `methods/` | method-specific code files |
 
 Implemented from scratch:
 
@@ -91,7 +99,8 @@ and evaluate against the active task's allowed classes.
 
 Fix:
 
-`splitmnist_cl.py` now uses `supervised_context_loss(...)`.
+`core.py` now provides `supervised_context_loss(...)`, and the sequential
+training loop uses it for the relevant methods.
 
 For Task-CL, this function:
 
@@ -171,6 +180,8 @@ Do not present the old GMvandeVen-code run as our implementation.
 Code:
 
 - `code/from_scratch/splitmnist_cl.py`
+- `code/from_scratch/core.py`
+- `code/from_scratch/methods/`
 - `code/from_scratch/run_all_classic_from_scratch.ps1`
 - `code/from_scratch/aggregate_from_scratch.py`
 - `code/from_scratch/compare_reproduction_sources.py`

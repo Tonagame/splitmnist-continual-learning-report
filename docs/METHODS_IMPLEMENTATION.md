@@ -16,9 +16,22 @@ The clean implementation for submission is now in:
 
 ## What Is Implemented From Scratch
 
-Main file:
+Main entry point:
 
 `code/from_scratch/splitmnist_cl.py`
+
+Method-specific code:
+
+| Method | Main code file |
+|---|---|
+| None | `code/from_scratch/methods/sequential.py` |
+| Joint Training | `code/from_scratch/methods/joint.py` |
+| EWC | `code/from_scratch/methods/ewc.py` plus `methods/sequential.py` |
+| LwF | `code/from_scratch/methods/lwf.py` plus `methods/sequential.py` |
+| A-GEM | `code/from_scratch/methods/agem.py` plus `methods/sequential.py` |
+| Separate Networks | `code/from_scratch/methods/separate.py` |
+| Generative Classifier | `code/from_scratch/methods/generative.py` |
+| LSR-lite variants | `code/from_scratch/methods/lsr_lite.py` plus `methods/sequential.py` |
 
 Implemented by us:
 
@@ -91,6 +104,7 @@ Smoke tests passed on the RTX 3070 for:
 - A-GEM
 - Generative Classifier
 - LSR-lite + Fourier + ASW
+- Joint
 - Separate Networks on Task-CL
 
 The smoke output is local and intentionally ignored by Git:

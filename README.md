@@ -37,7 +37,9 @@ Other useful figures:
 
 ## What Was Implemented
 
-The clean-room implementation in `code/from_scratch/splitmnist_cl.py` includes:
+The clean-room implementation in `code/from_scratch/` is split into a small CLI
+entry point, shared core utilities, and method-specific files under
+`code/from_scratch/methods/`. It includes:
 
 - Split MNIST construction
 - Class-CL, Domain-CL, and Task-CL evaluation protocols
