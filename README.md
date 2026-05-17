@@ -18,7 +18,7 @@ Website after GitHub Pages is enabled:
 | `docs/REPRODUCTION_REPORT.md` | Main paper-vs-reference-vs-our-code result summary. |
 | `docs/IMPLEMENTATION_AUDIT.md` | Honest status check of the implementation and limitations. |
 | `docs/LSR_LITE_EXPLANATION.md` | Explanation of LSR-lite, Fourier, ASW, and the ablations. |
-| `assets/` | Graphs, CSV files, and the Hebrew Word report. |
+| `assets/` | Graphs, CSV files, and Word reports. |
 
 ## Main Graphs
 
@@ -63,6 +63,7 @@ Important: the older scripts in `code/` are kept for transparency from the earli
 - `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
 - `assets/from_scratch_classic_no_lsr_2000_summary.csv`
 - `assets/splitMNIST_2000_all_scenarios_summary.csv`
+- `assets/full_project_explanation_with_all_graphs.docx`
 - `assets/summary_hebrew_splitMNIST_2000.docx`
 
 ## Documentation
