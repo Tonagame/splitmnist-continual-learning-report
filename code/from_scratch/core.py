@@ -1,8 +1,21 @@
 """Shared building blocks for the clean-room Split MNIST experiments.
 
-This module intentionally contains only reusable infrastructure: dataset
-construction, the MLP model, replay storage, evaluation, and CSV/JSON output.
-The continual-learning algorithms themselves live in ``methods/``.
+What this file does
+-------------------
+``core.py`` is the common toolbox for the project. It does not implement EWC,
+LwF, A-GEM, LSR-lite, or any other method directly. Instead, it contains the
+pieces that all methods need:
+
+1. method-name normalization for command-line input;
+2. Split MNIST dataset construction;
+3. the shared MLP model;
+4. the replay buffer used by memory-based methods;
+5. evaluation logic for Class-CL, Domain-CL, and Task-CL;
+6. CSV/JSON result writing.
+
+The continual-learning algorithms themselves live in ``methods/``. Keeping this
+file method-neutral makes the code easier to defend: ``core.py`` defines the
+experiment infrastructure, and each method file defines the learning algorithm.
 """
 
 from __future__ import annotations
@@ -23,9 +36,16 @@ from torchvision import datasets, transforms
 
 
 DIGIT_CONTEXTS = [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)]
+"""The standard 5-context Split MNIST sequence used throughout the project."""
 
 
 def normalize_method(name: str) -> str:
+    """Convert user-facing method names into one internal spelling.
+
+    Example: both ``a-gem`` and ``agem`` become ``agem``. This lets the CLI be
+    forgiving while the training code can compare against one clean value.
+    """
+
     aliases = {
         "none": "none",
         "joint": "joint",
@@ -50,6 +70,8 @@ def normalize_method(name: str) -> str:
 
 
 def display_method(method: str) -> str:
+    """Convert an internal method id into a readable label for reports."""
+
     names = {
         "none": "None",
         "joint": "Joint",
@@ -67,6 +89,8 @@ def display_method(method: str) -> str:
 
 
 def safe_name(text: str) -> str:
+    """Create a filesystem-safe name for per-run output files."""
+
     return (
         text.lower()
         .replace(" + ", "_")
@@ -78,6 +102,8 @@ def safe_name(text: str) -> str:
 
 @dataclass
 class RunMetrics:
+    """One row of final experiment metadata written to ``summary.csv``."""
+
     method: str
     scenario: str
     seed: int
@@ -113,12 +139,19 @@ class SplitMNISTContext(Dataset):
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         x, y = self.base[self.indices[idx]]
         original = int(y)
+        # Domain-CL uses a shared binary output space. Class-CL and Task-CL keep
+        # the original digit label so the model can still represent all digits.
         mapped = self._local[original] if self.scenario == "domain" else original
         return x, torch.tensor(mapped, dtype=torch.long), torch.tensor(original, dtype=torch.long)
 
 
 class MLP(nn.Module):
-    """Small fully connected network used by all neural methods."""
+    """Small fully connected network used by all neural methods.
+
+    ``features(x)`` exposes the penultimate representation. LSR-lite uses this
+    vector for feature anchoring; the normal classifier uses it to produce
+    logits.
+    """
 
     def __init__(self, output_dim: int, hidden: Sequence[int] = (400, 400), dropout: float = 0.0):
         super().__init__()
@@ -141,7 +174,12 @@ class MLP(nn.Module):
 
 
 class ReplayBuffer:
-    """Class-balanced CPU replay buffer built only from training data."""
+    """Class-balanced CPU replay buffer built only from training data.
+
+    A-GEM stores only images and labels. LSR-lite stores those plus the old
+    teacher logits and penultimate feature vectors. Nothing here ever reads
+    from the test set.
+    """
 
     def __init__(self, samples_per_class: int):
         self.samples_per_class = samples_per_class
@@ -158,6 +196,13 @@ class ReplayBuffer:
         batch_size: int,
         store_signals: bool = False,
     ) -> None:
+        """Add up to ``samples_per_class`` examples per original digit.
+
+        ``store_signals=False`` is used by A-GEM.
+        ``store_signals=True`` is used by LSR-lite to save logits/features from
+        the current model at insertion time.
+        """
+
         per_key: Dict[int, Dict[str, List[torch.Tensor]]] = {}
         for key in dataset.original_classes:
             per_key[int(key)] = {"x": [], "y": [], "logits": [], "features": []}
@@ -207,6 +252,8 @@ class ReplayBuffer:
             model.train()
 
     def sample(self, batch_size: int, device: torch.device, with_signals: bool = False):
+        """Sample replay data and move it to the active device."""
+
         if len(self) == 0:
             return None
         xs = torch.cat([entry["x"] for entry in self.data.values()], dim=0)
@@ -221,6 +268,8 @@ class ReplayBuffer:
 
 
 def set_seed(seed: int) -> None:
+    """Seed Python, NumPy, and PyTorch for more reproducible local runs."""
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -230,6 +279,8 @@ def set_seed(seed: int) -> None:
 
 
 def make_loader(dataset: Dataset, batch_size: int, shuffle: bool, drop_last: bool) -> DataLoader:
+    """Create a DataLoader with CUDA-aware pinned memory when available."""
+
     return DataLoader(
         dataset,
         batch_size=batch_size,
@@ -241,6 +292,8 @@ def make_loader(dataset: Dataset, batch_size: int, shuffle: bool, drop_last: boo
 
 
 def next_batch(loader: DataLoader, iterator: Optional[Iterable]):
+    """Return the next batch, restarting the loader when an epoch ends."""
+
     if iterator is None:
         iterator = iter(loader)
     try:
@@ -252,6 +305,12 @@ def next_batch(loader: DataLoader, iterator: Optional[Iterable]):
 
 
 def build_split_mnist(args):
+    """Download/load MNIST and split it into the five continual contexts.
+
+    Returns train contexts, test contexts, and output dimension. Domain-CL uses
+    two outputs; Class-CL and Task-CL use ten outputs.
+    """
+
     transform = transforms.ToTensor()
     root = Path(args.data_dir)
     train_base = datasets.MNIST(root=str(root), train=True, download=not args.no_download, transform=transform)
@@ -274,11 +333,15 @@ def build_split_mnist(args):
 
 
 def move_batch(batch, device: torch.device):
+    """Move image, label, and original digit tensors to CPU/GPU."""
+
     x, y, original = batch
     return x.to(device), y.to(device), original.to(device)
 
 
 def mask_task_logits(logits: torch.Tensor, context_index: int) -> torch.Tensor:
+    """Apply Task-CL allowed-class masking during evaluation."""
+
     allowed = DIGIT_CONTEXTS[context_index]
     masked = torch.full_like(logits, -1e9)
     masked[:, allowed[0]] = logits[:, allowed[0]]
@@ -303,6 +366,8 @@ def supervised_context_loss(logits: torch.Tensor, labels: torch.Tensor, args, co
 
 
 def evaluate_neural(model: MLP, test_contexts: Sequence[SplitMNISTContext], args, device: torch.device, acc_n: Optional[int]) -> float:
+    """Evaluate a normal neural model under the requested CL scenario."""
+
     model.eval()
     correct = 0
     total = 0
@@ -324,6 +389,8 @@ def evaluate_neural(model: MLP, test_contexts: Sequence[SplitMNISTContext], args
 
 
 def evaluate_separate(models: Sequence[MLP], test_contexts: Sequence[SplitMNISTContext], args, device: torch.device, acc_n: Optional[int]) -> float:
+    """Evaluate one-model-per-task Separate Networks in Task-CL."""
+
     correct = 0
     total = 0
     with torch.no_grad():
@@ -344,6 +411,8 @@ def evaluate_separate(models: Sequence[MLP], test_contexts: Sequence[SplitMNISTC
 
 
 def append_learning_curve(path: Path, rows: List[Dict[str, object]]) -> None:
+    """Append intermediate accuracy rows to ``learning_curve.csv``."""
+
     if not rows:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -356,6 +425,8 @@ def append_learning_curve(path: Path, rows: List[Dict[str, object]]) -> None:
 
 
 def append_summary(path: Path, metrics: RunMetrics) -> None:
+    """Append one final result row to ``summary.csv``."""
+
     path.parent.mkdir(parents=True, exist_ok=True)
     exists = path.exists()
     with path.open("a", newline="", encoding="utf-8") as handle:
@@ -367,11 +438,15 @@ def append_summary(path: Path, metrics: RunMetrics) -> None:
 
 
 def write_json(path: Path, payload: Dict[str, object]) -> None:
+    """Write per-run metadata such as device, CUDA status, and extras."""
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
 
 
 def record_eval(history: List[Dict[str, object]], args, method_name: str, iteration: int, context: int, accuracy: float) -> None:
+    """Store and print one intermediate evaluation point."""
+
     row = {
         "method": method_name,
         "scenario": args.scenario,
