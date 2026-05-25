@@ -63,6 +63,7 @@ Important: the older scripts in `code/` are kept for transparency from the earli
 - `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
 - `assets/from_scratch_classic_no_lsr_2000_summary.csv`
 - `assets/splitMNIST_2000_all_scenarios_summary.csv`
+- `assets/code_explanation_full.docx`
 - `assets/full_project_explanation_with_all_graphs.docx`
 - `assets/summary_hebrew_splitMNIST_2000.docx`
 
