@@ -1,94 +1,114 @@
 # Split MNIST Continual Learning Reproduction
 
-This repository is the cleaned submission package for our project on catastrophic forgetting and continual learning with Split MNIST.
+This repository is the final GitHub submission package for a project on catastrophic forgetting and continual learning with Split MNIST.
 
-It contains a GitHub Pages report, graphs, result tables, and a clean-room PyTorch implementation of the methods we tested. The original GMvandeVen repository was used as a reference target, but the submission code is under `code/from_scratch/`.
+It includes:
 
-Website after GitHub Pages is enabled:
+- a GitHub Pages report,
+- Markdown documentation,
+- clean-room Python code,
+- graphs,
+- CSV result files,
+- Word reports,
+- reflective writing,
+- AI usage documentation,
+- a video checklist/link placeholder.
 
-`https://tonagame.github.io/splitmnist-continual-learning-report/`
+Published website after GitHub Pages is enabled:
 
-## Start Here
+[`https://tonagame.github.io/splitmnist-continual-learning-report/`](https://tonagame.github.io/splitmnist-continual-learning-report/)
 
-| File / folder | Purpose |
+## Submission Checklist
+
+| Rule / requirement | Link |
 |---|---|
-| `index.html` | Main Hebrew GitHub Pages report. |
-| `code/from_scratch/` | Independent PyTorch implementation for the assignment. |
-| `docs/PROJECT_SCOPE.md` | What we reproduced, what we did not fully reproduce, and why. |
-| `docs/REPRODUCTION_REPORT.md` | Main paper-vs-reference-vs-our-code result summary. |
-| `docs/IMPLEMENTATION_AUDIT.md` | Honest status check of the implementation and limitations. |
-| `docs/LSR_LITE_EXPLANATION.md` | Explanation of LSR-lite, Fourier, ASW, and the ablations. |
-| `assets/` | Graphs, CSV files, and Word reports. |
+| GitHub site includes everything | [`index.html`](index.html) |
+| Full submission checklist | [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) |
+| Algorithmic thinking | [`docs/ALGORITHMIC_THINKING.md`](docs/ALGORITHMIC_THINKING.md) |
+| Project stages | [`docs/PROJECT_STEPS.md`](docs/PROJECT_STEPS.md) |
+| Testing and validation by stage | [`docs/TESTING_BY_STAGE.md`](docs/TESTING_BY_STAGE.md) |
+| AI plan summaries | [`docs/AI_PLAN_SUMMARY.md`](docs/AI_PLAN_SUMMARY.md) |
+| AI usage report | [`docs/AI_USAGE_REPORT.md`](docs/AI_USAGE_REPORT.md) |
+| AI work log | [`docs/AI_WORK_LOG.md`](docs/AI_WORK_LOG.md) |
+| Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
+| Video link / video instructions | [`docs/VIDEO.md`](docs/VIDEO.md) |
+| Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
+| Code explanation Word report | [`assets/code_explanation_full.docx`](assets/code_explanation_full.docx) |
+| Full Word report with graphs | [`assets/full_project_explanation_with_all_graphs.docx`](assets/full_project_explanation_with_all_graphs.docx) |
 
-## Main Graphs
+## Main Code
 
-The most important comparison graph is:
+The submitted implementation is:
 
-![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+[`code/from_scratch/`](code/from_scratch/)
 
-Other useful figures:
+Important files:
 
-- `assets/all-methods-by-scenario.png`
-- `assets/accuracy-heatmap.png`
-- `assets/lsr-ablation-by-scenario.png`
-- `assets/selected-learning-curves.png`
-- `assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
-- `assets/from_scratch_classic_no_lsr_2000_learning_curves.png`
+- [`splitmnist_cl.py`](code/from_scratch/splitmnist_cl.py) - command-line entry point and method dispatch.
+- [`core.py`](code/from_scratch/core.py) - dataset, MLP model, replay buffer, evaluation, result writing.
+- [`methods/`](code/from_scratch/methods/) - method-specific implementations.
 
-## What Was Implemented
+Implemented methods:
 
-The clean-room implementation in `code/from_scratch/` is split into a small CLI
-entry point, shared core utilities, and method-specific files under
-`code/from_scratch/methods/`. It includes:
-
-- Split MNIST construction
-- Class-CL, Domain-CL, and Task-CL evaluation protocols
 - None / sequential fine-tuning
 - Joint Training
 - EWC
 - LwF
 - A-GEM
-- Separate Networks for Task-CL
-- a simple Generative Classifier
+- Separate Networks
+- Generative Classifier
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW
 - LSR-lite + Fourier + ASW
-- CSV logging and graph aggregation
 
-Important: the older scripts in `code/` are kept for transparency from the earlier reference-run phase. The assignment-compliant implementation is `code/from_scratch/`.
+The older GMvandeVen-based scripts are kept only as historical reference files under [`code/legacy_reference/`](code/legacy_reference/).
 
-## Result Files
+## Main Results And Graphs
 
-- `assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `assets/from_scratch_classic_no_lsr_2000_summary.csv`
-- `assets/splitMNIST_2000_all_scenarios_summary.csv`
-- `assets/code_explanation_full.docx`
-- `assets/full_project_explanation_with_all_graphs.docx`
-- `assets/summary_hebrew_splitMNIST_2000.docx`
+Most important comparison graph:
 
-## Documentation
+![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
 
-- `docs/README.md` - documentation index
-- `docs/PROJECT_SCOPE.md` - project boundaries and chosen paper
-- `docs/REPRODUCTION_REPORT.md` - summary of what the experiments showed
-- `docs/CODE_EXPLANATION.md` - code and method explanations
-- `docs/METHODS_IMPLEMENTATION.md` - what was implemented and what was reference-run
-- `docs/PAPER_COMPARISON.md` - detailed comparison with the paper
-- `docs/IMPLEMENTATION_AUDIT.md` - protocol and reproduction audit
-- `docs/LSR_LITE_EXPLANATION.md` - LSR-lite explanation
-- `docs/AI_WORK_LOG.md` - short log of AI-assisted work
-- `docs/takeaways.md` - reflective writing
-- `docs/VIDEO.md` - video checklist / placeholder
+Other graphs:
 
-## GitHub Pages
+- [`assets/all-methods-by-scenario.png`](assets/all-methods-by-scenario.png)
+- [`assets/accuracy-heatmap.png`](assets/accuracy-heatmap.png)
+- [`assets/lsr-ablation-by-scenario.png`](assets/lsr-ablation-by-scenario.png)
+- [`assets/selected-learning-curves.png`](assets/selected-learning-curves.png)
+- [`assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`](assets/from_scratch_classic_no_lsr_2000_final_accuracy.png)
+- [`assets/from_scratch_classic_no_lsr_2000_learning_curves.png`](assets/from_scratch_classic_no_lsr_2000_learning_curves.png)
 
-This repository is configured as a static site from the repository root:
+Result files:
 
-1. Open `Settings -> Pages`.
-2. Choose `Deploy from a branch`.
-3. Select branch `main`.
-4. Select folder `/ root`.
-5. Save.
+- [`assets/paper_vs_gmvandeven_vs_from_scratch.csv`](assets/paper_vs_gmvandeven_vs_from_scratch.csv)
+- [`assets/from_scratch_classic_no_lsr_2000_summary.csv`](assets/from_scratch_classic_no_lsr_2000_summary.csv)
+- [`assets/splitMNIST_2000_all_scenarios_summary.csv`](assets/splitMNIST_2000_all_scenarios_summary.csv)
 
-The root must be used because `index.html` is in the repository root.
+## Reports
+
+- [`assets/code_explanation_full.docx`](assets/code_explanation_full.docx)
+- [`assets/full_project_explanation_with_all_graphs.docx`](assets/full_project_explanation_with_all_graphs.docx)
+- [`assets/summary_hebrew_splitMNIST_2000.docx`](assets/summary_hebrew_splitMNIST_2000.docx)
+
+## Documentation Index
+
+- [`docs/README.md`](docs/README.md)
+- [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md)
+- [`docs/REPRODUCTION_REPORT.md`](docs/REPRODUCTION_REPORT.md)
+- [`docs/CODE_EXPLANATION.md`](docs/CODE_EXPLANATION.md)
+- [`docs/METHODS_IMPLEMENTATION.md`](docs/METHODS_IMPLEMENTATION.md)
+- [`docs/PAPER_COMPARISON.md`](docs/PAPER_COMPARISON.md)
+- [`docs/IMPLEMENTATION_AUDIT.md`](docs/IMPLEMENTATION_AUDIT.md)
+- [`docs/LSR_LITE_EXPLANATION.md`](docs/LSR_LITE_EXPLANATION.md)
+
+## GitHub Pages Setup
+
+Use:
+
+```text
+Branch: main
+Folder: / root
+```
+
+The repository uses root [`index.html`](index.html), so do not choose `/docs` for GitHub Pages.
