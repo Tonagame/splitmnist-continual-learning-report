@@ -32,6 +32,7 @@ Published website after GitHub Pages is enabled:
 | AI work log | [`docs/AI_WORK_LOG.md`](docs/AI_WORK_LOG.md) |
 | Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
 | Video link / video instructions | [`docs/VIDEO.md`](docs/VIDEO.md) |
+| LSR-lite animation for video recording | [`lsr_animation.html`](lsr_animation.html) |
 | Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
 | Code explanation Word report | [`assets/code_explanation_full.docx`](assets/code_explanation_full.docx) |
 | Full Word report with graphs | [`assets/full_project_explanation_with_all_graphs.docx`](assets/full_project_explanation_with_all_graphs.docx) |
@@ -84,6 +85,10 @@ Result files:
 - [`assets/paper_vs_gmvandeven_vs_from_scratch.csv`](assets/paper_vs_gmvandeven_vs_from_scratch.csv)
 - [`assets/from_scratch_classic_no_lsr_2000_summary.csv`](assets/from_scratch_classic_no_lsr_2000_summary.csv)
 - [`assets/splitMNIST_2000_all_scenarios_summary.csv`](assets/splitMNIST_2000_all_scenarios_summary.csv)
+
+## Video Helper
+
+Use [`lsr_animation.html`](lsr_animation.html) as a short visual animation for explaining LSR-lite and its variants in the project video.
 
 ## Reports
 

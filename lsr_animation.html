@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LSR-lite Animation</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #667185;
+      --paper: #f6f4ee;
+      --panel: #ffffff;
+      --line: #d7dce5;
+      --blue: #2457c5;
+      --green: #08745f;
+      --orange: #b95d1d;
+      --purple: #6f42c1;
+      --red: #b42318;
+      --shadow: 0 18px 45px rgba(25, 35, 55, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, "Segoe UI", sans-serif;
+    }
+
+    .page {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 720px;
+      font-size: 16px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 300px;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 10px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button:focus {
+      border-color: var(--blue);
+      outline: none;
+    }
+
+    button.primary {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 650px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+    }
+
+    .stage-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(23, 32, 51, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 32, 51, 0.05) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 10px 28px rgba(25, 35, 55, 0.08);
+    }
+
+    .context-row {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 24px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(96px, 1fr));
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .context {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+    }
+
+    .context.active {
+      border-color: var(--blue);
+      box-shadow: 0 8px 24px rgba(36, 87, 197, 0.18);
+      transform: translateY(-3px);
+    }
+
+    .context-title {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .digits {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .digit {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 42px;
+      border-radius: 4px;
+      background: #101828;
+      color: #f9fafb;
+      font-size: 26px;
+      font-weight: 700;
+      font-family: Georgia, serif;
+    }
+
+    .model {
+      position: absolute;
+      left: 50%;
+      top: 285px;
+      width: 230px;
+      height: 150px;
+      transform: translateX(-50%);
+      border-radius: 8px;
+      border: 2px solid var(--ink);
+      background: var(--panel);
+      z-index: 5;
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .model strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .model span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .arrow {
+      position: absolute;
+      height: 3px;
+      background: var(--ink);
+      transform-origin: left center;
+      z-index: 3;
+      opacity: 0.55;
+    }
+
+    .arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -5px;
+      border-left: 10px solid var(--ink);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+
+    .current-flow {
+      left: 205px;
+      top: 232px;
+      width: 270px;
+      transform: rotate(16deg);
+    }
+
+    .replay-flow {
+      left: 250px;
+      bottom: 168px;
+      width: 250px;
+      transform: rotate(-13deg);
+      background: var(--green);
+    }
+
+    .replay-flow::after {
+      border-left-color: var(--green);
+    }
+
+    .output-flow {
+      right: 255px;
+      top: 345px;
+      width: 260px;
+      transform: rotate(0deg);
+      background: var(--orange);
+    }
+
+    .output-flow::after {
+      border-left-color: var(--orange);
+    }
+
+    .buffer {
+      position: absolute;
+      left: 38px;
+      bottom: 58px;
+      width: 275px;
+      padding: 14px;
+      border-radius: 8px;
+      z-index: 4;
+    }
+
+    .buffer h2,
+    .loss-box h2,
+    .output h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .memory-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .memory-card {
+      border-radius: 6px;
+      background: #ecfdf3;
+      border: 1px solid #a6d8bd;
+      min-height: 70px;
+      padding: 6px;
+      text-align: center;
+      transform: translateY(8px);
+      opacity: 0.25;
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+
+    .memory-card.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mini-digit {
+      display: inline-grid;
+      place-items: center;
+      width: 25px;
+      height: 30px;
+      border-radius: 4px;
+      background: #101828;
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .memory-label {
+      display: block;
+      margin-top: 4px;
+      color: #155d3b;
+      font-size: 11px;
+    }
+
+    .loss-box {
+      position: absolute;
+      right: 38px;
+      bottom: 52px;
+      width: 310px;
+      padding: 14px;
+      border-radius: 8px;
+      z-index: 4;
+    }
+
+    .loss-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .loss-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      padding: 8px;
+      opacity: 0.22;
+      transform: translateX(8px);
+      transition: opacity 260ms ease, transform 260ms ease, border-color 260ms ease;
+    }
+
+    .loss-item.on {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .loss-item b {
+      white-space: nowrap;
+    }
+
+    .loss-item small {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .output {
+      position: absolute;
+      right: 38px;
+      top: 230px;
+      width: 285px;
+      padding: 14px;
+      border-radius: 8px;
+      z-index: 4;
+    }
+
+    .bars {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #edf1f7;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 18%;
+      border-radius: inherit;
+      background: var(--orange);
+      transition: width 500ms ease;
+    }
+
+    .feature-strip {
+      position: absolute;
+      left: 50%;
+      bottom: 78px;
+      width: 300px;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 4px;
+      z-index: 4;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .feature-cell {
+      height: 34px;
+      border-radius: 3px;
+      background: var(--blue);
+      opacity: 0.4;
+      transform: scaleY(0.55);
+      transform-origin: bottom;
+      transition: transform 420ms ease, background 420ms ease, opacity 420ms ease;
+    }
+
+    .feature-cell.stable {
+      background: var(--green);
+      opacity: 0.85;
+      transform: scaleY(0.95);
+    }
+
+    .fft-wave {
+      position: absolute;
+      left: 50%;
+      bottom: 142px;
+      width: 285px;
+      height: 34px;
+      transform: translateX(-50%);
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    .fft-wave.on {
+      opacity: 1;
+    }
+
+    .asw-meter {
+      position: absolute;
+      left: 50%;
+      top: 452px;
+      width: 260px;
+      transform: translateX(-50%);
+      z-index: 5;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 10px;
+      opacity: 0;
+      transition: opacity 250ms ease;
+    }
+
+    .asw-meter.on {
+      opacity: 1;
+    }
+
+    .meter-track {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--orange), var(--green), var(--blue));
+      margin-top: 8px;
+    }
+
+    .meter-knob {
+      position: absolute;
+      top: -5px;
+      left: 47%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--ink);
+      background: #fff;
+      transition: left 500ms ease;
+    }
+
+    .side {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .script-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      min-height: 280px;
+    }
+
+    .script-card h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .script-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .variant-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .variant-card h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .variant-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .variant {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fff;
+      opacity: 0.55;
+      transition: opacity 250ms ease, border-color 250ms ease, background 250ms ease;
+    }
+
+    .variant.active {
+      opacity: 1;
+      border-color: var(--blue);
+      background: #f0f5ff;
+    }
+
+    .variant strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .variant span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .tick {
+      height: 8px;
+      border-radius: 999px;
+      background: #d8dee7;
+      transition: background 250ms ease;
+    }
+
+    .tick.on {
+      background: var(--blue);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 980px) {
+      header,
+      .layout {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      header {
+        align-items: start;
+      }
+
+      .controls {
+        justify-content: start;
+      }
+
+      .stage {
+        min-height: 780px;
+      }
+
+      .context-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .model {
+        top: 345px;
+      }
+
+      .output {
+        top: 520px;
+        right: 24px;
+        left: 24px;
+        width: auto;
+      }
+
+      .buffer {
+        left: 24px;
+        bottom: 180px;
+        width: 280px;
+      }
+
+      .loss-box {
+        right: 24px;
+        bottom: 20px;
+        width: 310px;
+      }
+
+      .feature-strip {
+        display: none;
+      }
+
+      .fft-wave,
+      .asw-meter,
+      .arrow {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>How LSR-lite Works</h1>
+        <p class="subtitle">A short visual script for the project video: replay memory, old logits, feature anchoring, Fourier regularization, and Adaptive Stability Weighting.</p>
+      </div>
+      <div class="controls" aria-label="Animation controls">
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+        <button id="play" class="primary">Play</button>
+        <button id="reset">Reset</button>
+      </div>
+    </header>
+
+    <section class="layout">
+      <div class="stage" aria-label="LSR-lite animation stage">
+        <div class="stage-grid"></div>
+
+        <div class="context-row">
+          <div class="context" data-context="0">
+            <div class="context-title">Context 1</div>
+            <div class="digits"><div class="digit">0</div><div class="digit">1</div></div>
+          </div>
+          <div class="context" data-context="1">
+            <div class="context-title">Context 2</div>
+            <div class="digits"><div class="digit">2</div><div class="digit">3</div></div>
+          </div>
+          <div class="context" data-context="2">
+            <div class="context-title">Context 3</div>
+            <div class="digits"><div class="digit">4</div><div class="digit">5</div></div>
+          </div>
+          <div class="context" data-context="3">
+            <div class="context-title">Context 4</div>
+            <div class="digits"><div class="digit">6</div><div class="digit">7</div></div>
+          </div>
+          <div class="context" data-context="4">
+            <div class="context-title">Context 5</div>
+            <div class="digits"><div class="digit">8</div><div class="digit">9</div></div>
+          </div>
+        </div>
+
+        <div class="arrow current-flow"></div>
+        <div class="arrow replay-flow"></div>
+        <div class="arrow output-flow"></div>
+
+        <div class="model">
+          <div>
+            <strong>Neural Model</strong>
+            <span>learns new digits while old memory pushes back</span>
+          </div>
+        </div>
+
+        <section class="panel buffer">
+          <h2>Replay Buffer</h2>
+          <div class="badge">100 samples per class</div>
+          <div class="memory-items">
+            <div class="memory-card"><span class="mini-digit">0</span><span class="memory-label">x, y</span></div>
+            <div class="memory-card"><span class="mini-digit">2</span><span class="memory-label">logits</span></div>
+            <div class="memory-card"><span class="mini-digit">5</span><span class="memory-label">features</span></div>
+            <div class="memory-card"><span class="mini-digit">7</span><span class="memory-label">old state</span></div>
+          </div>
+        </section>
+
+        <section class="panel output">
+          <h2>Old Output Behavior</h2>
+          <div class="bars">
+            <div class="bar-row"><span>3</span><div class="bar-track"><div class="bar-fill" data-bar="0"></div></div></div>
+            <div class="bar-row"><span>8</span><div class="bar-track"><div class="bar-fill" data-bar="1"></div></div></div>
+            <div class="bar-row"><span>5</span><div class="bar-track"><div class="bar-fill" data-bar="2"></div></div></div>
+            <div class="bar-row"><span>0</span><div class="bar-track"><div class="bar-fill" data-bar="3"></div></div></div>
+          </div>
+        </section>
+
+        <svg class="fft-wave" viewBox="0 0 300 42" role="img" aria-label="Fourier spectral wave">
+          <path d="M4 21 C 25 2, 44 2, 65 21 S 105 40, 126 21 S 166 2, 187 21 S 227 40, 248 21 S 281 5, 296 21" fill="none" stroke="#6f42c1" stroke-width="4" />
+          <path d="M4 25 C 27 12, 45 12, 68 25 S 105 38, 128 25 S 166 12, 189 25 S 227 38, 250 25 S 280 14, 296 25" fill="none" stroke="#b95d1d" stroke-width="2" opacity="0.7" />
+        </svg>
+
+        <div class="feature-strip" aria-label="Feature vector stability">
+          <div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div>
+          <div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div>
+          <div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div><div class="feature-cell"></div>
+          <div class="feature-cell"></div><div class="feature-cell"></div>
+        </div>
+
+        <div class="asw-meter">
+          <strong>ASW: balance old vs new loss</strong>
+          <div class="meter-track"><div class="meter-knob"></div></div>
+        </div>
+
+        <section class="panel loss-box">
+          <h2>LSR-lite Loss</h2>
+          <div class="loss-list">
+            <div class="loss-item" data-loss="current"><b>Current CE</b><small>learn new context</small></div>
+            <div class="loss-item" data-loss="replay"><b>Replay CE</b><small>remember old labels</small></div>
+            <div class="loss-item" data-loss="kd"><b>KD logits</b><small>preserve old behavior</small></div>
+            <div class="loss-item" data-loss="feature"><b>Feature anchor</b><small>preserve latent state</small></div>
+            <div class="loss-item" data-loss="fourier"><b>Fourier</b><small>spectral guardrail</small></div>
+            <div class="loss-item" data-loss="asw"><b>ASW</b><small>adaptive weighting</small></div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="side">
+        <section class="script-card">
+          <div class="badge" id="stepLabel">Step 1 of 6</div>
+          <h2 id="stepTitle">Sequential learning creates forgetting</h2>
+          <p id="stepText">The model sees digit pairs one after another. If it only trains on the newest pair, old classes fade from the decision boundary.</p>
+          <div class="timeline" aria-label="Animation progress">
+            <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+            <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+          </div>
+        </section>
+
+        <section class="variant-card">
+          <h2>Variants</h2>
+          <div class="variant-list">
+            <div class="variant" data-variant="base">
+              <strong>LSR-lite</strong>
+              <span>Replay + labels + logits + feature anchoring.</span>
+            </div>
+            <div class="variant" data-variant="fourier">
+              <strong>LSR-lite + Fourier</strong>
+              <span>Adds a small spectral regularization guardrail.</span>
+            </div>
+            <div class="variant" data-variant="asw">
+              <strong>LSR-lite + ASW</strong>
+              <span>Adapts KD and feature weights from old/new loss ratio.</span>
+            </div>
+            <div class="variant" data-variant="both">
+              <strong>LSR-lite + Fourier + ASW</strong>
+              <span>Combines the guardrail and adaptive weighting.</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const steps = [
+      {
+        title: "Sequential learning creates forgetting",
+        text: "The model sees digit pairs one after another. If it only trains on the newest pair, old classes fade from the decision boundary.",
+        context: 0,
+        memories: 0,
+        losses: ["current"],
+        bars: [22, 18, 14, 12],
+        featureStable: false,
+        wave: false,
+        asw: false,
+        variant: "base"
+      },
+      {
+        title: "LSR-lite stores a small old-memory buffer",
+        text: "After each context, LSR-lite stores a limited number of real train examples per class. It does not store the full dataset.",
+        context: 1,
+        memories: 2,
+        losses: ["current", "replay"],
+        bars: [38, 20, 15, 10],
+        featureStable: false,
+        wave: false,
+        asw: false,
+        variant: "base"
+      },
+      {
+        title: "Replay keeps old labels alive",
+        text: "Replay CE asks the current model to still classify old examples correctly while it learns the new context.",
+        context: 2,
+        memories: 4,
+        losses: ["current", "replay"],
+        bars: [52, 26, 18, 9],
+        featureStable: false,
+        wave: false,
+        asw: false,
+        variant: "base"
+      },
+      {
+        title: "Teacher logits preserve old output behavior",
+        text: "KD loss compares current logits to stored old logits, so the model preserves more than just the hard label.",
+        context: 3,
+        memories: 4,
+        losses: ["current", "replay", "kd"],
+        bars: [78, 42, 20, 8],
+        featureStable: false,
+        wave: false,
+        asw: false,
+        variant: "base"
+      },
+      {
+        title: "Feature anchoring preserves latent representations",
+        text: "LSR-lite stores old penultimate features. The current model is pushed to keep old examples internally represented in a similar way.",
+        context: 4,
+        memories: 4,
+        losses: ["current", "replay", "kd", "feature"],
+        bars: [82, 39, 22, 7],
+        featureStable: true,
+        wave: false,
+        asw: false,
+        variant: "base"
+      },
+      {
+        title: "Fourier and ASW are optional ablations",
+        text: "Fourier is a small spectral guardrail on features. ASW adapts stability weights by comparing old replay pressure to new-task pressure.",
+        context: 4,
+        memories: 4,
+        losses: ["current", "replay", "kd", "feature", "fourier", "asw"],
+        bars: [84, 41, 24, 6],
+        featureStable: true,
+        wave: true,
+        asw: true,
+        variant: "both"
+      }
+    ];
+
+    let step = 0;
+    let timer = null;
+
+    const contexts = Array.from(document.querySelectorAll(".context"));
+    const memoryCards = Array.from(document.querySelectorAll(".memory-card"));
+    const lossItems = Array.from(document.querySelectorAll(".loss-item"));
+    const bars = Array.from(document.querySelectorAll(".bar-fill"));
+    const featureCells = Array.from(document.querySelectorAll(".feature-cell"));
+    const ticks = Array.from(document.querySelectorAll(".tick"));
+    const variants = Array.from(document.querySelectorAll(".variant"));
+    const stepLabel = document.getElementById("stepLabel");
+    const stepTitle = document.getElementById("stepTitle");
+    const stepText = document.getElementById("stepText");
+    const wave = document.querySelector(".fft-wave");
+    const meter = document.querySelector(".asw-meter");
+    const knob = document.querySelector(".meter-knob");
+    const playButton = document.getElementById("play");
+
+    function render() {
+      const data = steps[step];
+      stepLabel.textContent = `Step ${step + 1} of ${steps.length}`;
+      stepTitle.textContent = data.title;
+      stepText.textContent = data.text;
+
+      contexts.forEach((item, index) => item.classList.toggle("active", index === data.context));
+      memoryCards.forEach((item, index) => item.classList.toggle("on", index < data.memories));
+      lossItems.forEach(item => item.classList.toggle("on", data.losses.includes(item.dataset.loss)));
+      bars.forEach((bar, index) => {
+        bar.style.width = `${data.bars[index]}%`;
+      });
+      featureCells.forEach((cell, index) => {
+        cell.classList.toggle("stable", data.featureStable || index % 3 === 0);
+      });
+      ticks.forEach((tick, index) => tick.classList.toggle("on", index <= step));
+      variants.forEach(item => item.classList.toggle("active", item.dataset.variant === data.variant));
+      wave.classList.toggle("on", data.wave);
+      meter.classList.toggle("on", data.asw);
+      knob.style.left = data.asw ? "63%" : "47%";
+    }
+
+    function nextStep() {
+      step = (step + 1) % steps.length;
+      render();
+    }
+
+    function prevStep() {
+      step = (step - 1 + steps.length) % steps.length;
+      render();
+    }
+
+    function stopPlayback() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+        playButton.textContent = "Play";
+      }
+    }
+
+    document.getElementById("next").addEventListener("click", () => {
+      stopPlayback();
+      nextStep();
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+      stopPlayback();
+      prevStep();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      stopPlayback();
+      step = 0;
+      render();
+    });
+
+    playButton.addEventListener("click", () => {
+      if (timer) {
+        stopPlayback();
+        return;
+      }
+      playButton.textContent = "Pause";
+      timer = setInterval(nextStep, 2800);
+    });
+
+    render();
+  </script>
+</body>
+</html>

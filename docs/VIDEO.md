@@ -8,6 +8,19 @@ Replace this placeholder after recording:
 
 `TODO: paste YouTube / Google Drive / other video link here`
 
+## Animation Helper
+
+Use the project animation page while recording:
+
+[`../lsr_animation.html`](../lsr_animation.html)
+
+Suggested use:
+
+1. Open the animation in the browser.
+2. Click `Play` or move through the steps manually.
+3. Explain how LSR-lite stores replay examples, labels, logits, and features.
+4. Explain that Fourier and ASW are optional variants, not the core memory mechanism.
+
 ## Suggested Video Structure
 
 1. Introduce the project: Split MNIST continual learning.
