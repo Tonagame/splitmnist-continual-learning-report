@@ -70,6 +70,8 @@ Most important comparison graph:
 
 ![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
 
+All graph previews are also collected in [`assets/README.md`](assets/README.md).
+
 Other graphs:
 
 - [`assets/all-methods-by-scenario.png`](assets/all-methods-by-scenario.png)
