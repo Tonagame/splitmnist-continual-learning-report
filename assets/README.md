@@ -4,6 +4,21 @@ This folder contains the project graphs and CSV result tables used by the GitHub
 
 The image previews below are intentionally kept in one place so the results can be inspected quickly from GitHub.
 
+## Current Method Set
+
+The current comparisons include:
+
+- None
+- EWC
+- LwF
+- A-GEM
+- Separate Networks for Task-CL
+- LSR-lite
+- LSR-lite + Fourier
+- LSR-lite + ASW
+- LSR-lite + Fourier + ASW
+- Joint
+
 ## Main Graphs
 
 ### Paper vs GMvandeVen vs From-Scratch
