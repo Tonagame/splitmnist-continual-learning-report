@@ -22,13 +22,10 @@ Published website after GitHub Pages is enabled:
 | Rule / requirement | Link |
 |---|---|
 | GitHub site includes everything | [`index.html`](index.html) |
-| Full submission checklist | [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) |
 | Algorithmic thinking | [`docs/ALGORITHMIC_THINKING.md`](docs/ALGORITHMIC_THINKING.md) |
 | Project stages | [`docs/PROJECT_STEPS.md`](docs/PROJECT_STEPS.md) |
 | Testing and validation by stage | [`docs/TESTING_BY_STAGE.md`](docs/TESTING_BY_STAGE.md) |
-| AI plan summaries | [`docs/AI_PLAN_SUMMARY.md`](docs/AI_PLAN_SUMMARY.md) |
-| AI usage report | [`docs/AI_USAGE_REPORT.md`](docs/AI_USAGE_REPORT.md) |
-| AI work log | [`docs/AI_WORK_LOG.md`](docs/AI_WORK_LOG.md) |
+| AI documentation | [`docs/AI_DOCUMENTATION.md`](docs/AI_DOCUMENTATION.md) |
 | Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
 | Video link / video instructions | [`docs/VIDEO.md`](docs/VIDEO.md) |
 | Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
