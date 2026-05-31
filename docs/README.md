@@ -2,6 +2,8 @@
 
 This folder contains the written documentation for the Split MNIST continual-learning project.
 
+For the shorter final submission pack, see [`../docs2/README.md`](../docs2/README.md).
+
 ## Recommended Reading Order
 
 1. [`PROJECT_SCOPE.md`](PROJECT_SCOPE.md) - what the project reproduces and what is outside scope.
@@ -18,7 +20,6 @@ This folder contains the written documentation for the Split MNIST continual-lea
 ## Assignment Support Files
 
 - [`takeaways.md`](takeaways.md) - reflective writing.
-- [`VIDEO.md`](VIDEO.md) - short video checklist / placeholder.
 - [`METHODS_IMPLEMENTATION.md`](METHODS_IMPLEMENTATION.md) - method-by-method implementation status.
 
 ## Main Result Assets

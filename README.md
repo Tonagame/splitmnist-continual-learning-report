@@ -10,8 +10,7 @@ It includes:
 - graphs,
 - CSV result files,
 - reflective writing,
-- AI usage documentation,
-- a video checklist/link placeholder.
+- AI usage documentation.
 
 Published website after GitHub Pages is enabled:
 
@@ -27,7 +26,6 @@ Published website after GitHub Pages is enabled:
 | Testing and validation by stage | [`docs/TESTING_BY_STAGE.md`](docs/TESTING_BY_STAGE.md) |
 | AI documentation | [`docs/AI_DOCUMENTATION.md`](docs/AI_DOCUMENTATION.md) |
 | Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
-| Video link / video instructions | [`docs/VIDEO.md`](docs/VIDEO.md) |
 | Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
 
 ## Main Code
@@ -82,6 +80,7 @@ Result files:
 
 ## Documentation Index
 
+- [`docs2/README.md`](docs2/README.md) - short final submission pack with the four requested documents.
 - [`docs/README.md`](docs/README.md)
 - [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md)
 - [`docs/REPRODUCTION_REPORT.md`](docs/REPRODUCTION_REPORT.md)
