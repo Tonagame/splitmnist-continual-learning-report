@@ -29,7 +29,6 @@ METHOD_ORDER = [
     "EWC",
     "LwF",
     "A-GEM",
-    "Generative Classifier",
     "Separate Networks",
     "Joint",
 ]
@@ -66,21 +65,22 @@ def build_comparison() -> pd.DataFrame:
     rows = []
 
     paper_df = pd.read_csv(PAPER_CSV, keep_default_na=False)
+    paper_df = paper_df[paper_df["method"].isin(METHOD_ORDER)].copy()
     for row in paper_df.itertuples():
         if str(row.paper_percent).strip():
             add_row(rows, row.scenario, row.method, "Paper Table 2", float(row.paper_percent))
 
     gm_df = pd.read_csv(GM_CSV, keep_default_na=False)
+    gm_df = gm_df[gm_df["method"].isin(METHOD_ORDER)].copy()
     for row in gm_df.itertuples():
         if row.method not in METHOD_ORDER:
             continue
         if str(row.accuracy).strip():
             add_row(rows, row.scenario, row.method, "GMvandeVen code run", float(row.accuracy) * 100.0)
-        elif row.method == "Generative Classifier":
-            add_row(rows, row.scenario, row.method, "GMvandeVen code run", np.nan, "failed or skipped")
 
     our_df = pd.read_csv(OUR_CSV, keep_default_na=False)
     our_df = apply_task_protocol_fix(our_df)
+    our_df = our_df[our_df["method"].isin(METHOD_ORDER)].copy()
     for row in our_df.itertuples():
         add_row(rows, row.scenario, row.method, "Our from-scratch code", float(row.final_accuracy) * 100.0)
 
@@ -114,6 +114,8 @@ def apply_task_protocol_fix(our_df: pd.DataFrame) -> pd.DataFrame:
         if mask.any():
             merged.loc[mask, "final_accuracy"] = row.final_accuracy
             merged.loc[mask, "runtime_seconds"] = row.runtime_seconds
+            if "accuracy_percent" in merged.columns:
+                merged.loc[mask, "accuracy_percent"] = float(row.final_accuracy) * 100.0
         else:
             merged = pd.concat([merged, pd.DataFrame([row._asdict()])], ignore_index=True)
     return merged
@@ -200,6 +202,7 @@ def main() -> None:
     df = build_comparison()
     df.to_csv(OUT_CSV, index=False)
     merged_ours = apply_task_protocol_fix(pd.read_csv(OUR_CSV, keep_default_na=False))
+    merged_ours = merged_ours[merged_ours["method"].isin(METHOD_ORDER)].copy()
     merged_ours.to_csv(OUT_MERGED_OUR_CSV, index=False)
     plot(df)
     print(f"Saved {OUT_CSV}")

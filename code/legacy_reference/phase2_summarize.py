@@ -241,7 +241,7 @@ def main():
         "# PHASE 2 Report",
         "",
         "Experiment: Split MNIST Domain-CL, contexts=5, iters=2000, batch=128, acc-n=1024.",
-        "Final accuracy is evaluated on the full test set. Generative Classifier and Separate Networks were skipped.",
+        "Final accuracy is evaluated on the full test set. Separate Networks were skipped.",
         "Learning-curve evaluation was logged every 100 iterations, following the explicit Phase 2 evaluation-frequency setting.",
         "Note: Joint used the same comparator convention as Phase 1 (`--joint --iters=10000`), which the repository reports as 50,000 progress iterations in the learning curve.",
         "",

@@ -69,11 +69,6 @@ $Runs = @(
         Log = Join-Path $Logs "splitMNIST_class_2000_agem.log"
     },
     @{
-        Method = "Generative Classifier"
-        Command = "& `"$Python`" main.py $CommonMain --gen-classifier --eval-history-method=`"Generative Classifier`""
-        Log = Join-Path $Logs "splitMNIST_class_2000_generative_classifier.log"
-    },
-    @{
         Method = "LSR-lite"
         Command = "& `"$Python`" train_lsr_lite.py $CommonLSR --eval-history-method=`"LSR-lite`""
         Log = Join-Path $Logs "splitMNIST_class_2000_lsr_lite.log"

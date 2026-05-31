@@ -25,15 +25,15 @@ $StatusPath = Join-Path $OutRoot "run_status.csv"
 $Plan = @(
     @{
         Scenario = "class"
-        Methods = @("none", "ewc", "lwf", "agem", "gen-classifier", "joint")
+        Methods = @("none", "ewc", "lwf", "agem", "joint")
     },
     @{
         Scenario = "domain"
-        Methods = @("none", "ewc", "lwf", "agem", "gen-classifier", "joint")
+        Methods = @("none", "ewc", "lwf", "agem", "joint")
     },
     @{
         Scenario = "task"
-        Methods = @("none", "ewc", "lwf", "agem", "gen-classifier", "separate", "joint")
+        Methods = @("none", "ewc", "lwf", "agem", "separate", "joint")
     }
 )
 

@@ -63,7 +63,7 @@ AI helped generate:
 - CSV summaries,
 - accuracy graphs,
 - learning-curve graphs,
-- Word reports,
+- report-style Markdown documentation,
 - GitHub Pages HTML,
 - Markdown documentation.
 
@@ -74,7 +74,6 @@ AI did not replace the scientific responsibility of the project. The final repor
 - not all paper datasets were reproduced,
 - most long runs are single-seed runs,
 - EWC is a partial reproduction,
-- the Generative Classifier is simplified,
 - LSR-lite is our experimental prototype and not a method from the paper.
 
 ## Useful AI Links

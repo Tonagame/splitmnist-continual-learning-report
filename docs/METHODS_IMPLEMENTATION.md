@@ -30,7 +30,6 @@ Method-specific code:
 | LwF | `code/from_scratch/methods/lwf.py` plus `methods/sequential.py` |
 | A-GEM | `code/from_scratch/methods/agem.py` plus `methods/sequential.py` |
 | Separate Networks | `code/from_scratch/methods/separate.py` |
-| Generative Classifier | `code/from_scratch/methods/generative.py` |
 | LSR-lite variants | `code/from_scratch/methods/lsr_lite.py` plus `methods/sequential.py` |
 
 Implemented by us:
@@ -43,7 +42,6 @@ Implemented by us:
 | LwF | Yes | Teacher snapshot and temperature-scaled logit distillation |
 | A-GEM | Yes | Replay buffer and gradient projection against memory gradient |
 | Separate Networks | Yes | One MLP per task, Task-CL only |
-| Generative Classifier | Yes | Class-conditional diagonal Gaussian statistics |
 | LSR-lite | Yes | Real replay, labels, teacher logits, feature anchoring |
 | LSR-lite + Fourier | Yes | Adds auxiliary Fourier feature-spectrum loss |
 | LSR-lite + ASW | Yes | Adaptive Stability Weighting for KD and feature losses |
@@ -79,9 +77,8 @@ LSR-lite is our experimental prototype. It combines:
 - LwF-style teacher-logit distillation;
 - feature anchoring on penultimate representations.
 
-It should not be described as a direct Generative Classifier hybrid. A
-Generative Classifier learns a generative model or class-conditional density.
-LSR-lite keeps real old training examples and does not synthesize samples.
+It should be described as a replay-and-distillation prototype. LSR-lite keeps
+real old training examples and does not synthesize samples.
 
 The four LSR variants tested were:
 
@@ -102,7 +99,6 @@ Smoke tests passed on the RTX 3070 for:
 - EWC
 - LwF
 - A-GEM
-- Generative Classifier
 - LSR-lite + Fourier + ASW
 - Joint
 - Separate Networks on Task-CL

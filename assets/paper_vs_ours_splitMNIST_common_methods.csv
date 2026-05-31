@@ -3,7 +3,6 @@ Class-CL,None,19.89,0.02,19.82,-0.07,
 Class-CL,EWC,20.64,0.52,27.42,6.78,
 Class-CL,LwF,21.89,0.32,20.27,-1.62,
 Class-CL,A-GEM,65.10,3.64,55.80,-9.30,
-Class-CL,Generative Classifier,93.82,0.06,,,not run / failed in our run
 Class-CL,Joint,98.17,0.04,98.15,-0.02,
 Domain-CL,None,60.13,1.66,54.35,-5.78,
 Domain-CL,EWC,63.03,1.58,64.64,1.61,

@@ -1,6 +1,6 @@
 # Assets
 
-This folder contains the project graphs, CSV result tables, and Word reports used by the GitHub Pages report.
+This folder contains the project graphs and CSV result tables used by the GitHub Pages report.
 
 The image previews below are intentionally kept in one place so the results can be inspected quickly from GitHub.
 
@@ -61,14 +61,7 @@ Learning curves for the from-scratch classic, non-LSR methods.
 - [splitMNIST_2000_all_scenarios_summary.csv](splitMNIST_2000_all_scenarios_summary.csv)
 - [from_scratch_classic_no_lsr_2000_summary.csv](from_scratch_classic_no_lsr_2000_summary.csv)
 
-## Word Reports
-
-- [full_project_explanation_with_all_graphs.docx](full_project_explanation_with_all_graphs.docx)
-- [code_explanation_full.docx](code_explanation_full.docx)
-- [summary_hebrew_splitMNIST_2000.docx](summary_hebrew_splitMNIST_2000.docx)
-
 ## Notes
 
 - The PNG files are the graph images displayed on the project page.
 - The CSV files contain the numerical values used to create the graphs.
-- The DOCX files are written reports for project explanation and submission support.

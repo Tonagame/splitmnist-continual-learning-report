@@ -33,7 +33,7 @@
         </p>
         <div class="hero-actions">
           <a class="button primary" href="#results">לראות תוצאות</a>
-          <a class="button" href="assets/full_project_explanation_with_all_graphs.docx">להוריד דוח Word מלא</a>
+          <a class="button" href="docs/README.md">לפתוח תיעוד מלא</a>
         </div>
       </div>
     </section>
@@ -116,10 +116,6 @@
           <h3>Separate Networks</h3>
           <p>רשת נפרדת לכל task. מתאים בעיקר ל-Task-CL, שבו יודעים בזמן הערכה איזו משימה פעילה.</p>
         </article>
-        <article class="method">
-          <h3>Generative Classifier</h3>
-          <p>מנסה ללמוד מודל גנרטיבי למחלקות ולהשתמש בו לסיווג. בניסויים שלנו הוא לא נתמך נקי בכל התרחישים, וב-Class-CL 2000 נכשל/נתקע.</p>
-        </article>
         <article class="method highlight">
           <h3>LSR-lite</h3>
           <p>השיטה הניסיונית שלנו: replay של דוגמאות אמיתיות מהעבר, עם labels, teacher logits ו-feature anchoring. היא משלבת replay בסגנון שיטות memory כמו A-GEM עם distillation בסגנון LwF.</p>
@@ -142,7 +138,7 @@
         <p>
           LSR-lite שומר buffer הוגן של 100 דוגמאות למחלקה. כל דוגמה כוללת את התמונה,
           התווית, logits של המורה בזמן ההכנסה ל-buffer, ווקטור feature פנימי מהשכבה שלפני הפלט.
-          חשוב לדייק: זו לא שיטה גנרטיבית כמו Generative Classifier, כי היא לא מייצרת דוגמאות חדשות;
+          חשוב לדייק: זו לא שיטה גנרטיבית, כי היא לא מייצרת דוגמאות חדשות;
           היא שומרת דוגמאות train אמיתיות ומשתמשת בהן כ-replay.
         </p>
       </div>
@@ -167,7 +163,6 @@
             <tr><td>EWC</td><td>0.2742</td><td>0.7074</td><td>0.0760</td></tr>
             <tr><td>LwF</td><td>0.2027</td><td>0.7789</td><td>0.0045</td></tr>
             <tr><td>A-GEM</td><td>0.5580</td><td>0.4235</td><td>0.3599</td></tr>
-            <tr><td>Generative Classifier</td><td>failed</td><td>-</td><td>-</td></tr>
             <tr><td>LSR-lite</td><td>0.9243</td><td>0.0573</td><td>0.7261</td></tr>
             <tr><td>LSR-lite + Fourier</td><td>0.9264</td><td>0.0552</td><td>0.7282</td></tr>
             <tr><td>LSR-lite + ASW</td><td>0.9241</td><td>0.0575</td><td>0.7259</td></tr>
@@ -264,7 +259,7 @@
             <tr>
               <td>Class-CL</td>
               <td>None ו-Joint כמעט זהים למאמר: בערך 20% ו-98%.</td>
-              <td>A-GEM אצלנו נמוך יותר: 55.80% לעומת 65.10%. Generative Classifier נכשל אצלנו ולכן אין שחזור מלא.</td>
+              <td>A-GEM אצלנו נמוך יותר: 55.80% לעומת 65.10%.</td>
             </tr>
             <tr>
               <td>Domain-CL</td>
@@ -298,7 +293,7 @@
         <li><strong>Domain-CL גם מעדיף LSR-lite.</strong> plain LSR-lite היה הטוב ביותר מבין השיטות שאינן Joint.</li>
         <li><strong>Task-CL מתנהג אחרת.</strong> בגלל allowed classes, LwF ו-Separate Networks כמעט מגיעים ל-Joint.</li>
         <li><strong>Fourier ו-ASW הם ablations.</strong> הם מעניינים, אבל לא הלב של ההצלחה. הלב הוא replay אמיתי + distillation + feature anchoring.</li>
-        <li><strong>LSR-lite אינו Generative Classifier.</strong> הוא קרוב יותר לשילוב של replay כמו A-GEM ו-distillation כמו LwF, עם feature anchoring.</li>
+        <li><strong>LSR-lite הוא replay + distillation.</strong> הוא קרוב יותר לשילוב של replay כמו A-GEM ו-distillation כמו LwF, עם feature anchoring.</li>
       </ol>
     </section>
 
@@ -312,7 +307,7 @@
       <div class="method-grid">
         <article class="method highlight">
           <h3>from_scratch/splitmnist_cl.py</h3>
-          <p>המימוש החדש להגשה: קוד PyTorch עצמאי ל-None, Joint, EWC, LwF, A-GEM, Separate Networks, Generative Classifier וכל וריאנטי LSR-lite, בלי תלות בקוד של GMvandeVen.</p>
+          <p>המימוש החדש להגשה: קוד PyTorch עצמאי ל-None, Joint, EWC, LwF, A-GEM, Separate Networks וכל וריאנטי LSR-lite, בלי תלות בקוד של GMvandeVen.</p>
         </article>
         <article class="method highlight">
           <h3>run_splitmnist_from_scratch.ps1</h3>
@@ -370,9 +365,6 @@
         <a href="docs/AI_USAGE_REPORT.md">AI usage report</a>
         <a href="docs/PROJECT_SCOPE.md">היקף הפרויקט</a>
         <a href="docs/REPRODUCTION_REPORT.md">דוח שחזור תוצאות</a>
-        <a href="assets/code_explanation_full.docx">דוח Word שמסביר את הקוד</a>
-        <a href="assets/full_project_explanation_with_all_graphs.docx">דוח Word מלא עם כל הגרפים</a>
-        <a href="assets/summary_hebrew_splitMNIST_2000.docx">דוח Word בעברית</a>
         <a href="assets/splitMNIST_2000_all_scenarios_summary.csv">טבלת CSV משולבת</a>
         <a href="assets/all-methods-by-scenario.png">גרף כל השיטות</a>
         <a href="assets/selected-learning-curves.png">גרף עקומות למידה</a>

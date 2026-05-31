@@ -43,10 +43,9 @@ Goal:
 Plan:
 
 1. Run EWC, LwF, A-GEM.
-2. Run Generative Classifier where supported.
-3. Run Separate Networks only where appropriate.
-4. Keep settings identical.
-5. Save logs, CSV files, and graphs.
+2. Run Separate Networks only where appropriate.
+3. Keep settings identical.
+4. Save logs, CSV files, and graphs.
 
 ## Plan 4: LSR-lite Prototype
 
@@ -101,7 +100,7 @@ Plan:
 
 1. Create a GitHub Pages report.
 2. Add Markdown documentation.
-3. Add Word reports.
+3. Add report-style Markdown pages.
 4. Add graphs and CSV files.
 5. Add code explanations.
 6. Reorganize docs and code folders.

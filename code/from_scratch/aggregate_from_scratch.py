@@ -16,7 +16,6 @@ METHOD_ORDER = [
     "EWC",
     "LwF",
     "A-GEM",
-    "Generative Classifier",
     "Separate Networks",
     "Joint",
 ]
@@ -44,6 +43,7 @@ def read_summaries(root: Path) -> pd.DataFrame:
     if not frames:
         raise FileNotFoundError(f"No summary.csv files found under {root}")
     df = pd.concat(frames, ignore_index=True)
+    df = df[df["method"].isin(METHOD_ORDER)].copy()
     df = df.drop_duplicates(subset=["scenario", "method", "seed"], keep="last")
     df["accuracy_percent"] = df["final_accuracy"] * 100.0
     df["scenario"] = pd.Categorical(df["scenario"], ordered=True, categories=ordered_categories(df["scenario"], SCENARIO_ORDER))
@@ -61,6 +61,7 @@ def read_curves(root: Path) -> pd.DataFrame | None:
     if not frames:
         return None
     df = pd.concat(frames, ignore_index=True)
+    df = df[df["method"].isin(METHOD_ORDER)].copy()
     df = df.drop_duplicates(subset=["scenario", "method", "iteration", "context"], keep="last")
     df["accuracy_percent"] = df["accuracy"] * 100.0
     return df

@@ -38,7 +38,6 @@ The main comparison methods were:
 - LwF
 - A-GEM
 - Separate Networks for Task-CL
-- Generative Classifier as a simplified clean-room variant
 
 We also added our own experimental prototype:
 
@@ -55,7 +54,6 @@ Known limitations:
 
 - The paper reports mean and SEM over 20 seeds; most of our long runs are single local runs.
 - Our clean-room EWC implementation is valid but does not fully match the original Task-CL EWC result.
-- Our clean-room Generative Classifier is a simple diagonal Gaussian classifier, not necessarily the same as the strongest generative setup in the paper.
 - LSR-lite is our own experimental method, not a method from the paper.
 
 ## What To Present As The Main Implementation

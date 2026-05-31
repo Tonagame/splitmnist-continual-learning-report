@@ -21,7 +21,6 @@ The code is split by responsibility so every method has a clear home:
 | `methods/lwf.py` | LwF teacher snapshot and distillation loss. |
 | `methods/agem.py` | A-GEM gradient projection update. |
 | `methods/lsr_lite.py` | LSR-lite replay, KD, feature anchoring, Fourier, and ASW losses. |
-| `methods/generative.py` | Diagonal Gaussian Generative Classifier. |
 | `methods/separate.py` | Separate Networks for Task-CL. |
 
 Together these files implement:
@@ -35,7 +34,6 @@ Together these files implement:
 - Learning without Forgetting (LwF)
 - Average Gradient Episodic Memory (A-GEM)
 - Separate Networks for Task-CL
-- Generative Classifier using class-conditional diagonal Gaussian statistics
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW
@@ -113,7 +111,6 @@ joint
 ewc
 lwf
 agem
-gen-classifier
 lsr-lite
 lsr-lite-fourier
 lsr-lite-asw
@@ -141,7 +138,6 @@ Smoke tests passed for:
 - EWC
 - LwF
 - A-GEM
-- Generative Classifier
 - LSR-lite + Fourier + ASW
 - Joint
 - Separate Networks on Task-CL

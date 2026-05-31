@@ -32,7 +32,6 @@ from core import (
     set_seed,
     write_json,
 )
-from methods.generative import train_generative
 from methods.joint import train_joint
 from methods.separate import train_separate
 from methods.sequential import train_sequential
@@ -40,7 +39,7 @@ from methods.sequential import train_sequential
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Clean-room Split MNIST continual-learning runner")
-    parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, gen-classifier, lsr-lite variants")
+    parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, lsr-lite variants")
     parser.add_argument("--scenario", default="class", choices=["class", "domain", "task"])
     parser.add_argument("--contexts", type=int, default=5)
     parser.add_argument("--iters", type=int, default=2000, help="iterations per context")
@@ -88,8 +87,6 @@ def run_method(args: argparse.Namespace, train_contexts, test_contexts, output_d
         final_accuracy, history, runtime = train_joint(args, train_contexts, test_contexts, output_dim, device)
     elif args.method == "separate":
         final_accuracy, history, runtime = train_separate(args, train_contexts, test_contexts, device)
-    elif args.method == "gen-classifier":
-        final_accuracy, history, runtime = train_generative(args, train_contexts, test_contexts, output_dim, device)
     else:
         final_accuracy, history, runtime, extras = train_sequential(args, train_contexts, test_contexts, output_dim, device)
     return final_accuracy, history, runtime, extras

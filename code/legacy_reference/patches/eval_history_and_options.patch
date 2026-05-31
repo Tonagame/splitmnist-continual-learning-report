@@ -86,7 +86,7 @@ index 067c9fc..5ca9abf 100755
 +            method=args.eval_history_method, iters_per_context=args.iters, test_size=args.acc_n,
 +            S=args.eval_s if hasattr(args, 'eval_s') else 1
 +        ))
-     # -after each context, for plotting in pdf (when using prototypes / generative classifier, this is also for visdom)
+     # -after each context, for plotting in pdf (when using prototypes, this is also for visdom)
      context_cbs = [
          cb._eval_cb(log=args.iters, test_datasets=test_datasets, plotting_dict=plotting_dict,
 @@ -544,4 +550,4 @@ if __name__ == '__main__':

@@ -20,7 +20,7 @@ Conceptually, LSR-lite combines memory/replay and distillation ideas:
 
 - like A-GEM / replay methods, it keeps a small buffer of real old training examples;
 - like LwF, it uses teacher-logit distillation to preserve old output behavior;
-- unlike a Generative Classifier, it does not learn a generator and does not synthesize old samples.
+- it does not learn a generator and does not synthesize old samples.
 
 LSR-lite uses a real exemplar replay buffer. For each stored sample it keeps:
 
@@ -67,4 +67,4 @@ Key files:
 
 ## Current Scope
 
-This is a prototype for Split MNIST Class-CL. It does not add bottleneck adapters yet, because adapters were optional and not needed to validate the core replay-plus-anchoring idea. It also does not modify the repository's original EWC, LwF, A-GEM, Joint, or Generative Classifier implementations.
+This is a prototype for Split MNIST Class-CL. It does not add bottleneck adapters yet, because adapters were optional and not needed to validate the core replay-plus-anchoring idea. It also does not modify the repository's original EWC, LwF, A-GEM, or Joint implementations.

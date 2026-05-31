@@ -9,7 +9,6 @@ It includes:
 - clean-room Python code,
 - graphs,
 - CSV result files,
-- Word reports,
 - reflective writing,
 - AI usage documentation,
 - a video checklist/link placeholder.
@@ -33,8 +32,6 @@ Published website after GitHub Pages is enabled:
 | Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
 | Video link / video instructions | [`docs/VIDEO.md`](docs/VIDEO.md) |
 | Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
-| Code explanation Word report | [`assets/code_explanation_full.docx`](assets/code_explanation_full.docx) |
-| Full Word report with graphs | [`assets/full_project_explanation_with_all_graphs.docx`](assets/full_project_explanation_with_all_graphs.docx) |
 
 ## Main Code
 
@@ -56,7 +53,6 @@ Implemented methods:
 - LwF
 - A-GEM
 - Separate Networks
-- Generative Classifier
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW
@@ -86,12 +82,6 @@ Result files:
 - [`assets/paper_vs_gmvandeven_vs_from_scratch.csv`](assets/paper_vs_gmvandeven_vs_from_scratch.csv)
 - [`assets/from_scratch_classic_no_lsr_2000_summary.csv`](assets/from_scratch_classic_no_lsr_2000_summary.csv)
 - [`assets/splitMNIST_2000_all_scenarios_summary.csv`](assets/splitMNIST_2000_all_scenarios_summary.csv)
-
-## Reports
-
-- [`assets/code_explanation_full.docx`](assets/code_explanation_full.docx)
-- [`assets/full_project_explanation_with_all_graphs.docx`](assets/full_project_explanation_with_all_graphs.docx)
-- [`assets/summary_hebrew_splitMNIST_2000.docx`](assets/summary_hebrew_splitMNIST_2000.docx)
 
 ## Documentation Index
 

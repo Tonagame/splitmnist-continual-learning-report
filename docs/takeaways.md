@@ -12,7 +12,7 @@ After confirming that Python, Conda, Git, CUDA, and PyTorch were working, I ran 
 - Domain-CL
 - Task-CL
 
-I compared standard methods such as None, EWC, LwF, A-GEM, Separate Networks, Generative Classifier where supported, and Joint Training.
+I compared standard methods such as None, EWC, LwF, A-GEM, Separate Networks, and Joint Training.
 I also implemented and tested an experimental prototype called LSR-lite.
 
 LSR-lite stores real replay examples from previous training data.

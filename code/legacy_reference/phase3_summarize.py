@@ -249,7 +249,6 @@ def main():
         "",
         "Experiment: Split MNIST Task-CL, contexts=5, iters=2000, batch=128, acc-n=1024.",
         "Final accuracy is evaluated on the full test set using the repository's Task-CL allowed-classes protocol.",
-        "Generative Classifier was skipped because previous testing showed it is not supported cleanly for Task-CL.",
         "Learning-curve evaluation was logged every 100 iterations.",
         "Note: Joint uses the same comparator convention as Phases 1/2 (`--joint --iters=10000`).",
         "",

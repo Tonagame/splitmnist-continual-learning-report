@@ -47,7 +47,6 @@ Each method was tested separately:
 - EWC: Fisher estimation and penalty.
 - LwF: teacher snapshot and distillation.
 - A-GEM: replay memory and gradient projection.
-- Generative Classifier: class statistics and likelihood evaluation.
 - Separate Networks: one model per task.
 - LSR-lite: replay buffer with logits/features.
 
@@ -85,7 +84,6 @@ After splitting the code into method files, the following checks were run:
   - A-GEM
   - LSR-lite + Fourier + ASW
   - Joint
-  - Generative Classifier
   - Separate Networks
 
 ## 8. Documentation Validation
@@ -95,5 +93,4 @@ Checked that:
 - README links point to the correct docs.
 - GitHub Pages uses root `index.html`.
 - graphs are stored under `assets/`.
-- Word reports are stored under `assets/`.
 - code explanation and project explanation are linked from README and website.

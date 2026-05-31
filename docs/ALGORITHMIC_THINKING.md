@@ -37,7 +37,6 @@ The algorithmic challenge is the **stability-plasticity tradeoff**:
 | LwF | Keep a frozen teacher model and distill its old predictions into the new model. |
 | A-GEM | Keep replay memory and project gradients when the new update conflicts with old examples. |
 | Separate Networks | Use one network per task. This works mainly when task identity is available. |
-| Generative Classifier | Store class-conditional statistics and classify by likelihood. |
 | LSR-lite | Store real old examples plus labels, old logits, and feature vectors. |
 
 ## LSR-lite Algorithmic Idea
@@ -61,7 +60,7 @@ current cross entropy
 + optional Fourier auxiliary loss
 ```
 
-This is a deliberate hybrid of replay and distillation ideas. It is **not** a generative classifier because it does not generate synthetic samples.
+This is a deliberate hybrid of replay and distillation ideas. It does not generate synthetic samples.
 
 ## Why This Is Algorithmic Thinking
 

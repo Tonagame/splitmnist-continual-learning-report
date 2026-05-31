@@ -17,8 +17,8 @@ This page maps the project repository to the requested submission rules.
 | Takeaways / reflective writing | [`takeaways.md`](takeaways.md) |
 | Video file / video link placeholder | [`VIDEO.md`](VIDEO.md) |
 | Code with comments | [`code/from_scratch/`](../code/from_scratch/) |
-| Full code explanation | [`assets/code_explanation_full.docx`](../assets/code_explanation_full.docx) |
-| Full report with graphs | [`assets/full_project_explanation_with_all_graphs.docx`](../assets/full_project_explanation_with_all_graphs.docx) |
+| Full code explanation | [`CODE_EXPLANATION.md`](CODE_EXPLANATION.md) |
+| Full report with graphs | [`REPRODUCTION_REPORT.md`](REPRODUCTION_REPORT.md), [`PAPER_COMPARISON.md`](PAPER_COMPARISON.md), and [`assets/`](../assets/) |
 | Graphs and original comparison | [`PAPER_COMPARISON.md`](PAPER_COMPARISON.md), [`REPRODUCTION_REPORT.md`](REPRODUCTION_REPORT.md), [`assets/`](../assets/) |
 
 ## Notes

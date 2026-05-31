@@ -51,7 +51,6 @@ Implemented from scratch:
 | LwF | Done | Teacher snapshot + logit distillation |
 | A-GEM | Done | Replay memory + gradient projection |
 | Separate Networks | Done | Task-CL only |
-| Generative Classifier | Done, but simple | Diagonal Gaussian classifier; not equivalent to the paper's stronger method |
 | LSR-lite variants | Done | Replay + labels + logits + feature anchoring + optional Fourier / ASW |
 | CSV logging | Done | `summary.csv`, `learning_curve.csv`, metrics JSON |
 | Graph generation | Done | Aggregation and comparison scripts |
@@ -69,15 +68,10 @@ Partly correct but needs nuance:
 
 > It is related to A-GEM because both use memory/replay.
 
-Incorrect / too strong:
-
-> It is a hybrid of Generative Classifier.
-
-Reason:
+Important distinction:
 
 LSR-lite does not train a generative model and does not generate synthetic old
-samples. It stores real old training examples. Therefore, it should be compared
-against Generative Classifier, but not described as being built from it.
+samples. It stores real old training examples.
 
 Detailed explanation:
 
@@ -146,22 +140,6 @@ Current honest status:
 > result.
 
 This should be stated clearly in the report.
-
-## Generative Classifier Note
-
-Our clean-room Generative Classifier is a simple diagonal Gaussian classifier.
-It stores class statistics:
-
-```text
-count, sum, sum of squares
-```
-
-This is a valid simple generative classifier, but it is not necessarily the same
-as the stronger generative method reported in the paper.
-
-In Task-CL, our implementation can run because task identity limits evaluation
-to the active classes. This should be treated as an extra clean-room variant,
-not as a direct reproduction of the original repository's supported setup.
 
 ## What Results Should Be Used In The Report
 

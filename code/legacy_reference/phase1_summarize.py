@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 METHODS = [
-    "None", "EWC", "LwF", "A-GEM", "Generative Classifier",
+    "None", "EWC", "LwF", "A-GEM",
     "LSR-lite", "LSR-lite + Fourier", "LSR-lite + ASW",
     "LSR-lite + Fourier + ASW", "Joint",
 ]
@@ -29,7 +29,6 @@ def find_result_files(results):
         "EWC": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--PReg*-offline.txt")),
         "LwF": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--current-KD2.0.txt")),
         "A-GEM": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--buffer-A-GEM*.txt")),
-        "Generative Classifier": latest(results.glob("acc-splitMNIST5-class--x10-VAE=F-784x400x400--z100--sigmoid--i2000-lr0.001-b128-adam-BCE--S50.txt")),
         "LSR-lite": latest(results.glob("acc-splitMNIST5-class--LSR-lite--i2000-b128-bud100-kd1.0-feat1.0.txt")),
         "LSR-lite + Fourier": latest(results.glob("acc-splitMNIST5-class--LSR-lite-Fourier--i2000-b128-bud100-kd1.0-feat1.0-fft0.1.txt")),
         "LSR-lite + ASW": latest(results.glob("acc-splitMNIST5-class--LSR-lite-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.txt")),

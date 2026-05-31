@@ -32,7 +32,6 @@ Implemented from scratch:
 - LwF
 - A-GEM
 - Separate Networks
-- Generative Classifier
 - LSR-lite
 - LSR-lite + Fourier
 - LSR-lite + ASW

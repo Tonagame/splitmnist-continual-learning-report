@@ -33,4 +33,3 @@ Important files:
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.png`
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
 - `../assets/from_scratch_classic_no_lsr_2000_summary.csv`
-- `../assets/summary_hebrew_splitMNIST_2000.docx`

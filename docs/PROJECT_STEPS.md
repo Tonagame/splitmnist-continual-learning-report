@@ -36,7 +36,6 @@ Ran or implemented:
 - LwF
 - A-GEM
 - Separate Networks
-- Generative Classifier where supported
 
 ## 5. LSR-lite Prototype
 
@@ -97,7 +96,7 @@ Generated:
 - learning curve graphs,
 - heatmap,
 - paper-vs-reference-vs-from-scratch comparison,
-- Word reports,
+- report-style Markdown documentation,
 - GitHub Pages site.
 
 ## 10. Final GitHub Organization

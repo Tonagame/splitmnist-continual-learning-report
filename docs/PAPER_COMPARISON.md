@@ -37,7 +37,6 @@ implementation.
 | Class-CL | EWC | 20.64 | 0.52 | 27.42 | 6.78 |  |
 | Class-CL | LwF | 21.89 | 0.32 | 20.27 | -1.62 |  |
 | Class-CL | A-GEM | 65.10 | 3.64 | 55.80 | -9.30 |  |
-| Class-CL | Generative Classifier | 93.82 | 0.06 |  |  | not run / failed in our run |
 | Class-CL | Joint | 98.17 | 0.04 | 98.15 | -0.02 |  |
 | Domain-CL | None | 60.13 | 1.66 | 54.35 | -5.78 |  |
 | Domain-CL | EWC | 63.03 | 1.58 | 64.64 | 1.61 |  |
@@ -57,7 +56,7 @@ LSR-lite is not a method from the paper. It was implemented in this project, so 
 
 | Scenario | Best LSR variant | Accuracy % | Comparable paper reference |
 |---|---|---:|---|
-| Class-CL | LSR-lite + Fourier + ASW | 92.84 | Below paper BI-R 94.41 and Generative Classifier 93.82, above DGR 90.35, ER 88.79 and A-GEM 65.10 |
+| Class-CL | LSR-lite + Fourier + ASW | 92.84 | Below paper BI-R 94.41, above DGR 90.35, ER 88.79 and A-GEM 65.10 |
 | Domain-CL | LSR-lite | 96.51 | Above paper DGR 95.57 and ER 93.75, below paper BI-R 97.26 |
 | Task-CL | LSR-lite + Fourier + ASW | 99.40 | Close to paper LwF 99.60 / Separate Networks 99.57 / Joint 99.67 |
 
@@ -68,4 +67,4 @@ LSR-lite is not a method from the paper. It was implemented in this project, so 
 - Our A-GEM in Class-CL was lower than the paper: 55.80% vs 65.10%.
 - Our LwF and EWC in Domain/Task were somewhat higher than the paper values.
 - LSR-lite is not in the paper, but it performed strongly: especially Class-CL and Domain-CL.
-- In Class-CL, our best LSR variant reached 92.84%, which is much higher than paper A-GEM and ER, close to Generative Classifier, but still below paper BI-R.
+- In Class-CL, our best LSR variant reached 92.84%, which is much higher than paper A-GEM and ER, but still below paper BI-R.

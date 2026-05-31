@@ -40,7 +40,6 @@ if ($Scenario -eq "task") {
         "ewc",
         "lwf",
         "agem",
-        "gen-classifier",
         "lsr-lite",
         "lsr-lite-fourier",
         "lsr-lite-asw",

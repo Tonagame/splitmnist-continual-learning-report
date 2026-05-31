@@ -14,7 +14,7 @@ The goal is to reduce catastrophic forgetting by keeping a small, fair memory of
 old training examples and preserving both the model's old output behavior and
 its internal feature representation.
 
-## Is LSR-lite A Hybrid Of A-GEM, LwF, And Generative Classifier?
+## Is LSR-lite A Hybrid Method?
 
 Almost, but with an important correction.
 
@@ -26,15 +26,14 @@ LSR-lite is best described as a hybrid of:
 | LwF | Knowledge distillation from stored teacher logits |
 | Representation regularization | Feature anchoring using stored penultimate feature vectors |
 
-It is **not really a Generative Classifier hybrid**, because it does not train a
-generative model and it does not generate synthetic old samples.
+It is not a generative method, because it does not train a generator and it does
+not generate synthetic old samples.
 
 A more accurate sentence is:
 
 > LSR-lite combines exemplar replay, LwF-style distillation, and feature
 > anchoring. It is conceptually related to memory/replay methods such as A-GEM,
-> but unlike a Generative Classifier it keeps real old examples instead of
-> learning a generative model.
+> but it keeps real old examples instead of learning a generative model.
 
 ## What Is Stored In Memory?
 

@@ -26,7 +26,6 @@ large file.
 | `code/from_scratch/methods/lwf.py` | LwF teacher and distillation code. |
 | `code/from_scratch/methods/agem.py` | A-GEM gradient projection code. |
 | `code/from_scratch/methods/lsr_lite.py` | LSR-lite, Fourier, and ASW losses. |
-| `code/from_scratch/methods/generative.py` | Generative Classifier. |
 | `code/from_scratch/methods/separate.py` | Separate Networks. |
 
 This layout is meant to make the defense easier: each method can be opened and
@@ -154,19 +153,6 @@ Separate Networks is implemented for Task-CL.
 The code creates one MLP per task, each with two output units.
 At evaluation time, the task identity selects the correct network.
 
-### Generative Classifier
-
-The clean-room Generative Classifier stores class statistics, not raw images.
-For each class it keeps:
-
-```text
-count, sum, sum of squares
-```
-
-It then classifies by diagonal Gaussian log-likelihood.
-This is a simple generative classifier and may not match the stronger generative
-model from the paper without further tuning.
-
 ### LSR-lite
 
 LSR-lite stores a balanced replay buffer from training data only.
@@ -176,8 +162,8 @@ It is a hybrid of exemplar replay and distillation ideas:
 - like LwF, it preserves old output behavior through teacher-logit distillation;
 - additionally, it anchors the penultimate feature representation.
 
-It is not a true Generative Classifier hybrid, because it does not learn a
-generative model and does not synthesize old examples.
+It is not a generative method, because it does not learn a generator and does
+not synthesize old examples.
 
 For each stored example it keeps:
 
@@ -255,7 +241,6 @@ Smoke tests were run successfully on the NVIDIA RTX 3070 for:
 - EWC
 - LwF
 - A-GEM
-- Generative Classifier
 - LSR-lite + Fourier + ASW
 - Separate Networks
 
