@@ -43,6 +43,8 @@ SOURCE_COLORS = {
 
 
 def normalize_scenario(value: str) -> str:
+    """Normalize scenario names to the labels used in comparison graphs."""
+
     key = value.strip().lower().replace("-cl", "")
     return {
         "class": "Class-CL",
@@ -52,6 +54,8 @@ def normalize_scenario(value: str) -> str:
 
 
 def add_row(rows, scenario, method, source, accuracy_percent, note=""):
+    """Append one normalized comparison row to the growing result list."""
+
     rows.append(
         {
             "scenario": normalize_scenario(str(scenario)),
@@ -64,6 +68,8 @@ def add_row(rows, scenario, method, source, accuracy_percent, note=""):
 
 
 def build_comparison() -> pd.DataFrame:
+    """Merge paper, GMvandeVen-run, and clean-room result tables."""
+
     rows = []
 
     paper_df = pd.read_csv(PAPER_CSV, keep_default_na=False)
@@ -124,6 +130,8 @@ def apply_task_protocol_fix(our_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot(df: pd.DataFrame) -> None:
+    """Create the grouped paper-vs-code-vs-clean-room comparison graph."""
+
     scenarios = [scenario for scenario in SCENARIO_ORDER if scenario in set(df["scenario"].astype(str))]
     fig, axes = plt.subplots(len(scenarios), 1, figsize=(16, 5.2 * len(scenarios)), sharey=True)
     if len(scenarios) == 1:
@@ -201,6 +209,8 @@ def plot(df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    """Build comparison CSVs and regenerate the reproduction graph."""
+
     df = build_comparison()
     df.to_csv(OUT_CSV, index=False)
     merged_ours = apply_task_protocol_fix(pd.read_csv(OUR_CSV, keep_default_na=False))

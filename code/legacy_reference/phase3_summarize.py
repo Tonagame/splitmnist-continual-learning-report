@@ -49,15 +49,21 @@ LOGS = {
 
 
 def latest(paths):
+    """Return the newest existing path from a glob result."""
+
     paths = [p for p in paths if p.exists()]
     return max(paths, key=lambda p: p.stat().st_mtime) if paths else None
 
 
 def read_float(path):
+    """Read a single numeric result value from a text file."""
+
     return float(path.read_text(encoding="utf-8").strip())
 
 
 def find_result_files(results):
+    """Locate Phase 3 final-accuracy files for each method."""
+
     return {
         "None": latest(results.glob("acc-splitMNIST5-task--F-784x400x400_c10--i2000-lr0.001-b128-adam.txt")),
         "EWC": latest(results.glob("acc-splitMNIST5-task--F-784x400x400_c10--i2000-lr0.001-b128-adam--PReg*-offline.txt")),
@@ -73,6 +79,8 @@ def find_result_files(results):
 
 
 def find_time_files(results):
+    """Locate repository runtime files for classic Phase 3 methods."""
+
     return {
         "None": latest(results.glob("time-splitMNIST5-task--F-784x400x400_c10--i2000-lr0.001-b128-adam.txt")),
         "EWC": latest(results.glob("time-splitMNIST5-task--F-784x400x400_c10--i2000-lr0.001-b128-adam--PReg*-offline.txt")),
@@ -84,6 +92,8 @@ def find_time_files(results):
 
 
 def load_status(results):
+    """Load run_status.csv so reports can include success/failure state."""
+
     path = results / "run_status.csv"
     if not path.exists():
         return {}
@@ -92,6 +102,8 @@ def load_status(results):
 
 
 def runtime_from_log(results, method):
+    """Estimate runtime from method log timestamps when no time file exists."""
+
     log = results / "logs" / LOGS[method]
     if not log.exists():
         return ""
@@ -111,6 +123,8 @@ def runtime_from_log(results, method):
 
 
 def load_asw_stats(results, method):
+    """Read saved ASW factor statistics for H&T ASW variants."""
+
     pattern = {
         "H&T + ASW": "metrics-splitMNIST5-task--H&T-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.csv",
         "H&T + Fourier + ASW": "metrics-splitMNIST5-task--H&T-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.csv",
@@ -125,6 +139,8 @@ def load_asw_stats(results, method):
 
 
 def plot_final(rows, out):
+    """Create the Phase 3 final-accuracy bar chart."""
+
     methods = [r["method"] for r in rows]
     vals = [float(r["final_accuracy"]) if r["final_accuracy"] else math.nan for r in rows]
     colors = ["#7a8599", "#2f80ed", "#27ae60", "#f2994a", "#8b5cf6",
@@ -152,6 +168,8 @@ def plot_final(rows, out):
 
 
 def plot_learning_curve(curve_path, graph_path, context_graph_path):
+    """Create raw and context-aggregated Phase 3 learning-curve graphs."""
+
     if not curve_path.exists():
         return
     by_method = {}
@@ -197,6 +215,8 @@ def plot_learning_curve(curve_path, graph_path, context_graph_path):
 
 
 def main():
+    """Aggregate Phase 3 outputs into summary.csv, graphs, and a report."""
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--results-dir", required=True)
     args = parser.parse_args()

@@ -11,6 +11,8 @@ import pandas as pd
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse the folder containing a single from-scratch summary.csv file."""
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--results-dir", required=True)
     parser.add_argument("--title", default=None)
@@ -18,6 +20,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """Read one summary file and create a simple final-accuracy bar chart."""
+
     args = parse_args()
     results_dir = Path(args.results_dir)
     summary_path = results_dir / "summary.csv"

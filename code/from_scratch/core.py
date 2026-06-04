@@ -123,6 +123,8 @@ class SplitMNISTContext(Dataset):
     """
 
     def __init__(self, base: Dataset, indices: Sequence[int], digits: Tuple[int, int], scenario: str):
+        """Store the base dataset indexes and label-mapping rules."""
+
         self.base = base
         self.indices = list(indices)
         self.digits = tuple(digits)
@@ -131,9 +133,13 @@ class SplitMNISTContext(Dataset):
         self._local = {digits[0]: 0, digits[1]: 1}
 
     def __len__(self) -> int:
+        """Return how many MNIST examples belong to this context."""
+
         return len(self.indices)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Return one image with both the scenario label and original digit."""
+
         x, y = self.base[self.indices[idx]]
         original = int(y)
         # Domain-CL uses a shared binary output space. Class-CL and Task-CL keep
@@ -151,6 +157,8 @@ class MLP(nn.Module):
     """
 
     def __init__(self, output_dim: int, hidden: Sequence[int] = (400, 400), dropout: float = 0.0):
+        """Build the MLP encoder and classifier head."""
+
         super().__init__()
         layers: List[nn.Module] = []
         in_dim = 28 * 28
@@ -164,9 +172,13 @@ class MLP(nn.Module):
         self.classifier = nn.Linear(in_dim, output_dim)
 
     def features(self, x: torch.Tensor) -> torch.Tensor:
+        """Return the penultimate representation used by H&T anchoring."""
+
         return self.encoder(x.flatten(1))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Compute class logits from an input image batch."""
+
         return self.classifier(self.features(x))
 
 
@@ -179,10 +191,14 @@ class ReplayBuffer:
     """
 
     def __init__(self, samples_per_class: int):
+        """Create an empty buffer with a fixed per-class storage budget."""
+
         self.samples_per_class = samples_per_class
         self.data: Dict[int, Dict[str, torch.Tensor]] = {}
 
     def __len__(self) -> int:
+        """Return the total number of stored replay examples."""
+
         return sum(entry["x"].size(0) for entry in self.data.values())
 
     def add_from_dataset(

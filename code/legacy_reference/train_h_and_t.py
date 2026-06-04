@@ -32,13 +32,19 @@ class HAndTBuffer:
     """Class-balanced exemplar buffer with stored teacher signals."""
 
     def __init__(self, samples_per_class):
+        """Create an empty H&T buffer with a per-class exemplar limit."""
+
         self.samples_per_class = samples_per_class
         self.data = {}
 
     def __len__(self):
+        """Return the total number of examples currently stored."""
+
         return sum(entry["x"].size(0) for entry in self.data.values())
 
     def add_class(self, class_id, x, y, logits, features):
+        """Store exemplars and teacher signals for one class/context key."""
+
         n = min(self.samples_per_class, x.size(0))
         self.data[class_id] = {
             "x": x[:n].detach().cpu().clone(),
@@ -48,6 +54,8 @@ class HAndTBuffer:
         }
 
     def sample(self, batch_size, device):
+        """Sample replay examples with labels, logits, and features."""
+
         if len(self) == 0:
             return None
         entries = list(self.data.values())
@@ -65,6 +73,8 @@ class HAndTBuffer:
 
 
 def build_args():
+    """Parse CLI arguments and fill defaults expected by GMvandeVen utilities."""
+
     parser = argparse.ArgumentParser(description="Run the H&T prototype.")
     parser.add_argument("--experiment", type=str, default="splitMNIST")
     parser.add_argument("--scenario", type=str, default="class", choices=["task", "domain", "class"])
@@ -131,18 +141,24 @@ def build_args():
 
 
 def kd_loss(student_logits, teacher_logits, temp):
+    """Compute temperature-scaled distillation loss between logits."""
+
     log_probs = F.log_softmax(student_logits / temp, dim=1)
     target_probs = F.softmax(teacher_logits / temp, dim=1)
     return F.kl_div(log_probs, target_probs, reduction="batchmean") * (temp ** 2)
 
 
 def fourier_feature_loss(current_features, stored_features):
+    """Compare stored and current feature spectra for Fourier regularization."""
+
     current_spec = torch.log1p(torch.abs(torch.fft.rfft(current_features.float(), dim=1)))
     stored_spec = torch.log1p(torch.abs(torch.fft.rfft(stored_features.float(), dim=1)))
     return F.mse_loss(current_spec, stored_spec)
 
 
 def collect_class_exemplars(model, dataset, class_id, n, batch_size, device):
+    """Collect train exemplars plus model logits/features for buffer insertion."""
+
     loader = utils.get_data_loader(dataset, batch_size=batch_size, cuda=(device.type == "cuda"), drop_last=False)
     xs, ys, logits, features = [], [], [], []
     model.eval()
@@ -163,6 +179,8 @@ def collect_class_exemplars(model, dataset, class_id, n, batch_size, device):
 
 
 def evaluate_average(model, test_datasets, test_size, batch_size, current_context=None):
+    """Evaluate average accuracy over the requested test contexts."""
+
     accs = []
     datasets = test_datasets[:current_context] if current_context is not None else test_datasets
     for i, dataset in enumerate(datasets):
@@ -181,6 +199,8 @@ def evaluate_average(model, test_datasets, test_size, batch_size, current_contex
 
 
 def append_eval_history(file_path, method, iteration, context, accuracy):
+    """Append one intermediate evaluation row to a learning-curve CSV."""
+
     if file_path is None:
         return
     path = Path(file_path)
@@ -199,6 +219,8 @@ def append_eval_history(file_path, method, iteration, context, accuracy):
 
 
 def main():
+    """Run the legacy H&T prototype and save accuracy/metric outputs."""
+
     args = build_args()
     if args.scenario not in ("class", "domain", "task"):
         raise ValueError("This prototype runner supports Class-CL, Domain-CL, and Task-CL.")

@@ -15,6 +15,8 @@ from core import MLP, SplitMNISTContext, display_method, evaluate_neural, make_l
 
 
 def train_joint(args, train_contexts: Sequence[SplitMNISTContext], test_contexts: Sequence[SplitMNISTContext], output_dim: int, device: torch.device) -> Tuple[float, List[Dict[str, object]], float]:
+    """Train the upper-bound model on all contexts mixed together."""
+
     start = time.time()
     method_name = display_method(args.method)
     model = MLP(output_dim=output_dim, hidden=args.hidden, dropout=args.dropout).to(device)

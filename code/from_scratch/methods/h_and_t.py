@@ -13,12 +13,16 @@ from methods.lwf import kd_loss
 
 
 def fourier_loss(current_features: torch.Tensor, stored_features: torch.Tensor) -> torch.Tensor:
+    """Compare feature spectra for the optional Fourier auxiliary loss."""
+
     current_spec = torch.log1p(torch.abs(torch.fft.rfft(current_features.float(), dim=1)))
     stored_spec = torch.log1p(torch.abs(torch.fft.rfft(stored_features.float(), dim=1)))
     return F.mse_loss(current_spec, stored_spec)
 
 
 def h_and_t_options(method: str) -> Tuple[bool, bool, bool]:
+    """Decode which H&T ablation switches are active for a method id."""
+
     is_h_and_t = method.startswith("h-and-t")
     use_fourier = method in ("h-and-t-fourier", "h-and-t-fourier-asw")
     use_asw = method in ("h-and-t-asw", "h-and-t-fourier-asw")
@@ -57,6 +61,8 @@ def add_h_and_t_replay_loss(model, loss, replay: ReplayBuffer, args, use_fourier
 
 
 def asw_summary(factors: List[float]):
+    """Summarize ASW factors for JSON metrics when ASW was enabled."""
+
     if not factors:
         return {}
     return {

@@ -22,6 +22,8 @@ METHOD_ORDER = [
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse the result root and optional title for aggregation graphs."""
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, help="Root folder containing scenario result folders")
     parser.add_argument("--title", default="From-scratch Split MNIST classic methods")
@@ -29,12 +31,16 @@ def parse_args() -> argparse.Namespace:
 
 
 def ordered_categories(values, order):
+    """Return known categories first, followed by any unexpected extras."""
+
     present = [item for item in order if item in set(values)]
     extra = sorted(set(values) - set(order))
     return present + extra
 
 
 def read_summaries(root: Path) -> pd.DataFrame:
+    """Load scenario-level summary.csv files into one ordered dataframe."""
+
     frames = []
     for path in root.glob("splitmnist_*_*/summary.csv"):
         df = pd.read_csv(path, keep_default_na=False)
@@ -52,6 +58,8 @@ def read_summaries(root: Path) -> pd.DataFrame:
 
 
 def read_curves(root: Path) -> pd.DataFrame | None:
+    """Load available learning-curve CSV files, or return None if absent."""
+
     frames = []
     for path in root.glob("splitmnist_*_*/learning_curve.csv"):
         if path.stat().st_size == 0:
@@ -68,6 +76,8 @@ def read_curves(root: Path) -> pd.DataFrame | None:
 
 
 def plot_final_accuracy(df: pd.DataFrame, root: Path, title: str) -> Path:
+    """Create and save the combined final-accuracy bar chart."""
+
     scenarios = ordered_categories(df["scenario"].astype(str), SCENARIO_ORDER)
     methods = ordered_categories(df["method"].astype(str), METHOD_ORDER)
     fig, axes = plt.subplots(1, len(scenarios), figsize=(6.2 * len(scenarios), 6), sharey=True)
@@ -101,6 +111,8 @@ def plot_final_accuracy(df: pd.DataFrame, root: Path, title: str) -> Path:
 
 
 def plot_learning_curves(curves: pd.DataFrame, root: Path, title: str) -> Path:
+    """Create and save one learning-curve panel per scenario."""
+
     scenarios = ordered_categories(curves["scenario"].astype(str), SCENARIO_ORDER)
     fig, axes = plt.subplots(len(scenarios), 1, figsize=(12, 4.5 * len(scenarios)), sharex=False)
     if len(scenarios) == 1:
@@ -126,6 +138,8 @@ def plot_learning_curves(curves: pd.DataFrame, root: Path, title: str) -> Path:
 
 
 def write_report(df: pd.DataFrame, curves: pd.DataFrame | None, root: Path, final_graph: Path, curve_graph: Path | None) -> Path:
+    """Write a compact Markdown report pointing to the generated files."""
+
     report = root / "FROM_SCRATCH_CLASSIC_REPORT.md"
     lines = [
         "# From-Scratch Classic Split MNIST Report",
@@ -156,6 +170,8 @@ def write_report(df: pd.DataFrame, curves: pd.DataFrame | None, root: Path, fina
 
 
 def main() -> None:
+    """Run aggregation, graph generation, CSV export, and report writing."""
+
     args = parse_args()
     root = Path(args.root)
     root.mkdir(parents=True, exist_ok=True)

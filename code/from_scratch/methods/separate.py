@@ -13,6 +13,8 @@ from core import DIGIT_CONTEXTS, MLP, SplitMNISTContext, display_method, evaluat
 
 
 def train_separate(args, train_contexts: Sequence[SplitMNISTContext], test_contexts: Sequence[SplitMNISTContext], device: torch.device) -> Tuple[float, List[Dict[str, object]], float]:
+    """Train one small classifier per task for the Task-CL protocol."""
+
     start = time.time()
     method_name = display_method(args.method)
     models = [MLP(output_dim=2, hidden=args.hidden, dropout=args.dropout).to(device) for _ in train_contexts]

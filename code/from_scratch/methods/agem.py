@@ -12,6 +12,8 @@ from core import ReplayBuffer, supervised_context_loss
 
 
 def grad_vector(parameters: Sequence[nn.Parameter]) -> torch.Tensor:
+    """Flatten all current parameter gradients into one vector."""
+
     pieces = []
     for param in parameters:
         if param.grad is None:
@@ -22,6 +24,8 @@ def grad_vector(parameters: Sequence[nn.Parameter]) -> torch.Tensor:
 
 
 def set_grad_vector(parameters: Sequence[nn.Parameter], vector: torch.Tensor) -> None:
+    """Copy a flattened gradient vector back into model parameters."""
+
     pointer = 0
     for param in parameters:
         numel = param.numel()

@@ -38,6 +38,8 @@ from methods.sequential import train_sequential
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse and validate all CLI options for one Split MNIST run."""
+
     parser = argparse.ArgumentParser(description="Clean-room Split MNIST continual-learning runner")
     parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, h-and-t variants")
     parser.add_argument("--scenario", default="class", choices=["class", "domain", "task"])
@@ -93,6 +95,8 @@ def run_method(args: argparse.Namespace, train_contexts, test_contexts, output_d
 
 
 def main() -> None:
+    """Run one experiment and write its curves, summary row, and metadata."""
+
     args = parse_args()
     set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
