@@ -12,22 +12,6 @@ It includes:
 - reflective writing,
 - AI usage documentation.
 
-Published website after GitHub Pages is enabled:
-
-[`https://tonagame.github.io/splitmnist-continual-learning-report/`](https://tonagame.github.io/splitmnist-continual-learning-report/)
-
-## Submission Checklist
-
-| Rule / requirement | Link |
-|---|---|
-| GitHub site includes everything | [`index.html`](index.html) |
-| Algorithmic thinking | [`docs/ALGORITHMIC_THINKING.md`](docs/ALGORITHMIC_THINKING.md) |
-| Project stages | [`docs/PROJECT_STEPS.md`](docs/PROJECT_STEPS.md) |
-| Testing and validation by stage | [`docs/TESTING_BY_STAGE.md`](docs/TESTING_BY_STAGE.md) |
-| AI documentation | [`docs/AI_DOCUMENTATION.md`](docs/AI_DOCUMENTATION.md) |
-| Reflective writing / takeaways | [`docs/takeaways.md`](docs/takeaways.md) |
-| Clean-room code | [`code/from_scratch/`](code/from_scratch/) |
-
 ## Main Code
 
 The submitted implementation is:
@@ -55,28 +39,44 @@ Implemented methods:
 
 The older GMvandeVen-based scripts are kept only as historical reference files under [`code/legacy_reference/`](code/legacy_reference/).
 
-## Main Results And Graphs
+## Three Main Result Graphs
 
-Most important comparison graph:
+### 1. First We Ran Their Code And Compared It To The Paper
 
-![Paper vs GMvandeVen vs from-scratch](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+At the beginning, we ran the original GMvandeVen continual-learning code locally and compared those results against the paper table.
 
-All graph previews are also collected in [`assets/README.md`](assets/README.md).
+![Paper vs original-code local run](assets/paper_vs_ours_splitMNIST_common_methods.png)
 
-Other graphs:
+Source files:
 
-- [`assets/all-methods-by-scenario.png`](assets/all-methods-by-scenario.png)
-- [`assets/accuracy-heatmap.png`](assets/accuracy-heatmap.png)
-- [`assets/h-and-t-ablation-by-scenario.png`](assets/h-and-t-ablation-by-scenario.png)
-- [`assets/selected-learning-curves.png`](assets/selected-learning-curves.png)
-- [`assets/from_scratch_classic_no_ht_2000_final_accuracy.png`](assets/from_scratch_classic_no_ht_2000_final_accuracy.png)
-- [`assets/from_scratch_classic_no_ht_2000_learning_curves.png`](assets/from_scratch_classic_no_ht_2000_learning_curves.png)
+- [`assets/paper_vs_ours_splitMNIST_common_methods.png`](assets/paper_vs_ours_splitMNIST_common_methods.png)
+- [`assets/paper_vs_ours_splitMNIST_common_methods.csv`](assets/paper_vs_ours_splitMNIST_common_methods.csv)
 
-Result files:
+### 2. Then We Ran Our Code And Compared Everything
 
+After that, we ran our clean-room implementation and compared it against both the paper and the previous local run of the original code.
+
+![Paper vs original code vs our clean-room code](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+
+Source files:
+
+- [`assets/paper_vs_gmvandeven_vs_from_scratch.png`](assets/paper_vs_gmvandeven_vs_from_scratch.png)
 - [`assets/paper_vs_gmvandeven_vs_from_scratch.csv`](assets/paper_vs_gmvandeven_vs_from_scratch.csv)
 - [`assets/from_scratch_classic_no_ht_2000_summary.csv`](assets/from_scratch_classic_no_ht_2000_summary.csv)
+
+### 3. Finally We Compared H&T To The Other Methods
+
+H&T is our experimental hybrid method: A-GEM-style replay memory plus LwF-style distillation, with feature anchoring. We also tested H&T + Fourier, H&T + ASW, and H&T + Fourier + ASW.
+
+![H&T compared to the other methods](assets/all-methods-by-scenario.png)
+
+Source files:
+
+- [`assets/all-methods-by-scenario.png`](assets/all-methods-by-scenario.png)
+- [`assets/h-and-t-ablation-by-scenario.png`](assets/h-and-t-ablation-by-scenario.png)
 - [`assets/splitMNIST_2000_all_scenarios_summary.csv`](assets/splitMNIST_2000_all_scenarios_summary.csv)
+
+All graph previews are collected in [`assets/README.md`](assets/README.md).
 
 ## Documentation Index
 
@@ -89,14 +89,3 @@ Result files:
 - [`docs/PAPER_COMPARISON.md`](docs/PAPER_COMPARISON.md)
 - [`docs/IMPLEMENTATION_AUDIT.md`](docs/IMPLEMENTATION_AUDIT.md)
 - [`docs/H_AND_T_EXPLANATION.md`](docs/H_AND_T_EXPLANATION.md)
-
-## GitHub Pages Setup
-
-Use:
-
-```text
-Branch: main
-Folder: / root
-```
-
-The repository uses root [`index.html`](index.html), so do not choose `/docs` for GitHub Pages.
