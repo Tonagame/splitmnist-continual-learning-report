@@ -24,7 +24,7 @@ The graph compares:
 ## Key Result Files
 
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `../assets/from_scratch_classic_no_lsr_2000_summary.csv`
+- `../assets/from_scratch_classic_no_ht_2000_summary.csv`
 - `../assets/splitMNIST_2000_all_scenarios_summary.csv`
 
 ## What Matched Well
@@ -46,9 +46,9 @@ The likely reason is that our EWC implementation is simpler:
 
 This is documented as a partial reproduction, not hidden.
 
-## LSR-lite Result
+## H&T Result
 
-LSR-lite is our experimental bonus method. It is not part of the paper.
+H&T is our experimental bonus method. It is not part of the paper.
 
 It combines:
 
@@ -63,4 +63,4 @@ It performed especially well in Class-CL and Domain-CL, where catastrophic forge
 
 Detailed explanation:
 
-`LSR_LITE_EXPLANATION.md`
+`H_AND_T_EXPLANATION.md`

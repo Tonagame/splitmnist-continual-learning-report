@@ -30,7 +30,7 @@ Method-specific code:
 | LwF | `code/from_scratch/methods/lwf.py` plus `methods/sequential.py` |
 | A-GEM | `code/from_scratch/methods/agem.py` plus `methods/sequential.py` |
 | Separate Networks | `code/from_scratch/methods/separate.py` |
-| LSR-lite variants | `code/from_scratch/methods/lsr_lite.py` plus `methods/sequential.py` |
+| H&T variants | `code/from_scratch/methods/h_and_t.py` plus `methods/sequential.py` |
 
 Implemented by us:
 
@@ -42,10 +42,10 @@ Implemented by us:
 | LwF | Yes | Teacher snapshot and temperature-scaled logit distillation |
 | A-GEM | Yes | Replay buffer and gradient projection against memory gradient |
 | Separate Networks | Yes | One MLP per task, Task-CL only |
-| LSR-lite | Yes | Real replay, labels, teacher logits, feature anchoring |
-| LSR-lite + Fourier | Yes | Adds auxiliary Fourier feature-spectrum loss |
-| LSR-lite + ASW | Yes | Adaptive Stability Weighting for KD and feature losses |
-| LSR-lite + Fourier + ASW | Yes | Combined ablation |
+| H&T | Yes | Real replay, labels, teacher logits, feature anchoring |
+| H&T + Fourier | Yes | Adds auxiliary Fourier feature-spectrum loss |
+| H&T + ASW | Yes | Adaptive Stability Weighting for KD and feature losses |
+| H&T + Fourier + ASW | Yes | Combined ablation |
 
 Also implemented by us:
 
@@ -69,27 +69,27 @@ https://github.com/GMvandeVen/continual-learning
 We can compare our results against its reported/reference behavior, but the
 submitted implementation should be the code in `code/from_scratch/`.
 
-## LSR-lite Variants
+## H&T Variants
 
-LSR-lite is our experimental prototype. It combines:
+H&T is our experimental prototype. It combines:
 
 - exemplar replay / memory ideas, similar in spirit to A-GEM;
 - LwF-style teacher-logit distillation;
 - feature anchoring on penultimate representations.
 
-It should be described as a replay-and-distillation prototype. LSR-lite keeps
+It should be described as a replay-and-distillation prototype. H&T keeps
 real old training examples and does not synthesize samples.
 
-The four LSR variants tested were:
+The four H&T variants tested were:
 
-- `LSR-lite`
-- `LSR-lite + Fourier`
-- `LSR-lite + ASW`
-- `LSR-lite + Fourier + ASW`
+- `H&T`
+- `H&T + Fourier`
+- `H&T + ASW`
+- `H&T + Fourier + ASW`
 
 Detailed explanation:
 
-`LSR_LITE_EXPLANATION.md`
+`H_AND_T_EXPLANATION.md`
 
 ## Current Verification
 
@@ -99,7 +99,7 @@ Smoke tests passed on the RTX 3070 for:
 - EWC
 - LwF
 - A-GEM
-- LSR-lite + Fourier + ASW
+- H&T + Fourier + ASW
 - Joint
 - Separate Networks on Task-CL
 

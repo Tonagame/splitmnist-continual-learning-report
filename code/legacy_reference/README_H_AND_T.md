@@ -1,28 +1,28 @@
-# LSR-lite Prototype
+# H&T Prototype
 
-This repository copy includes a small experimental runner for **LSR-lite** on Split MNIST Class-CL:
+This repository copy includes a small experimental runner for **H&T** on Split MNIST Class-CL:
 
 ```powershell
-& "E:\conda-envs\continual\python.exe" train_lsr_lite.py --experiment=splitMNIST --scenario=class --contexts=5 --iters=100 --batch=128 --acc-n=1024 --results-dir="E:\Codex\continual-learning-setup\continual-learning\results\lsr-lite-class" --model-dir="E:\Codex\continual-learning-setup\continual-learning\results\models"
+& "E:\conda-envs\continual\python.exe" train_h_and_t.py --experiment=splitMNIST --scenario=class --contexts=5 --iters=100 --batch=128 --acc-n=1024 --results-dir="E:\Codex\continual-learning-setup\continual-learning\results\h-and-t-class" --model-dir="E:\Codex\continual-learning-setup\continual-learning\results\models"
 ```
 
 The Fourier ablation is enabled only with:
 
 ```powershell
-& "E:\conda-envs\continual\python.exe" train_lsr_lite.py --experiment=splitMNIST --scenario=class --contexts=5 --iters=100 --batch=128 --acc-n=1024 --fourier --results-dir="E:\Codex\continual-learning-setup\continual-learning\results\lsr-lite-class" --model-dir="E:\Codex\continual-learning-setup\continual-learning\results\models"
+& "E:\conda-envs\continual\python.exe" train_h_and_t.py --experiment=splitMNIST --scenario=class --contexts=5 --iters=100 --batch=128 --acc-n=1024 --fourier --results-dir="E:\Codex\continual-learning-setup\continual-learning\results\h-and-t-class" --model-dir="E:\Codex\continual-learning-setup\continual-learning\results\models"
 ```
 
 ## What Was Implemented
 
-`train_lsr_lite.py` is intentionally separate from the original `main.py` method switches. It reuses the repository's data loading, classifier definition, optimizer style, and evaluation helpers, but keeps the prototype isolated.
+`train_h_and_t.py` is intentionally separate from the original `main.py` method switches. It reuses the repository's data loading, classifier definition, optimizer style, and evaluation helpers, but keeps the prototype isolated.
 
-Conceptually, LSR-lite combines memory/replay and distillation ideas:
+Conceptually, H&T combines memory/replay and distillation ideas:
 
 - like A-GEM / replay methods, it keeps a small buffer of real old training examples;
 - like LwF, it uses teacher-logit distillation to preserve old output behavior;
 - it does not learn a generator and does not synthesize old samples.
 
-LSR-lite uses a real exemplar replay buffer. For each stored sample it keeps:
+H&T uses a real exemplar replay buffer. For each stored sample it keeps:
 
 - image tensor `x`
 - class label `y`
@@ -40,7 +40,7 @@ The default buffer budget is `100` exemplars per class, matching the existing A-
 
 ## Fourier Ablation
 
-The Fourier variant does **not** replace replay with FFT signatures. It uses the same real exemplar replay buffer as LSR-lite.
+The Fourier variant does **not** replace replay with FFT signatures. It uses the same real exemplar replay buffer as H&T.
 
 When `--fourier` is passed, the runner adds an auxiliary feature-spectrum anchoring term:
 
@@ -55,15 +55,15 @@ This is deliberately an auxiliary regularizer, not the core memory mechanism.
 The quick Class-CL comparison artifacts are saved under:
 
 ```text
-E:\Codex\continual-learning-setup\continual-learning\results\lsr-lite-class
+E:\Codex\continual-learning-setup\continual-learning\results\h-and-t-class
 ```
 
 Key files:
 
 - `summary.csv`
-- `splitMNIST_class_lsr_comparison.png`
-- `logs\splitMNIST_class_lsr_lite.log`
-- `logs\splitMNIST_class_lsr_lite_fourier.log`
+- `splitMNIST_class_h_and_t_comparison.png`
+- `logs\splitMNIST_class_h_and_t.log`
+- `logs\splitMNIST_class_h_and_t_fourier.log`
 
 ## Current Scope
 

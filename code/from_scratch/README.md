@@ -16,11 +16,11 @@ The code is split by responsibility so every method has a clear home:
 | `splitmnist_cl.py` | CLI entry point, argument parsing, method dispatch, result writing. |
 | `core.py` | Split MNIST construction, MLP, replay buffer, evaluation, CSV/JSON helpers. |
 | `methods/joint.py` | Joint Training upper-bound method. |
-| `methods/sequential.py` | Shared sequential loop for None, EWC, LwF, A-GEM, and LSR-lite variants. |
+| `methods/sequential.py` | Shared sequential loop for None, EWC, LwF, A-GEM, and H&T variants. |
 | `methods/ewc.py` | EWC Fisher estimate and quadratic penalty. |
 | `methods/lwf.py` | LwF teacher snapshot and distillation loss. |
 | `methods/agem.py` | A-GEM gradient projection update. |
-| `methods/lsr_lite.py` | LSR-lite replay, KD, feature anchoring, Fourier, and ASW losses. |
+| `methods/h_and_t.py` | H&T replay, KD, feature anchoring, Fourier, and ASW losses. |
 | `methods/separate.py` | Separate Networks for Task-CL. |
 
 Together these files implement:
@@ -34,10 +34,10 @@ Together these files implement:
 - Learning without Forgetting (LwF)
 - Average Gradient Episodic Memory (A-GEM)
 - Separate Networks for Task-CL
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 - CSV learning-curve logging
 - summary.csv and per-run metrics JSON files
 - combined summary and graph aggregation
@@ -60,7 +60,7 @@ E:\conda-envs\continual\python.exe .\code\from_scratch\splitmnist_cl.py `
 
 ## Serious Split MNIST Runs
 
-Run the classic methods for all scenarios, without LSR variants:
+Run the classic methods for all scenarios, without H&T variants:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\code\from_scratch\run_all_classic_from_scratch.ps1 `
@@ -70,11 +70,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\code\from_scratch\run_all_
 
 This creates:
 
-- `results_from_scratch/classic_no_lsr_2000/combined_summary.csv`
-- `results_from_scratch/classic_no_lsr_2000/combined_learning_curve.csv`
-- `results_from_scratch/classic_no_lsr_2000/from_scratch_classic_final_accuracy.png`
-- `results_from_scratch/classic_no_lsr_2000/from_scratch_classic_learning_curves.png`
-- `results_from_scratch/classic_no_lsr_2000/FROM_SCRATCH_CLASSIC_REPORT.md`
+- `results_from_scratch/classic_no_ht_2000/combined_summary.csv`
+- `results_from_scratch/classic_no_ht_2000/combined_learning_curve.csv`
+- `results_from_scratch/classic_no_ht_2000/from_scratch_classic_final_accuracy.png`
+- `results_from_scratch/classic_no_ht_2000/from_scratch_classic_learning_curves.png`
+- `results_from_scratch/classic_no_ht_2000/FROM_SCRATCH_CLASSIC_REPORT.md`
 
 To create the reproduction comparison against the paper and the earlier
 GMvandeVen-code run:
@@ -111,10 +111,10 @@ joint
 ewc
 lwf
 agem
-lsr-lite
-lsr-lite-fourier
-lsr-lite-asw
-lsr-lite-fourier-asw
+h-and-t
+h-and-t-fourier
+h-and-t-asw
+h-and-t-fourier-asw
 separate
 ```
 
@@ -124,7 +124,7 @@ separate
 
 - Test data is used only for evaluation.
 - Replay buffers are built only from train data.
-- A-GEM and LSR variants use the same default budget: 100 samples per original digit class.
+- A-GEM and H&T variants use the same default budget: 100 samples per original digit class.
 - Class-CL evaluates over all 10 classes with no task identity.
 - Task-CL uses task identity by masking to the two allowed classes for the current task.
 - Task-CL training also uses only the active task's two allowed classes for the supervised loss.
@@ -138,7 +138,7 @@ Smoke tests passed for:
 - EWC
 - LwF
 - A-GEM
-- LSR-lite + Fourier + ASW
+- H&T + Fourier + ASW
 - Joint
 - Separate Networks on Task-CL
 

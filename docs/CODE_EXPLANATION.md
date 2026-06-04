@@ -25,7 +25,7 @@ large file.
 | `code/from_scratch/methods/ewc.py` | EWC-specific Fisher and penalty code. |
 | `code/from_scratch/methods/lwf.py` | LwF teacher and distillation code. |
 | `code/from_scratch/methods/agem.py` | A-GEM gradient projection code. |
-| `code/from_scratch/methods/lsr_lite.py` | LSR-lite, Fourier, and ASW losses. |
+| `code/from_scratch/methods/h_and_t.py` | H&T, Fourier, and ASW losses. |
 | `code/from_scratch/methods/separate.py` | Separate Networks. |
 
 This layout is meant to make the defense easier: each method can be opened and
@@ -92,7 +92,7 @@ The default hidden layers are:
 400, 400
 ```
 
-The model also exposes a `features(x)` function. LSR-lite uses this penultimate
+The model also exposes a `features(x)` function. H&T uses this penultimate
 feature vector for feature anchoring.
 
 ## Implemented Methods
@@ -153,9 +153,9 @@ Separate Networks is implemented for Task-CL.
 The code creates one MLP per task, each with two output units.
 At evaluation time, the task identity selects the correct network.
 
-### LSR-lite
+### H&T
 
-LSR-lite stores a balanced replay buffer from training data only.
+H&T stores a balanced replay buffer from training data only.
 It is a hybrid of exemplar replay and distillation ideas:
 
 - like memory/replay methods such as A-GEM, it keeps a small buffer of old real examples;
@@ -184,7 +184,7 @@ L_total =
 + lambda_feat * MSE(current replay features, stored features)
 ```
 
-### LSR-lite + Fourier
+### H&T + Fourier
 
 This adds an auxiliary Fourier feature-spectrum loss:
 
@@ -195,7 +195,7 @@ MSE(log(1 + abs(rFFT(current_features))),
 
 It does not replace real replay samples.
 
-### LSR-lite + ASW
+### H&T + ASW
 
 Adaptive Stability Weighting adjusts the KD and feature-anchor weights:
 
@@ -211,7 +211,7 @@ lambda_kd_eff = lambda_kd * adaptive_factor
 lambda_feat_eff = lambda_feat * adaptive_factor
 ```
 
-### LSR-lite + Fourier + ASW
+### H&T + Fourier + ASW
 
 This combines the Fourier auxiliary loss with ASW.
 The Fourier weight stays fixed.
@@ -241,7 +241,7 @@ Smoke tests were run successfully on the NVIDIA RTX 3070 for:
 - EWC
 - LwF
 - A-GEM
-- LSR-lite + Fourier + ASW
+- H&T + Fourier + ASW
 - Separate Networks
 
 These tests used only one iteration per context, so they verify code execution,

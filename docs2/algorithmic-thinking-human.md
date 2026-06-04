@@ -74,8 +74,8 @@ Starting with EWC, each method had its own python file created and filled with f
 
 After implementing each method, it was ran and compared against the reference results. Some methods were closer to the paper than others - with most being really close and a few were off by a margin.
 
-## Hybrid approach
-Taking inspiration from a method called Latent Replay, we implemented a CL method fusing A-GEM and LwF: taking the replay element from A-GEM and the knowledge distillation from LwF.
+## H&T Hybrid Approach
+We implemented H&T as a CL method fusing ideas from A-GEM and LwF: taking the replay-memory element from A-GEM, the knowledge-distillation element from LwF, and adding feature anchoring.
 
 The goal is to reduce catastrophic forgetting by keeping a small, fair memory of old training examples and preserving both the model's old output behavior and its internal feature representation.
 For each saved replay example, the method stores:
@@ -104,7 +104,7 @@ The method displayed a strong improvement over the others - scoring high accurac
 We experimented with small additions to the method to check if they have any significant impact on the result. both additions were used separately and in combination - yielding small gains but no real improvement over just using the new method.
 #### Fourier
 The Fourier transform (FFT) of the feature vectors was used a regularization component in the loss calculation.
-#### Adaptive Stability Weighting (AWS)
+#### Adaptive Stability Weighting (ASW)
 The ratio between the loss of the replay and the current loss was used as a component of the knowledge distillation loss, making it more/less significant in the loss calculation.
 
 ## Validation during Development
@@ -114,7 +114,7 @@ Important checks:
 - Class-CL evaluation does not use task identity.
 - Class-CL final evaluation uses all 10 classes.
 - Task-CL uses allowed-class masking, as required by the protocol.
-- A-GEM and LSR-lite use the same default memory budget: 100 samples per original digit class.
+- A-GEM and H&T use the same default memory budget: 100 samples per original digit class.
 
 For large, 2000-iteration (per context) runs, checked:
 - every method produced logs,
@@ -130,3 +130,81 @@ After all the CL methods and scenario combinations were tested and checked - gra
 - Our results compared to the paper's results and the locally ran code from the included repository
 - The performance of each method grouped by scenario
 - The learning curves of each method
+
+## Human Design Choices
+
+The main human decisions in the project were:
+
+- choosing the paper: *Three types of incremental learning*;
+- choosing Split MNIST as the reproducible dataset;
+- deciding to compare Class-CL, Domain-CL, and Task-CL;
+- deciding to use the local NVIDIA RTX 3070 GPU;
+- checking whether results were fair and comparable;
+- requiring no test data during training;
+- requiring true Class-CL evaluation without task identity;
+- requiring the same memory budget for A-GEM and H&T variants;
+- deciding to remove the simplified generative-classifier experiment from the final method set;
+- deciding to add H&T as an experimental bonus prototype.
+
+## Scenario Logic
+
+| Scenario | What It Tests | Why It Matters |
+|---|---|---|
+| Class-CL | The model must choose among all 10 digits without task identity. | This is the hardest and most realistic setting. |
+| Domain-CL | The model uses a shared label space while data arrives in different contexts. | This tests robustness to changing input distributions. |
+| Task-CL | The model is told which task is active during evaluation. | This is easier because the allowed classes are restricted. |
+
+## Method Logic
+
+| Method | Algorithmic Idea |
+|---|---|
+| None | Train only on the current context. This shows forgetting directly. |
+| Joint | Train on all data together. This is an upper bound, not a true continual-learning method. |
+| EWC | Penalize changes to parameters that were important for previous contexts. |
+| LwF | Keep a frozen teacher model and distill old behavior into the new model. |
+| A-GEM | Use replay memory and project gradients when the new update conflicts with old examples. |
+| Separate Networks | Use one model per task. This mainly fits Task-CL. |
+| H&T | Store real old examples, labels, teacher logits, and feature vectors. |
+
+## H&T Human Design
+
+H&T means:
+
+```text
+Haim and Tamir Hybrid Technique
+```
+
+The method was designed as a memory-and-stability prototype.
+
+For each replay example, H&T stores:
+
+- image `x`,
+- label `y`,
+- teacher logits at insertion time,
+- penultimate feature vector at insertion time.
+
+The training loss combines:
+
+```text
+current cross entropy
++ replay cross entropy
++ logit distillation
++ feature anchoring
++ optional Fourier auxiliary loss
+```
+
+The key human idea was:
+
+> If the model sees old examples again, remembers its old predictions, and keeps its old internal representation stable, it should forget less.
+
+## Why This Counts As Algorithmic Thinking
+
+The project compares different algorithmic strategies for the same forgetting problem:
+
+- protect weights,
+- preserve old outputs,
+- use replay memory,
+- split models by task,
+- preserve internal representations.
+
+The results show that the best strategy depends on the scenario. Class-CL needs stronger memory and representation stability, while Task-CL is easier because task identity is available.

@@ -15,7 +15,7 @@ It helped with:
 - planning smoke tests and long experiments,
 - writing PowerShell runners,
 - debugging experiment failures,
-- designing the LSR-lite prototype,
+- designing the H&T prototype,
 - checking protocol issues such as test-data leakage and Class-CL evaluation,
 - creating CSV summaries and graphs,
 - writing the GitHub Pages report,
@@ -68,7 +68,7 @@ Plan:
 3. Keep settings identical.
 4. Save logs, CSV files, and graphs.
 
-### Plan 4: LSR-lite Prototype
+### Plan 4: H&T Prototype
 
 Goal:
 
@@ -152,7 +152,7 @@ AI helped turn the project into clear phases:
 
 - baseline runs,
 - selected continual-learning methods,
-- LSR-lite ablations,
+- H&T ablations,
 - Class-CL 2000-iteration run,
 - Domain-CL 2000-iteration run,
 - Task-CL 2000-iteration run.
@@ -165,7 +165,7 @@ AI helped check important risks:
 - replay buffers are built from train data only,
 - Class-CL has no task identity,
 - Task-CL uses allowed classes,
-- A-GEM and LSR-lite use comparable memory budgets.
+- A-GEM and H&T use comparable memory budgets.
 
 ### 5. Clean-Room Implementation
 
@@ -195,7 +195,7 @@ The project direction and requirements were provided by the student:
 - use Split MNIST,
 - run on RTX 3070,
 - compare Class-CL, Domain-CL, and Task-CL,
-- add LSR-lite, Fourier, and ASW ablations,
+- add H&T, Fourier, and ASW ablations,
 - switch from using the original repository directly to implementing methods independently,
 - remove the simplified generative-classifier experiment from the submitted method set,
 - keep limitations visible instead of hiding them.
@@ -207,7 +207,7 @@ AI did not replace the scientific responsibility of the project. The final repor
 - not all paper datasets were reproduced,
 - most long runs are single-seed runs,
 - EWC is a partial reproduction,
-- LSR-lite is our experimental prototype and not a method from the paper.
+- H&T is our experimental prototype and not a method from the paper.
 
 ## Transparency Note
 

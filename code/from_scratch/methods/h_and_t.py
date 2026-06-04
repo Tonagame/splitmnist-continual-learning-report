@@ -1,4 +1,4 @@
-"""LSR-lite replay, distillation, feature anchoring, Fourier, and ASW losses."""
+"""H&T replay, distillation, feature anchoring, Fourier, and ASW losses."""
 
 from __future__ import annotations
 
@@ -18,15 +18,15 @@ def fourier_loss(current_features: torch.Tensor, stored_features: torch.Tensor) 
     return F.mse_loss(current_spec, stored_spec)
 
 
-def lsr_options(method: str) -> Tuple[bool, bool, bool]:
-    is_lsr = method.startswith("lsr-lite")
-    use_fourier = method in ("lsr-lite-fourier", "lsr-lite-fourier-asw")
-    use_asw = method in ("lsr-lite-asw", "lsr-lite-fourier-asw")
-    return is_lsr, use_fourier, use_asw
+def h_and_t_options(method: str) -> Tuple[bool, bool, bool]:
+    is_h_and_t = method.startswith("h-and-t")
+    use_fourier = method in ("h-and-t-fourier", "h-and-t-fourier-asw")
+    use_asw = method in ("h-and-t-asw", "h-and-t-fourier-asw")
+    return is_h_and_t, use_fourier, use_asw
 
 
-def add_lsr_replay_loss(model, loss, replay: ReplayBuffer, args, use_fourier: bool, use_asw: bool, factors: List[float]):
-    """Add the LSR-lite stability terms to the current supervised loss."""
+def add_h_and_t_replay_loss(model, loss, replay: ReplayBuffer, args, use_fourier: bool, use_asw: bool, factors: List[float]):
+    """Add the H&T stability terms to the current supervised loss."""
 
     if len(replay) == 0:
         return loss
@@ -48,11 +48,11 @@ def add_lsr_replay_loss(model, loss, replay: ReplayBuffer, args, use_fourier: bo
         factor = max(args.asw_min, min(args.asw_max, factor))
         factors.append(float(factor))
 
-    loss = loss + args.lsr_replay_ce_lambda * replay_ce
-    loss = loss + args.lsr_kd_lambda * factor * kd
-    loss = loss + args.lsr_feature_lambda * factor * feature_anchor
+    loss = loss + args.h_and_t_replay_ce_lambda * replay_ce
+    loss = loss + args.h_and_t_kd_lambda * factor * kd
+    loss = loss + args.h_and_t_feature_lambda * factor * feature_anchor
     if use_fourier:
-        loss = loss + args.lsr_fourier_lambda * fourier_loss(rep_features, old_features)
+        loss = loss + args.h_and_t_fourier_lambda * fourier_loss(rep_features, old_features)
     return loss
 
 

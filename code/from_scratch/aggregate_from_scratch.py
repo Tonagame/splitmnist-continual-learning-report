@@ -130,7 +130,7 @@ def write_report(df: pd.DataFrame, curves: pd.DataFrame | None, root: Path, fina
     lines = [
         "# From-Scratch Classic Split MNIST Report",
         "",
-        "This report summarizes the independent implementation runs. LSR variants were not rerun in this batch by request.",
+        "This report summarizes the independent implementation runs. H&T variants were not rerun in this batch by request.",
         "",
         "## Final Accuracy",
         "",

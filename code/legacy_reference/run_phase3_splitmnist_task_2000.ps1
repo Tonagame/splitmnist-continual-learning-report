@@ -44,7 +44,7 @@ $CommonMain = @(
     "--budget=100", "--results-dir=$Out", "--plot-dir=$Plots", "--model-dir=$Models",
     "--eval-history-file=$LearningCurve"
 )
-$CommonLSR = @(
+$CommonHAndT = @(
     "--experiment=splitMNIST", "--scenario=task", "--contexts=5", "--iters=2000",
     "--batch=128", "--acc-n=1024", "--budget=100", "--eval-every=100",
     "--results-dir=$Out", "--model-dir=$Models", "--eval-history-file=$LearningCurve"
@@ -56,10 +56,10 @@ $Runs = @(
     @{ Method="LwF"; Script="main.py"; Args=$CommonMain + @("--lwf", "--eval-history-method=LwF"); Log=Join-Path $Logs "splitMNIST_task_2000_lwf.log" },
     @{ Method="A-GEM"; Script="main.py"; Args=$CommonMain + @("--agem", "--eval-history-method=A-GEM"); Log=Join-Path $Logs "splitMNIST_task_2000_agem.log" },
     @{ Method="Separate Networks"; Script="main.py"; Args=$CommonMain + @("--separate-networks", "--eval-history-method=Separate Networks"); Log=Join-Path $Logs "splitMNIST_task_2000_separate_networks.log" },
-    @{ Method="LSR-lite"; Script="train_lsr_lite.py"; Args=$CommonLSR + @("--eval-history-method=LSR-lite"); Log=Join-Path $Logs "splitMNIST_task_2000_lsr_lite.log" },
-    @{ Method="LSR-lite + Fourier"; Script="train_lsr_lite.py"; Args=$CommonLSR + @("--fourier", "--eval-history-method=LSR-lite + Fourier"); Log=Join-Path $Logs "splitMNIST_task_2000_lsr_lite_fourier.log" },
-    @{ Method="LSR-lite + ASW"; Script="train_lsr_lite.py"; Args=$CommonLSR + @("--asw", "--distill-weight=1.0", "--feature-weight=0.5", "--temp=2", "--eval-history-method=LSR-lite + ASW"); Log=Join-Path $Logs "splitMNIST_task_2000_lsr_lite_asw.log" },
-    @{ Method="LSR-lite + Fourier + ASW"; Script="train_lsr_lite.py"; Args=$CommonLSR + @("--fourier", "--asw", "--distill-weight=1.0", "--feature-weight=0.5", "--fourier-weight=0.05", "--temp=2", "--eval-history-method=LSR-lite + Fourier + ASW"); Log=Join-Path $Logs "splitMNIST_task_2000_lsr_lite_fourier_asw.log" },
+    @{ Method="H&T"; Script="train_h_and_t.py"; Args=$CommonHAndT + @("--eval-history-method=H&T"); Log=Join-Path $Logs "splitMNIST_task_2000_h_and_t.log" },
+    @{ Method="H&T + Fourier"; Script="train_h_and_t.py"; Args=$CommonHAndT + @("--fourier", "--eval-history-method=H&T + Fourier"); Log=Join-Path $Logs "splitMNIST_task_2000_h_and_t_fourier.log" },
+    @{ Method="H&T + ASW"; Script="train_h_and_t.py"; Args=$CommonHAndT + @("--asw", "--distill-weight=1.0", "--feature-weight=0.5", "--temp=2", "--eval-history-method=H&T + ASW"); Log=Join-Path $Logs "splitMNIST_task_2000_h_and_t_asw.log" },
+    @{ Method="H&T + Fourier + ASW"; Script="train_h_and_t.py"; Args=$CommonHAndT + @("--fourier", "--asw", "--distill-weight=1.0", "--feature-weight=0.5", "--fourier-weight=0.05", "--temp=2", "--eval-history-method=H&T + Fourier + ASW"); Log=Join-Path $Logs "splitMNIST_task_2000_h_and_t_fourier_asw.log" },
     @{ Method="Joint"; Script="main.py"; Args=@(
         "--experiment=splitMNIST", "--scenario=task", "--contexts=5", "--iters=10000",
         "--batch=128", "--acc-n=1024", "--acc-log=100", "--time", "--no-save",

@@ -48,10 +48,10 @@ Implemented methods:
 - LwF
 - A-GEM
 - Separate Networks
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 
 The older GMvandeVen-based scripts are kept only as historical reference files under [`code/legacy_reference/`](code/legacy_reference/).
 
@@ -67,20 +67,20 @@ Other graphs:
 
 - [`assets/all-methods-by-scenario.png`](assets/all-methods-by-scenario.png)
 - [`assets/accuracy-heatmap.png`](assets/accuracy-heatmap.png)
-- [`assets/lsr-ablation-by-scenario.png`](assets/lsr-ablation-by-scenario.png)
+- [`assets/h-and-t-ablation-by-scenario.png`](assets/h-and-t-ablation-by-scenario.png)
 - [`assets/selected-learning-curves.png`](assets/selected-learning-curves.png)
-- [`assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`](assets/from_scratch_classic_no_lsr_2000_final_accuracy.png)
-- [`assets/from_scratch_classic_no_lsr_2000_learning_curves.png`](assets/from_scratch_classic_no_lsr_2000_learning_curves.png)
+- [`assets/from_scratch_classic_no_ht_2000_final_accuracy.png`](assets/from_scratch_classic_no_ht_2000_final_accuracy.png)
+- [`assets/from_scratch_classic_no_ht_2000_learning_curves.png`](assets/from_scratch_classic_no_ht_2000_learning_curves.png)
 
 Result files:
 
 - [`assets/paper_vs_gmvandeven_vs_from_scratch.csv`](assets/paper_vs_gmvandeven_vs_from_scratch.csv)
-- [`assets/from_scratch_classic_no_lsr_2000_summary.csv`](assets/from_scratch_classic_no_lsr_2000_summary.csv)
+- [`assets/from_scratch_classic_no_ht_2000_summary.csv`](assets/from_scratch_classic_no_ht_2000_summary.csv)
 - [`assets/splitMNIST_2000_all_scenarios_summary.csv`](assets/splitMNIST_2000_all_scenarios_summary.csv)
 
 ## Documentation Index
 
-- [`docs2/README.md`](docs2/README.md) - short final submission pack with the four requested documents.
+- [`docs2/README.md`](docs2/README.md) - updated final submission pack. This is the cleaner Docs2 version of the original documentation archive.
 - [`docs/README.md`](docs/README.md)
 - [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md)
 - [`docs/REPRODUCTION_REPORT.md`](docs/REPRODUCTION_REPORT.md)
@@ -88,7 +88,7 @@ Result files:
 - [`docs/METHODS_IMPLEMENTATION.md`](docs/METHODS_IMPLEMENTATION.md)
 - [`docs/PAPER_COMPARISON.md`](docs/PAPER_COMPARISON.md)
 - [`docs/IMPLEMENTATION_AUDIT.md`](docs/IMPLEMENTATION_AUDIT.md)
-- [`docs/LSR_LITE_EXPLANATION.md`](docs/LSR_LITE_EXPLANATION.md)
+- [`docs/H_AND_T_EXPLANATION.md`](docs/H_AND_T_EXPLANATION.md)
 
 ## GitHub Pages Setup
 

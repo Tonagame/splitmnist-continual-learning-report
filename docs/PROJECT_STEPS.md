@@ -37,16 +37,16 @@ Ran or implemented:
 - A-GEM
 - Separate Networks
 
-## 5. LSR-lite Prototype
+## 5. H&T Prototype
 
 Implemented and tested:
 
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 
-The key LSR-lite mechanism was:
+The key H&T mechanism was:
 
 - real replay samples,
 - stored labels,
@@ -61,7 +61,7 @@ Checked:
 - replay buffers use train data only,
 - Class-CL has no task identity,
 - Task-CL keeps allowed-class evaluation,
-- A-GEM and LSR use the same memory budget where applicable.
+- A-GEM and H&T use the same memory budget where applicable.
 
 ## 7. Serious 2000-Iteration Runs
 

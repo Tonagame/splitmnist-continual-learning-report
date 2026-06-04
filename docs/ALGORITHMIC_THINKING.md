@@ -37,11 +37,11 @@ The algorithmic challenge is the **stability-plasticity tradeoff**:
 | LwF | Keep a frozen teacher model and distill its old predictions into the new model. |
 | A-GEM | Keep replay memory and project gradients when the new update conflicts with old examples. |
 | Separate Networks | Use one network per task. This works mainly when task identity is available. |
-| LSR-lite | Store real old examples plus labels, old logits, and feature vectors. |
+| H&T | Store real old examples plus labels, old logits, and feature vectors. |
 
-## LSR-lite Algorithmic Idea
+## H&T Algorithmic Idea
 
-LSR-lite means **Latent Stability Replay-lite**.
+H&T means **Haim and Tamir Hybrid Technique**.
 
 For each saved replay example, it stores:
 

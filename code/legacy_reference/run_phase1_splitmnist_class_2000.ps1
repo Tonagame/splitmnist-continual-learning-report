@@ -45,7 +45,7 @@ $Command
 }
 
 $CommonMain = "--experiment=splitMNIST --scenario=class --contexts=5 --iters=2000 --batch=128 --acc-n=1024 --acc-log=10 --time --no-save --budget=100 --results-dir=`"$Out`" --plot-dir=`"$Plots`" --model-dir=`"$Models`" --eval-history-file=`"$LearningCurve`""
-$CommonLSR = "--experiment=splitMNIST --scenario=class --contexts=5 --iters=2000 --batch=128 --acc-n=1024 --budget=100 --eval-every=10 --results-dir=`"$Out`" --model-dir=`"$Models`" --eval-history-file=`"$LearningCurve`""
+$CommonHAndT = "--experiment=splitMNIST --scenario=class --contexts=5 --iters=2000 --batch=128 --acc-n=1024 --budget=100 --eval-every=10 --results-dir=`"$Out`" --model-dir=`"$Models`" --eval-history-file=`"$LearningCurve`""
 
 $Runs = @(
     @{
@@ -69,24 +69,24 @@ $Runs = @(
         Log = Join-Path $Logs "splitMNIST_class_2000_agem.log"
     },
     @{
-        Method = "LSR-lite"
-        Command = "& `"$Python`" train_lsr_lite.py $CommonLSR --eval-history-method=`"LSR-lite`""
-        Log = Join-Path $Logs "splitMNIST_class_2000_lsr_lite.log"
+        Method = "H&T"
+        Command = "& `"$Python`" train_h_and_t.py $CommonHAndT --eval-history-method=`"H&T`""
+        Log = Join-Path $Logs "splitMNIST_class_2000_h_and_t.log"
     },
     @{
-        Method = "LSR-lite + Fourier"
-        Command = "& `"$Python`" train_lsr_lite.py $CommonLSR --fourier --eval-history-method=`"LSR-lite + Fourier`""
-        Log = Join-Path $Logs "splitMNIST_class_2000_lsr_lite_fourier.log"
+        Method = "H&T + Fourier"
+        Command = "& `"$Python`" train_h_and_t.py $CommonHAndT --fourier --eval-history-method=`"H&T + Fourier`""
+        Log = Join-Path $Logs "splitMNIST_class_2000_h_and_t_fourier.log"
     },
     @{
-        Method = "LSR-lite + ASW"
-        Command = "& `"$Python`" train_lsr_lite.py $CommonLSR --asw --distill-weight=1.0 --feature-weight=0.5 --temp=2 --eval-history-method=`"LSR-lite + ASW`""
-        Log = Join-Path $Logs "splitMNIST_class_2000_lsr_lite_asw.log"
+        Method = "H&T + ASW"
+        Command = "& `"$Python`" train_h_and_t.py $CommonHAndT --asw --distill-weight=1.0 --feature-weight=0.5 --temp=2 --eval-history-method=`"H&T + ASW`""
+        Log = Join-Path $Logs "splitMNIST_class_2000_h_and_t_asw.log"
     },
     @{
-        Method = "LSR-lite + Fourier + ASW"
-        Command = "& `"$Python`" train_lsr_lite.py $CommonLSR --fourier --asw --distill-weight=1.0 --feature-weight=0.5 --fourier-weight=0.05 --temp=2 --eval-history-method=`"LSR-lite + Fourier + ASW`""
-        Log = Join-Path $Logs "splitMNIST_class_2000_lsr_lite_fourier_asw.log"
+        Method = "H&T + Fourier + ASW"
+        Command = "& `"$Python`" train_h_and_t.py $CommonHAndT --fourier --asw --distill-weight=1.0 --feature-weight=0.5 --fourier-weight=0.05 --temp=2 --eval-history-method=`"H&T + Fourier + ASW`""
+        Log = Join-Path $Logs "splitMNIST_class_2000_h_and_t_fourier_asw.log"
     },
     @{
         Method = "Joint"

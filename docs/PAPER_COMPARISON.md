@@ -50,15 +50,15 @@ implementation.
 | Task-CL | Separate Networks | 99.57 | 0.03 | 99.74 | 0.17 |  |
 | Task-CL | Joint | 99.67 | 0.03 | 99.81 | 0.14 |  |
 
-## Our New LSR-lite Results
+## Our New H&T Results
 
-LSR-lite is not a method from the paper. It was implemented in this project, so it should be compared against paper methods only as a new experimental prototype.
+H&T is not a method from the paper. It was implemented in this project, so it should be compared against paper methods only as a new experimental prototype.
 
-| Scenario | Best LSR variant | Accuracy % | Comparable paper reference |
+| Scenario | Best H&T variant | Accuracy % | Comparable paper reference |
 |---|---|---:|---|
-| Class-CL | LSR-lite + Fourier + ASW | 92.84 | Below paper BI-R 94.41, above DGR 90.35, ER 88.79 and A-GEM 65.10 |
-| Domain-CL | LSR-lite | 96.51 | Above paper DGR 95.57 and ER 93.75, below paper BI-R 97.26 |
-| Task-CL | LSR-lite + Fourier + ASW | 99.40 | Close to paper LwF 99.60 / Separate Networks 99.57 / Joint 99.67 |
+| Class-CL | H&T + Fourier + ASW | 92.84 | Below paper BI-R 94.41, above DGR 90.35, ER 88.79 and A-GEM 65.10 |
+| Domain-CL | H&T | 96.51 | Above paper DGR 95.57 and ER 93.75, below paper BI-R 97.26 |
+| Task-CL | H&T + Fourier + ASW | 99.40 | Close to paper LwF 99.60 / Separate Networks 99.57 / Joint 99.67 |
 
 ## Main Interpretation
 
@@ -66,5 +66,5 @@ LSR-lite is not a method from the paper. It was implemented in this project, so 
 - Some classic methods differ because the paper reports 20-seed averages, while our runs are single local runs.
 - Our A-GEM in Class-CL was lower than the paper: 55.80% vs 65.10%.
 - Our LwF and EWC in Domain/Task were somewhat higher than the paper values.
-- LSR-lite is not in the paper, but it performed strongly: especially Class-CL and Domain-CL.
-- In Class-CL, our best LSR variant reached 92.84%, which is much higher than paper A-GEM and ER, but still below paper BI-R.
+- H&T is not in the paper, but it performed strongly: especially Class-CL and Domain-CL.
+- In Class-CL, our best H&T variant reached 92.84%, which is much higher than paper A-GEM and ER, but still below paper BI-R.

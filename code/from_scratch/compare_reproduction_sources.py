@@ -12,16 +12,18 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "assets"
-FROM_SCRATCH = ROOT / "results_from_scratch" / "classic_no_lsr_2000"
+FROM_SCRATCH = ROOT / "results_from_scratch" / "classic_no_ht_2000"
 
 PAPER_CSV = ASSETS / "paper_vs_ours_splitMNIST_common_methods.csv"
 GM_CSV = ASSETS / "splitMNIST_2000_all_scenarios_summary.csv"
-OUR_CSV = FROM_SCRATCH / "combined_summary.csv"
+LOCAL_OUR_CSV = FROM_SCRATCH / "combined_summary.csv"
+ASSET_OUR_CSV = ASSETS / "from_scratch_classic_no_ht_2000_summary.csv"
+OUR_CSV = LOCAL_OUR_CSV if LOCAL_OUR_CSV.exists() else ASSET_OUR_CSV
 TASK_FIX_CSV = ROOT / "results_from_scratch" / "task_protocol_fix_2000" / "summary.csv"
 
 OUT_CSV = ASSETS / "paper_vs_gmvandeven_vs_from_scratch.csv"
 OUT_PNG = ASSETS / "paper_vs_gmvandeven_vs_from_scratch.png"
-OUT_MERGED_OUR_CSV = ASSETS / "from_scratch_classic_no_lsr_2000_summary.csv"
+OUT_MERGED_OUR_CSV = ASSETS / "from_scratch_classic_no_ht_2000_summary.csv"
 
 SCENARIO_ORDER = ["Class-CL", "Domain-CL", "Task-CL"]
 METHOD_ORDER = [

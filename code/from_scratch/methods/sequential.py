@@ -1,4 +1,4 @@
-"""Sequential continual-learning methods: None, EWC, LwF, A-GEM, and LSR-lite."""
+"""Sequential continual-learning methods: None, EWC, LwF, A-GEM, and H&T."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from torch import optim
 from core import MLP, ReplayBuffer, SplitMNISTContext, display_method, evaluate_neural, make_loader, move_batch, next_batch, record_eval, supervised_context_loss
 from methods.agem import agem_step
 from methods.ewc import estimate_fisher, ewc_penalty
-from methods.lsr_lite import add_lsr_replay_loss, asw_summary, lsr_options
+from methods.h_and_t import add_h_and_t_replay_loss, asw_summary, h_and_t_options
 from methods.lwf import frozen_teacher, kd_loss
 
 
@@ -26,11 +26,11 @@ def train_sequential(args, train_contexts: Sequence[SplitMNISTContext], test_con
     ewc_tasks = []
     teacher = None
     replay = ReplayBuffer(args.memory_per_class)
-    lsr_factors: List[float] = []
+    h_and_t_factors: List[float] = []
     history: List[Dict[str, object]] = []
     global_step = 0
 
-    is_lsr, use_fourier, use_asw = lsr_options(args.method)
+    is_h_and_t, use_fourier, use_asw = h_and_t_options(args.method)
 
     for context_index, train_dataset in enumerate(train_contexts):
         loader = make_loader(train_dataset, args.batch, shuffle=True, drop_last=True)
@@ -55,8 +55,8 @@ def train_sequential(args, train_contexts: Sequence[SplitMNISTContext], test_con
                         teacher_logits = teacher(x)
                     loss = loss + args.lwf_lambda * kd_loss(logits, teacher_logits, args.temperature)
 
-                if is_lsr:
-                    loss = add_lsr_replay_loss(model, loss, replay, args, use_fourier, use_asw, lsr_factors)
+                if is_h_and_t:
+                    loss = add_h_and_t_replay_loss(model, loss, replay, args, use_fourier, use_asw, h_and_t_factors)
 
                 loss.backward()
                 optimizer.step()
@@ -71,10 +71,10 @@ def train_sequential(args, train_contexts: Sequence[SplitMNISTContext], test_con
             teacher = frozen_teacher(model, device)
         elif args.method == "agem":
             replay.add_from_dataset(model=None, dataset=train_dataset, device=device, batch_size=args.batch, store_signals=False)
-        elif is_lsr:
+        elif is_h_and_t:
             replay.add_from_dataset(model=model, dataset=train_dataset, device=device, batch_size=args.batch, store_signals=True)
 
     final_acc_n = None if args.final_acc_n == 0 else args.final_acc_n
     final_accuracy = evaluate_neural(model, test_contexts, args, device, acc_n=final_acc_n)
     runtime = time.time() - start
-    return final_accuracy, history, runtime, asw_summary(lsr_factors)
+    return final_accuracy, history, runtime, asw_summary(h_and_t_factors)

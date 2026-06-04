@@ -17,7 +17,7 @@ Main files:
 | `from_scratch/splitmnist_cl.py` | CLI entry point and method dispatch. |
 | `from_scratch/core.py` | Shared dataset, model, replay, evaluation, and output helpers. |
 | `from_scratch/methods/` | Method-specific implementation files. |
-| `from_scratch/run_all_classic_from_scratch.ps1` | Runs all classic methods over Class-CL, Domain-CL, and Task-CL without rerunning LSR. |
+| `from_scratch/run_all_classic_from_scratch.ps1` | Runs all classic methods over Class-CL, Domain-CL, and Task-CL without rerunning H&T. |
 | `from_scratch/run_splitmnist_from_scratch.ps1` | Runs long experiments for Class-CL, Domain-CL, or Task-CL. |
 | `from_scratch/aggregate_from_scratch.py` | Creates combined CSV files and graphs. |
 | `from_scratch/compare_reproduction_sources.py` | Compares paper results, GMvandeVen-code runs, and our from-scratch runs. |
@@ -32,10 +32,10 @@ Implemented from scratch:
 - LwF
 - A-GEM
 - Separate Networks
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 
 ## Legacy Reference Files
 
@@ -49,7 +49,7 @@ They are kept for transparency, but they are not the final answer to the assignm
 
 | File | Purpose |
 |---|---|
-| `legacy_reference/train_lsr_lite.py` | Earlier LSR-lite prototype that reused repository utilities. |
+| `legacy_reference/train_h_and_t.py` | Earlier H&T prototype that reused repository utilities. |
 | `legacy_reference/run_phase1_splitmnist_class_2000.ps1` | Earlier Class-CL runner for the GMvandeVen repo. |
 | `legacy_reference/run_phase2_splitmnist_domain_2000.ps1` | Earlier Domain-CL runner for the GMvandeVen repo. |
 | `legacy_reference/run_phase3_splitmnist_task_2000.ps1` | Earlier Task-CL runner for the GMvandeVen repo. |
@@ -64,4 +64,4 @@ They are kept for transparency, but they are not the final answer to the assignm
 - Replay buffers are built only from train data.
 - Class-CL evaluates over all 10 classes without task identity.
 - Task-CL uses task identity through allowed-class masking.
-- A-GEM and LSR variants use the same default memory budget: 100 samples per original digit class.
+- A-GEM and H&T variants use the same default memory budget: 100 samples per original digit class.

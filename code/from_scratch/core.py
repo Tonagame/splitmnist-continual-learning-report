@@ -3,7 +3,7 @@
 What this file does
 -------------------
 ``core.py`` is the common toolbox for the project. It does not implement EWC,
-LwF, A-GEM, LSR-lite, or any other method directly. Instead, it contains the
+LwF, A-GEM, H&T, or any other method directly. Instead, it contains the
 pieces that all methods need:
 
 1. method-name normalization for command-line input;
@@ -55,11 +55,11 @@ def normalize_method(name: str) -> str:
         "agem": "agem",
         "separate": "separate",
         "separate-networks": "separate",
-        "lsr": "lsr-lite",
-        "lsr-lite": "lsr-lite",
-        "lsr-lite-fourier": "lsr-lite-fourier",
-        "lsr-lite-asw": "lsr-lite-asw",
-        "lsr-lite-fourier-asw": "lsr-lite-fourier-asw",
+        "h&t": "h-and-t",
+        "h-and-t": "h-and-t",
+        "h-and-t-fourier": "h-and-t-fourier",
+        "h-and-t-asw": "h-and-t-asw",
+        "h-and-t-fourier-asw": "h-and-t-fourier-asw",
     }
     key = name.strip().lower()
     if key not in aliases:
@@ -77,10 +77,10 @@ def display_method(method: str) -> str:
         "lwf": "LwF",
         "agem": "A-GEM",
         "separate": "Separate Networks",
-        "lsr-lite": "LSR-lite",
-        "lsr-lite-fourier": "LSR-lite + Fourier",
-        "lsr-lite-asw": "LSR-lite + ASW",
-        "lsr-lite-fourier-asw": "LSR-lite + Fourier + ASW",
+        "h-and-t": "H&T",
+        "h-and-t-fourier": "H&T + Fourier",
+        "h-and-t-asw": "H&T + ASW",
+        "h-and-t-fourier-asw": "H&T + Fourier + ASW",
     }
     return names[method]
 
@@ -145,7 +145,7 @@ class SplitMNISTContext(Dataset):
 class MLP(nn.Module):
     """Small fully connected network used by all neural methods.
 
-    ``features(x)`` exposes the penultimate representation. LSR-lite uses this
+    ``features(x)`` exposes the penultimate representation. H&T uses this
     vector for feature anchoring; the normal classifier uses it to produce
     logits.
     """
@@ -173,7 +173,7 @@ class MLP(nn.Module):
 class ReplayBuffer:
     """Class-balanced CPU replay buffer built only from training data.
 
-    A-GEM stores only images and labels. LSR-lite stores those plus the old
+    A-GEM stores only images and labels. H&T stores those plus the old
     teacher logits and penultimate feature vectors. Nothing here ever reads
     from the test set.
     """
@@ -196,7 +196,7 @@ class ReplayBuffer:
         """Add up to ``samples_per_class`` examples per original digit.
 
         ``store_signals=False`` is used by A-GEM.
-        ``store_signals=True`` is used by LSR-lite to save logits/features from
+        ``store_signals=True`` is used by H&T to save logits/features from
         the current model at insertion time.
         """
 

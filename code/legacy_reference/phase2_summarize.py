@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 
 METHODS = [
-    "None", "EWC", "LwF", "A-GEM", "LSR-lite", "LSR-lite + Fourier",
-    "LSR-lite + ASW", "LSR-lite + Fourier + ASW", "Joint",
+    "None", "EWC", "LwF", "A-GEM", "H&T", "H&T + Fourier",
+    "H&T + ASW", "H&T + Fourier + ASW", "Joint",
 ]
 
 PYTHON = r"E:\conda-envs\continual\python.exe"
@@ -18,7 +18,7 @@ COMMON_MAIN = (
     "--experiment=splitMNIST --scenario=domain --contexts=5 --iters=2000 "
     "--batch=128 --acc-n=1024 --acc-log=100 --time --no-save --budget=100"
 )
-COMMON_LSR = (
+COMMON_H_AND_T = (
     "--experiment=splitMNIST --scenario=domain --contexts=5 --iters=2000 "
     "--batch=128 --acc-n=1024 --budget=100 --eval-every=100"
 )
@@ -27,10 +27,10 @@ COMMANDS = {
     "EWC": f'& "{PYTHON}" main.py {COMMON_MAIN} --ewc --eval-history-method=EWC',
     "LwF": f'& "{PYTHON}" main.py {COMMON_MAIN} --lwf --eval-history-method=LwF',
     "A-GEM": f'& "{PYTHON}" main.py {COMMON_MAIN} --agem --eval-history-method=A-GEM',
-    "LSR-lite": f'& "{PYTHON}" train_lsr_lite.py {COMMON_LSR} --eval-history-method=LSR-lite',
-    "LSR-lite + Fourier": f'& "{PYTHON}" train_lsr_lite.py {COMMON_LSR} --fourier --eval-history-method="LSR-lite + Fourier"',
-    "LSR-lite + ASW": f'& "{PYTHON}" train_lsr_lite.py {COMMON_LSR} --asw --distill-weight=1.0 --feature-weight=0.5 --temp=2 --eval-history-method="LSR-lite + ASW"',
-    "LSR-lite + Fourier + ASW": f'& "{PYTHON}" train_lsr_lite.py {COMMON_LSR} --fourier --asw --distill-weight=1.0 --feature-weight=0.5 --fourier-weight=0.05 --temp=2 --eval-history-method="LSR-lite + Fourier + ASW"',
+    "H&T": f'& "{PYTHON}" train_h_and_t.py {COMMON_H_AND_T} --eval-history-method=H&T',
+    "H&T + Fourier": f'& "{PYTHON}" train_h_and_t.py {COMMON_H_AND_T} --fourier --eval-history-method="H&T + Fourier"',
+    "H&T + ASW": f'& "{PYTHON}" train_h_and_t.py {COMMON_H_AND_T} --asw --distill-weight=1.0 --feature-weight=0.5 --temp=2 --eval-history-method="H&T + ASW"',
+    "H&T + Fourier + ASW": f'& "{PYTHON}" train_h_and_t.py {COMMON_H_AND_T} --fourier --asw --distill-weight=1.0 --feature-weight=0.5 --fourier-weight=0.05 --temp=2 --eval-history-method="H&T + Fourier + ASW"',
     "Joint": f'& "{PYTHON}" main.py --experiment=splitMNIST --scenario=domain --contexts=5 --iters=10000 --batch=128 --acc-n=1024 --acc-log=100 --time --no-save --budget=100 --joint --eval-history-method=Joint',
 }
 LOGS = {
@@ -38,10 +38,10 @@ LOGS = {
     "EWC": "splitMNIST_domain_2000_ewc.log",
     "LwF": "splitMNIST_domain_2000_lwf.log",
     "A-GEM": "splitMNIST_domain_2000_agem.log",
-    "LSR-lite": "splitMNIST_domain_2000_lsr_lite.log",
-    "LSR-lite + Fourier": "splitMNIST_domain_2000_lsr_lite_fourier.log",
-    "LSR-lite + ASW": "splitMNIST_domain_2000_lsr_lite_asw.log",
-    "LSR-lite + Fourier + ASW": "splitMNIST_domain_2000_lsr_lite_fourier_asw.log",
+    "H&T": "splitMNIST_domain_2000_h_and_t.log",
+    "H&T + Fourier": "splitMNIST_domain_2000_h_and_t_fourier.log",
+    "H&T + ASW": "splitMNIST_domain_2000_h_and_t_asw.log",
+    "H&T + Fourier + ASW": "splitMNIST_domain_2000_h_and_t_fourier_asw.log",
     "Joint": "splitMNIST_domain_2000_joint.log",
 }
 
@@ -61,10 +61,10 @@ def find_result_files(results):
         "EWC": latest(results.glob("acc-splitMNIST5-domain--F-784x400x400_c2--i2000-lr0.001-b128-adam--PReg*-offline.txt")),
         "LwF": latest(results.glob("acc-splitMNIST5-domain--F-784x400x400_c2--i2000-lr0.001-b128-adam--current-KD2.0.txt")),
         "A-GEM": latest(results.glob("acc-splitMNIST5-domain--F-784x400x400_c2--i2000-lr0.001-b128-adam--buffer-A-GEM*.txt")),
-        "LSR-lite": latest(results.glob("acc-splitMNIST5-domain--LSR-lite--i2000-b128-bud100-kd1.0-feat1.0.txt")),
-        "LSR-lite + Fourier": latest(results.glob("acc-splitMNIST5-domain--LSR-lite-Fourier--i2000-b128-bud100-kd1.0-feat1.0-fft0.1.txt")),
-        "LSR-lite + ASW": latest(results.glob("acc-splitMNIST5-domain--LSR-lite-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.txt")),
-        "LSR-lite + Fourier + ASW": latest(results.glob("acc-splitMNIST5-domain--LSR-lite-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.txt")),
+        "H&T": latest(results.glob("acc-splitMNIST5-domain--H&T--i2000-b128-bud100-kd1.0-feat1.0.txt")),
+        "H&T + Fourier": latest(results.glob("acc-splitMNIST5-domain--H&T-Fourier--i2000-b128-bud100-kd1.0-feat1.0-fft0.1.txt")),
+        "H&T + ASW": latest(results.glob("acc-splitMNIST5-domain--H&T-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.txt")),
+        "H&T + Fourier + ASW": latest(results.glob("acc-splitMNIST5-domain--H&T-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.txt")),
         "Joint": latest(results.glob("acc-splitMNIST5-Joint-domain--F-784x400x400_c2--i10000-lr0.001-b128-adam.txt")),
     }
 
@@ -108,8 +108,8 @@ def load_status(results):
 
 def load_asw_stats(results, method):
     pattern = {
-        "LSR-lite + ASW": "metrics-splitMNIST5-domain--LSR-lite-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.csv",
-        "LSR-lite + Fourier + ASW": "metrics-splitMNIST5-domain--LSR-lite-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.csv",
+        "H&T + ASW": "metrics-splitMNIST5-domain--H&T-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.csv",
+        "H&T + Fourier + ASW": "metrics-splitMNIST5-domain--H&T-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.csv",
     }.get(method)
     if not pattern:
         return {}
@@ -260,14 +260,14 @@ def main():
         "",
         f"Closest method to Joint: {closest['method'] if closest else 'n/a'}",
         f"Best improvement over None: {best['method'] if best else 'n/a'}",
-        f"Fourier helped vs LSR-lite: {acc.get('LSR-lite + Fourier', float('nan')) - acc.get('LSR-lite', float('nan')) if 'LSR-lite + Fourier' in acc and 'LSR-lite' in acc else 'n/a'}",
-        f"ASW helped vs LSR-lite: {acc.get('LSR-lite + ASW', float('nan')) - acc.get('LSR-lite', float('nan')) if 'LSR-lite + ASW' in acc and 'LSR-lite' in acc else 'n/a'}",
-        f"Fourier + ASW helped vs Fourier alone: {acc.get('LSR-lite + Fourier + ASW', float('nan')) - acc.get('LSR-lite + Fourier', float('nan')) if 'LSR-lite + Fourier + ASW' in acc and 'LSR-lite + Fourier' in acc else 'n/a'}",
+        f"Fourier helped vs H&T: {acc.get('H&T + Fourier', float('nan')) - acc.get('H&T', float('nan')) if 'H&T + Fourier' in acc and 'H&T' in acc else 'n/a'}",
+        f"ASW helped vs H&T: {acc.get('H&T + ASW', float('nan')) - acc.get('H&T', float('nan')) if 'H&T + ASW' in acc and 'H&T' in acc else 'n/a'}",
+        f"Fourier + ASW helped vs Fourier alone: {acc.get('H&T + Fourier + ASW', float('nan')) - acc.get('H&T + Fourier', float('nan')) if 'H&T + Fourier + ASW' in acc and 'H&T + Fourier' in acc else 'n/a'}",
         "",
         "## ASW Stats",
         "",
     ]
-    for method in ["LSR-lite + ASW", "LSR-lite + Fourier + ASW"]:
+    for method in ["H&T + ASW", "H&T + Fourier + ASW"]:
         stats = load_asw_stats(results, method)
         if stats:
             lines.append(f"- {stats['method']}: mean={stats.get('asw_mean')}, min={stats.get('asw_min')}, max={stats.get('asw_max')}")

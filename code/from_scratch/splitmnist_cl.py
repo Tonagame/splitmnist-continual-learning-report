@@ -39,7 +39,7 @@ from methods.sequential import train_sequential
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Clean-room Split MNIST continual-learning runner")
-    parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, lsr-lite variants")
+    parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, h-and-t variants")
     parser.add_argument("--scenario", default="class", choices=["class", "domain", "task"])
     parser.add_argument("--contexts", type=int, default=5)
     parser.add_argument("--iters", type=int, default=2000, help="iterations per context")
@@ -61,10 +61,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fisher-samples", type=int, default=1024)
     parser.add_argument("--lwf-lambda", type=float, default=1.0)
     parser.add_argument("--temperature", type=float, default=2.0)
-    parser.add_argument("--lsr-kd-lambda", type=float, default=1.0)
-    parser.add_argument("--lsr-feature-lambda", type=float, default=0.5)
-    parser.add_argument("--lsr-replay-ce-lambda", type=float, default=1.0)
-    parser.add_argument("--lsr-fourier-lambda", type=float, default=0.05)
+    parser.add_argument("--h-and-t-kd-lambda", type=float, default=1.0)
+    parser.add_argument("--h-and-t-feature-lambda", type=float, default=0.5)
+    parser.add_argument("--h-and-t-replay-ce-lambda", type=float, default=1.0)
+    parser.add_argument("--h-and-t-fourier-lambda", type=float, default=0.05)
     parser.add_argument("--asw-epsilon", type=float, default=1e-8)
     parser.add_argument("--asw-min", type=float, default=0.5)
     parser.add_argument("--asw-max", type=float, default=2.0)

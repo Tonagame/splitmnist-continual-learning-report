@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Split MNIST Continual Learning Results</title>
-  <meta name="description" content="סיכום ניסויי Continual Learning על Split MNIST: Class-CL, Domain-CL, Task-CL, LSR-lite ושיטות בסיס." />
+  <meta name="description" content="סיכום ניסויי Continual Learning על Split MNIST: Class-CL, Domain-CL, Task-CL, H&T ושיטות בסיס." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -29,7 +29,7 @@
         <h1>ניסוי למידה מתמשכת על Split MNIST</h1>
         <p class="lead">
           הרצה מקומית של מאגר GMvandeVen/continual-learning על Windows עם GPU,
-          כולל השוואה בין שיטות בסיס, שיטות קלאסיות, ווריאנטים ניסיוניים של LSR-lite.
+          כולל השוואה בין שיטות בסיס, שיטות קלאסיות, ווריאנטים ניסיוניים של H&T.
         </p>
         <div class="hero-actions">
           <a class="button primary" href="#results">לראות תוצאות</a>
@@ -43,12 +43,12 @@
         <article class="metric">
           <span>Class-CL</span>
           <strong>0.9284</strong>
-          <p>השיטה הטובה ביותר שאינה Joint: LSR-lite + Fourier + ASW</p>
+          <p>השיטה הטובה ביותר שאינה Joint: H&T + Fourier + ASW</p>
         </article>
         <article class="metric">
           <span>Domain-CL</span>
           <strong>0.9651</strong>
-          <p>השיטה הטובה ביותר שאינה Joint: LSR-lite</p>
+          <p>השיטה הטובה ביותר שאינה Joint: H&T</p>
         </article>
         <article class="metric">
           <span>Task-CL</span>
@@ -117,7 +117,7 @@
           <p>רשת נפרדת לכל task. מתאים בעיקר ל-Task-CL, שבו יודעים בזמן הערכה איזו משימה פעילה.</p>
         </article>
         <article class="method highlight">
-          <h3>LSR-lite</h3>
+          <h3>H&T</h3>
           <p>השיטה הניסיונית שלנו: replay של דוגמאות אמיתיות מהעבר, עם labels, teacher logits ו-feature anchoring. היא משלבת replay בסגנון שיטות memory כמו A-GEM עם distillation בסגנון LwF.</p>
         </article>
         <article class="method">
@@ -131,12 +131,12 @@
       </div>
     </section>
 
-    <section class="section lsr-box">
+    <section class="section h-and-t-box">
       <div>
-        <p class="eyebrow">LSR-lite</p>
+        <p class="eyebrow">H&T</p>
         <h2>המנגנון הניסיוני שבדקנו</h2>
         <p>
-          LSR-lite שומר buffer הוגן של 100 דוגמאות למחלקה. כל דוגמה כוללת את התמונה,
+          H&T שומר buffer הוגן של 100 דוגמאות למחלקה. כל דוגמה כוללת את התמונה,
           התווית, logits של המורה בזמן ההכנסה ל-buffer, ווקטור feature פנימי מהשכבה שלפני הפלט.
           חשוב לדייק: זו לא שיטה גנרטיבית, כי היא לא מייצרת דוגמאות חדשות;
           היא שומרת דוגמאות train אמיתיות ומשתמשת בהן כ-replay.
@@ -163,10 +163,10 @@
             <tr><td>EWC</td><td>0.2742</td><td>0.7074</td><td>0.0760</td></tr>
             <tr><td>LwF</td><td>0.2027</td><td>0.7789</td><td>0.0045</td></tr>
             <tr><td>A-GEM</td><td>0.5580</td><td>0.4235</td><td>0.3599</td></tr>
-            <tr><td>LSR-lite</td><td>0.9243</td><td>0.0573</td><td>0.7261</td></tr>
-            <tr><td>LSR-lite + Fourier</td><td>0.9264</td><td>0.0552</td><td>0.7282</td></tr>
-            <tr><td>LSR-lite + ASW</td><td>0.9241</td><td>0.0575</td><td>0.7259</td></tr>
-            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9284</td><td>0.0531</td><td>0.7302</td></tr>
+            <tr><td>H&T</td><td>0.9243</td><td>0.0573</td><td>0.7261</td></tr>
+            <tr><td>H&T + Fourier</td><td>0.9264</td><td>0.0552</td><td>0.7282</td></tr>
+            <tr><td>H&T + ASW</td><td>0.9241</td><td>0.0575</td><td>0.7259</td></tr>
+            <tr><td>H&T + Fourier + ASW</td><td>0.9284</td><td>0.0531</td><td>0.7302</td></tr>
             <tr><td>Joint</td><td>0.9815</td><td>0.0000</td><td>0.7834</td></tr>
           </tbody>
         </table>
@@ -181,10 +181,10 @@
             <tr><td>EWC</td><td>0.6464</td><td>0.3414</td><td>0.1029</td></tr>
             <tr><td>LwF</td><td>0.7863</td><td>0.2015</td><td>0.2428</td></tr>
             <tr><td>A-GEM</td><td>0.8819</td><td>0.1060</td><td>0.3384</td></tr>
-            <tr><td>LSR-lite</td><td>0.9651</td><td>0.0228</td><td>0.4216</td></tr>
-            <tr><td>LSR-lite + Fourier</td><td>0.9627</td><td>0.0252</td><td>0.4192</td></tr>
-            <tr><td>LSR-lite + ASW</td><td>0.9574</td><td>0.0305</td><td>0.4139</td></tr>
-            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9593</td><td>0.0286</td><td>0.4158</td></tr>
+            <tr><td>H&T</td><td>0.9651</td><td>0.0228</td><td>0.4216</td></tr>
+            <tr><td>H&T + Fourier</td><td>0.9627</td><td>0.0252</td><td>0.4192</td></tr>
+            <tr><td>H&T + ASW</td><td>0.9574</td><td>0.0305</td><td>0.4139</td></tr>
+            <tr><td>H&T + Fourier + ASW</td><td>0.9593</td><td>0.0286</td><td>0.4158</td></tr>
             <tr><td>Joint</td><td>0.9879</td><td>0.0000</td><td>0.4444</td></tr>
           </tbody>
         </table>
@@ -200,10 +200,10 @@
             <tr><td>LwF</td><td>0.9978</td><td>0.0003</td><td>0.1213</td></tr>
             <tr><td>A-GEM</td><td>0.9904</td><td>0.0077</td><td>0.1139</td></tr>
             <tr><td>Separate Networks</td><td>0.9974</td><td>0.0007</td><td>0.1209</td></tr>
-            <tr><td>LSR-lite</td><td>0.9933</td><td>0.0048</td><td>0.1168</td></tr>
-            <tr><td>LSR-lite + Fourier</td><td>0.9926</td><td>0.0055</td><td>0.1161</td></tr>
-            <tr><td>LSR-lite + ASW</td><td>0.9919</td><td>0.0062</td><td>0.1154</td></tr>
-            <tr><td>LSR-lite + Fourier + ASW</td><td>0.9940</td><td>0.0041</td><td>0.1175</td></tr>
+            <tr><td>H&T</td><td>0.9933</td><td>0.0048</td><td>0.1168</td></tr>
+            <tr><td>H&T + Fourier</td><td>0.9926</td><td>0.0055</td><td>0.1161</td></tr>
+            <tr><td>H&T + ASW</td><td>0.9919</td><td>0.0062</td><td>0.1154</td></tr>
+            <tr><td>H&T + Fourier + ASW</td><td>0.9940</td><td>0.0041</td><td>0.1175</td></tr>
             <tr><td>Joint</td><td>0.9981</td><td>0.0000</td><td>0.1216</td></tr>
           </tbody>
         </table>
@@ -223,8 +223,8 @@
           <figcaption>Heatmap שמראה איפה כל שיטה חזקה או חלשה.</figcaption>
         </figure>
         <figure>
-          <img src="assets/lsr-ablation-by-scenario.png" alt="השוואת וריאנטים של LSR" />
-          <figcaption>השוואת LSR-lite, Fourier, ASW ו-Joint.</figcaption>
+          <img src="assets/h-and-t-ablation-by-scenario.png" alt="השוואת וריאנטים של H&T" />
+          <figcaption>השוואת H&T, Fourier, ASW ו-Joint.</figcaption>
         </figure>
         <figure>
           <img src="assets/selected-learning-curves.png" alt="עקומות למידה נבחרות" />
@@ -280,7 +280,7 @@
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף PNG</a>,
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.csv">CSV השוואה משולשת</a>,
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.png">גרף השוואה משולשת</a>,
-        <a href="assets/from_scratch_classic_no_lsr_2000_summary.csv">תוצאות הקוד העצמאי</a>.
+        <a href="assets/from_scratch_classic_no_ht_2000_summary.csv">תוצאות הקוד העצמאי</a>.
       </p>
     </section>
 
@@ -289,11 +289,11 @@
       <h2>מסקנות קצרות</h2>
       <ol>
         <li><strong>Class-CL הוא המבחן האמיתי הקשה.</strong> בלי task identity, השיטות הקלאסיות מתקשות.</li>
-        <li><strong>LSR-lite הוא הכיוון המבטיח ביותר עבור Class-CL.</strong> הוא קפץ מ-0.1982 ב-None ליותר מ-0.92.</li>
-        <li><strong>Domain-CL גם מעדיף LSR-lite.</strong> plain LSR-lite היה הטוב ביותר מבין השיטות שאינן Joint.</li>
+        <li><strong>H&T הוא הכיוון המבטיח ביותר עבור Class-CL.</strong> הוא קפץ מ-0.1982 ב-None ליותר מ-0.92.</li>
+        <li><strong>Domain-CL גם מעדיף H&T.</strong> plain H&T היה הטוב ביותר מבין השיטות שאינן Joint.</li>
         <li><strong>Task-CL מתנהג אחרת.</strong> בגלל allowed classes, LwF ו-Separate Networks כמעט מגיעים ל-Joint.</li>
         <li><strong>Fourier ו-ASW הם ablations.</strong> הם מעניינים, אבל לא הלב של ההצלחה. הלב הוא replay אמיתי + distillation + feature anchoring.</li>
-        <li><strong>LSR-lite הוא replay + distillation.</strong> הוא קרוב יותר לשילוב של replay כמו A-GEM ו-distillation כמו LwF, עם feature anchoring.</li>
+        <li><strong>H&T הוא replay + distillation.</strong> הוא קרוב יותר לשילוב של replay כמו A-GEM ו-distillation כמו LwF, עם feature anchoring.</li>
       </ol>
     </section>
 
@@ -307,7 +307,7 @@
       <div class="method-grid">
         <article class="method highlight">
           <h3>from_scratch/splitmnist_cl.py</h3>
-          <p>המימוש החדש להגשה: קוד PyTorch עצמאי ל-None, Joint, EWC, LwF, A-GEM, Separate Networks וכל וריאנטי LSR-lite, בלי תלות בקוד של GMvandeVen.</p>
+          <p>המימוש החדש להגשה: קוד PyTorch עצמאי ל-None, Joint, EWC, LwF, A-GEM, Separate Networks וכל וריאנטי H&T, בלי תלות בקוד של GMvandeVen.</p>
         </article>
         <article class="method highlight">
           <h3>run_splitmnist_from_scratch.ps1</h3>
@@ -318,8 +318,8 @@
           <p>הנתיב הישן שהריץ את הריפו המקורי נשאר כרפרנס בלבד. לפי הדרישה החדשה, מגישים ומשחזרים תוצאות דרך <a href="code/from_scratch/">code/from_scratch/</a>.</p>
         </article>
         <article class="method highlight">
-          <h3>legacy_reference/train_lsr_lite.py</h3>
-          <p>מימוש LSR-lite מוקדם מהשלב שבו הרצנו את הריפו המקורי כרפרנס: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
+          <h3>legacy_reference/train_h_and_t.py</h3>
+          <p>מימוש H&T מוקדם מהשלב שבו הרצנו את הריפו המקורי כרפרנס: replay אמיתי, labels, teacher logits, feature vectors, Fourier auxiliary loss ו-ASW.</p>
         </article>
         <article class="method">
           <h3>legacy_reference phase runners</h3>
@@ -369,15 +369,15 @@
         <a href="assets/selected-learning-curves.png">גרף עקומות למידה</a>
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.png">גרף מול המאמר</a>
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.png">גרף מאמר מול קוד מול מימוש עצמאי</a>
-        <a href="assets/from_scratch_classic_no_lsr_2000_final_accuracy.png">גרף הקוד העצמאי</a>
+        <a href="assets/from_scratch_classic_no_ht_2000_final_accuracy.png">גרף הקוד העצמאי</a>
         <a href="docs/PAPER_COMPARISON.md">השוואה למאמר</a>
         <a href="assets/paper_vs_ours_splitMNIST_common_methods.csv">CSV מול המאמר</a>
         <a href="assets/paper_vs_gmvandeven_vs_from_scratch.csv">CSV השוואה משולשת</a>
-        <a href="assets/from_scratch_classic_no_lsr_2000_summary.csv">CSV הקוד העצמאי</a>
+        <a href="assets/from_scratch_classic_no_ht_2000_summary.csv">CSV הקוד העצמאי</a>
         <a href="docs/CODE_EXPLANATION.md">הסבר קוד</a>
         <a href="docs/METHODS_IMPLEMENTATION.md">מה מומש ומה הורץ</a>
         <a href="docs/IMPLEMENTATION_AUDIT.md">בדיקת תקינות המימוש</a>
-        <a href="docs/LSR_LITE_EXPLANATION.md">הסבר LSR-lite והווריאנטים</a>
+        <a href="docs/H_AND_T_EXPLANATION.md">הסבר H&T והווריאנטים</a>
         <a href="code/">תיקיית קוד</a>
         <a href="code/from_scratch/">קוד עצמאי from scratch</a>
         <a href="docs/takeaways.md">takeaways.md</a>
@@ -394,7 +394,7 @@
         </article>
         <article class="method">
           <h3>שלבי הפרויקט</h3>
-          <p>התקנת סביבת CUDA, בדיקות smoke, הרצת baseline, פיתוח LSR-lite, הרצת Class/Domain/Task ל-2000 איטרציות, ויצירת דוחות וגרפים.</p>
+          <p>התקנת סביבת CUDA, בדיקות smoke, הרצת baseline, פיתוח H&T, הרצת Class/Domain/Task ל-2000 איטרציות, ויצירת דוחות וגרפים.</p>
         </article>
         <article class="method">
           <h3>בדיקות בכל שלב</h3>
@@ -402,7 +402,7 @@
         </article>
         <article class="method">
           <h3>מסקנות מהפלט</h3>
-          <p>LSR-lite היה חזק במיוחד ב-Class-CL וב-Domain-CL. ב-Task-CL, LwF ו-Separate Networks כמעט הגיעו ל-Joint.</p>
+          <p>H&T היה חזק במיוחד ב-Class-CL וב-Domain-CL. ב-Task-CL, LwF ו-Separate Networks כמעט הגיעו ל-Joint.</p>
         </article>
         <article class="method">
           <h3>Reflective Writing</h3>

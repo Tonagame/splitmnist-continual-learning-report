@@ -41,10 +41,10 @@ The main comparison methods were:
 
 We also added our own experimental prototype:
 
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 
 ## What Is Not A Full Reproduction
 
@@ -54,7 +54,7 @@ Known limitations:
 
 - The paper reports mean and SEM over 20 seeds; most of our long runs are single local runs.
 - Our clean-room EWC implementation is valid but does not fully match the original Task-CL EWC result.
-- LSR-lite is our own experimental method, not a method from the paper.
+- H&T is our own experimental method, not a method from the paper.
 
 ## What To Present As The Main Implementation
 

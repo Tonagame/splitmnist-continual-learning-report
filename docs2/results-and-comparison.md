@@ -42,9 +42,9 @@ Raw CSV:
 
 ![Accuracy heatmap](../assets/accuracy-heatmap.png)
 
-### LSR-lite Ablation Graph
+### H&T Ablation Graph
 
-![LSR ablation by scenario](../assets/lsr-ablation-by-scenario.png)
+![H&T ablation by scenario](../assets/h-and-t-ablation-by-scenario.png)
 
 ### Selected Learning Curves
 
@@ -71,21 +71,21 @@ Raw CSV:
 | Task-CL | Separate Networks | 99.57 | Close to paper. |
 | Task-CL | Joint | 99.67 | Close to paper. |
 
-## LSR-lite Results
+## H&T Results
 
-LSR-lite is not from the paper. It is our experimental prototype.
+H&T is not from the paper. It is our experimental prototype.
 
-| Scenario | Best LSR Variant | Accuracy % | Interpretation |
+| Scenario | Best H&T Variant | Accuracy % | Interpretation |
 |---|---|---:|---|
-| Class-CL | LSR-lite + Fourier + ASW | 92.84 | Strong result in the hardest scenario. |
-| Domain-CL | LSR-lite | 96.51 | Best non-Joint LSR-family result for Domain-CL. |
-| Task-CL | LSR-lite + Fourier + ASW | 99.40 | Strong, but Task-CL is already easier due to task identity. |
+| Class-CL | H&T + Fourier + ASW | 92.84 | Strong result in the hardest scenario. |
+| Domain-CL | H&T | 96.51 | Best non-Joint H&T-family result for Domain-CL. |
+| Task-CL | H&T + Fourier + ASW | 99.40 | Strong, but Task-CL is already easier due to task identity. |
 
 ## Main Interpretation
 
 - Class-CL is the hardest scenario.
 - Joint Training remains the upper bound.
 - A-GEM is the strongest classic method in Class-CL among the reproduced classic baselines.
-- LSR-lite performs strongly because it stores richer replay signals.
+- H&T performs strongly because it stores richer replay signals.
 - Task-CL results are generally high because task identity is available.
 - EWC is implemented, but the from-scratch version remains a partial reproduction compared with the strongest reference result.

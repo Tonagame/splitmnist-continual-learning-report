@@ -246,7 +246,7 @@ a {
   background: #f2fbf7;
 }
 
-.lsr-box {
+.h-and-t-box {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px;
@@ -389,7 +389,7 @@ figcaption {
   .graph-grid,
   .download-grid,
   .two-column,
-  .lsr-box {
+  .h-and-t-box {
     grid-template-columns: 1fr;
   }
 

@@ -28,10 +28,10 @@ if ($Scenario -eq "task") {
         "lwf",
         "agem",
         "separate",
-        "lsr-lite",
-        "lsr-lite-fourier",
-        "lsr-lite-asw",
-        "lsr-lite-fourier-asw",
+        "h-and-t",
+        "h-and-t-fourier",
+        "h-and-t-asw",
+        "h-and-t-fourier-asw",
         "joint"
     )
 } else {
@@ -40,10 +40,10 @@ if ($Scenario -eq "task") {
         "ewc",
         "lwf",
         "agem",
-        "lsr-lite",
-        "lsr-lite-fourier",
-        "lsr-lite-asw",
-        "lsr-lite-fourier-asw",
+        "h-and-t",
+        "h-and-t-fourier",
+        "h-and-t-asw",
+        "h-and-t-fourier-asw",
         "joint"
     )
 }

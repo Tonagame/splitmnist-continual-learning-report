@@ -48,7 +48,7 @@ Each method was tested separately:
 - LwF: teacher snapshot and distillation.
 - A-GEM: replay memory and gradient projection.
 - Separate Networks: one model per task.
-- LSR-lite: replay buffer with logits/features.
+- H&T: replay buffer with logits/features.
 
 ## 5. Protocol Validation
 
@@ -59,7 +59,7 @@ Important checks:
 - Class-CL evaluation does not use task identity.
 - Class-CL final evaluation uses all 10 classes.
 - Task-CL uses allowed-class masking, as required by the protocol.
-- A-GEM and LSR-lite use the same default memory budget: 100 samples per original digit class.
+- A-GEM and H&T use the same default memory budget: 100 samples per original digit class.
 
 ## 6. Long-Run Validation
 
@@ -82,7 +82,7 @@ After splitting the code into method files, the following checks were run:
   - EWC
   - LwF
   - A-GEM
-  - LSR-lite + Fourier + ASW
+  - H&T + Fourier + ASW
   - Joint
   - Separate Networks
 

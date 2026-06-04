@@ -1,26 +1,24 @@
-# LSR-lite Explanation And Ablations
+# H&T Explanation And Ablations
 
-## What Is LSR-lite?
+## What Is H&T?
 
-LSR-lite is our experimental continual-learning prototype.
+H&T is our experimental continual-learning prototype.
 
 The name means:
 
 ```text
-Latent Stability Replay - lite
+Haim and Tamir Hybrid Technique
 ```
 
 The goal is to reduce catastrophic forgetting by keeping a small, fair memory of
 old training examples and preserving both the model's old output behavior and
 its internal feature representation.
 
-## Is LSR-lite A Hybrid Method?
+## Is H&T A Hybrid Method?
 
-Almost, but with an important correction.
+H&T is best described as a hybrid of:
 
-LSR-lite is best described as a hybrid of:
-
-| Source idea | What LSR-lite borrows |
+| Source idea | What H&T borrows |
 |---|---|
 | A-GEM / replay methods | A small memory buffer of old real training examples |
 | LwF | Knowledge distillation from stored teacher logits |
@@ -31,13 +29,13 @@ not generate synthetic old samples.
 
 A more accurate sentence is:
 
-> LSR-lite combines exemplar replay, LwF-style distillation, and feature
+> H&T combines exemplar replay, LwF-style distillation, and feature
 > anchoring. It is conceptually related to memory/replay methods such as A-GEM,
 > but it keeps real old examples instead of learning a generative model.
 
 ## What Is Stored In Memory?
 
-For each saved replay example, LSR-lite stores:
+For each saved replay example, H&T stores:
 
 - image `x`
 - label `y`
@@ -55,7 +53,7 @@ The buffer is built from train data only. Test data is never used for training.
 
 ## Loss Function
 
-The basic LSR-lite loss is:
+The basic H&T loss is:
 
 ```text
 L_total =
@@ -72,9 +70,9 @@ Where:
 - `L_KD_logits` keeps the current model close to the old teacher predictions.
 - `L_feature_anchor` keeps internal feature vectors close to their stored values.
 
-## Ablation 1: LSR-lite
+## Ablation 1: H&T
 
-Plain LSR-lite uses:
+Plain H&T uses:
 
 - real replay samples
 - labels
@@ -86,7 +84,7 @@ Plain LSR-lite uses:
 
 This is the core method.
 
-## Ablation 2: LSR-lite + Fourier
+## Ablation 2: H&T + Fourier
 
 This variant adds an auxiliary Fourier / spectral feature regularization term.
 
@@ -121,7 +119,7 @@ In our main run:
 lambda_fft = 0.05
 ```
 
-## Ablation 3: LSR-lite + ASW
+## Ablation 3: H&T + ASW
 
 ASW means:
 
@@ -155,7 +153,7 @@ temperature = 2
 epsilon = 1e-8
 ```
 
-## Ablation 4: LSR-lite + Fourier + ASW
+## Ablation 4: H&T + Fourier + ASW
 
 This combines:
 
@@ -172,13 +170,13 @@ anchor weights.
 ## Main 2000-Iteration Results
 
 These results are from the earlier controlled 2000-iteration experiments.
-They are useful as experimental results for LSR-lite, but the classic baseline
+They are useful as experimental results for H&T, but the classic baseline
 methods also have a newer from-scratch reproduction path in `code/from_scratch/`.
 
-| Scenario | LSR-lite | LSR-lite + Fourier | LSR-lite + ASW | LSR-lite + Fourier + ASW | Best LSR variant |
+| Scenario | H&T | H&T + Fourier | H&T + ASW | H&T + Fourier + ASW | Best H&T variant |
 |---|---:|---:|---:|---:|---|
 | Class-CL | 92.43% | 92.64% | 92.41% | 92.84% | Fourier + ASW |
-| Domain-CL | 96.51% | 96.27% | 95.74% | 95.93% | LSR-lite |
+| Domain-CL | 96.51% | 96.27% | 95.74% | 95.93% | H&T |
 | Task-CL | 99.33% | 99.26% | 99.19% | 99.40% | Fourier + ASW |
 
 ## What We Learned From The Ablations
@@ -186,14 +184,14 @@ methods also have a newer from-scratch reproduction path in `code/from_scratch/`
 1. The core replay mechanism matters most.
 2. Fourier helps slightly in Class-CL, but does not dominate.
 3. ASW alone does not always improve performance.
-4. Fourier + ASW gives the best Class-CL LSR result in our runs.
-5. Domain-CL preferred plain LSR-lite.
-6. Task-CL is already easy because task identity is available, so all LSR
+4. Fourier + ASW gives the best Class-CL H&T result in our runs.
+5. Domain-CL preferred plain H&T.
+6. Task-CL is already easy because task identity is available, so all H&T
    variants are close to Joint.
 
 ## How To Explain It Simply
 
-LSR-lite tries to solve forgetting by asking the model to remember old examples
+H&T tries to solve forgetting by asking the model to remember old examples
 in three ways:
 
 1. **Remember the label:** replay cross entropy.
@@ -207,6 +205,6 @@ Fourier and ASW are optional additions:
 
 ## Honest Limitation
 
-LSR-lite is our experimental prototype, not a method from the paper.
+H&T is our experimental prototype, not a method from the paper.
 It should be presented as a new ablation/prototype compared against the paper
 and GMvandeVen reference methods, not as an official reproduced method.

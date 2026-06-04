@@ -15,7 +15,7 @@ $ErrorActionPreference = "Continue"
 
 $Script = Join-Path $Root "code\from_scratch\splitmnist_cl.py"
 $Aggregate = Join-Path $Root "code\from_scratch\aggregate_from_scratch.py"
-$OutRoot = Join-Path $Root "results_from_scratch\classic_no_lsr_$Iters"
+$OutRoot = Join-Path $Root "results_from_scratch\classic_no_ht_$Iters"
 $Logs = Join-Path $OutRoot "logs"
 New-Item -ItemType Directory -Force -Path $OutRoot, $Logs | Out-Null
 
@@ -75,6 +75,6 @@ foreach ($ScenarioPlan in $Plan) {
     }
 }
 
-& $Python $Aggregate --root $OutRoot --title "From-scratch Split MNIST classic methods, no LSR, $Iters iterations" *>> (Join-Path $Logs "aggregate.log")
+& $Python $Aggregate --root $OutRoot --title "From-scratch Split MNIST classic methods, no H&T, $Iters iterations" *>> (Join-Path $Logs "aggregate.log")
 
-Write-Host "Saved from-scratch classic/no-LSR results to $OutRoot"
+Write-Host "Saved from-scratch classic/no-H&T results to $OutRoot"

@@ -50,9 +50,9 @@ AI helped organize the selected methods:
 
 The project later removed the simplified generative-classifier experiment from the submitted method set.
 
-### 4. LSR-lite Prototype
+### 4. H&T Prototype
 
-AI helped design and implement the LSR-lite prototype:
+AI helped design and implement the H&T prototype:
 
 - replay buffer with real old training samples,
 - labels,
@@ -95,7 +95,7 @@ The student made the main project decisions:
 - use Split MNIST;
 - run on RTX 3070;
 - compare Class-CL, Domain-CL, and Task-CL;
-- add LSR-lite, Fourier, and ASW;
+- add H&T, Fourier, and ASW;
 - switch from reference-code runs to from-scratch implementation;
 - keep limitations visible;
 - remove methods that were not cleanly comparable.

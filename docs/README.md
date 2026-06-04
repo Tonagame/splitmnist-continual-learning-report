@@ -13,7 +13,7 @@ For the shorter final submission pack, see [`../docs2/README.md`](../docs2/READM
 5. [`TESTING_BY_STAGE.md`](TESTING_BY_STAGE.md) - validation and testing at each stage.
 6. [`IMPLEMENTATION_AUDIT.md`](IMPLEMENTATION_AUDIT.md) - honesty check: what is fully implemented, partial, or experimental.
 7. [`CODE_EXPLANATION.md`](CODE_EXPLANATION.md) - how the implementation works.
-8. [`LSR_LITE_EXPLANATION.md`](LSR_LITE_EXPLANATION.md) - the LSR-lite prototype and its ablations.
+8. [`H_AND_T_EXPLANATION.md`](H_AND_T_EXPLANATION.md) - the H&T prototype and its ablations.
 9. [`PAPER_COMPARISON.md`](PAPER_COMPARISON.md) - detailed comparison with the paper and reference code.
 10. [`AI_DOCUMENTATION.md`](AI_DOCUMENTATION.md) - combined AI plan summary, usage report, and work log.
 
@@ -30,4 +30,4 @@ Important files:
 
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.png`
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `../assets/from_scratch_classic_no_lsr_2000_summary.csv`
+- `../assets/from_scratch_classic_no_ht_2000_summary.csv`

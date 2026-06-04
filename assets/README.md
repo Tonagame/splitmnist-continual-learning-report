@@ -13,10 +13,10 @@ The current comparisons include:
 - LwF
 - A-GEM
 - Separate Networks for Task-CL
-- LSR-lite
-- LSR-lite + Fourier
-- LSR-lite + ASW
-- LSR-lite + Fourier + ASW
+- H&T
+- H&T + Fourier
+- H&T + ASW
+- H&T + Fourier + ASW
 - Joint
 
 ## Main Graphs
@@ -45,11 +45,11 @@ Summarizes accuracy by method and scenario in a compact heatmap view.
 
 ![Accuracy Heatmap](accuracy-heatmap.png)
 
-### LSR Ablation By Scenario
+### H&T Ablation By Scenario
 
-Compares LSR-lite, Fourier, ASW, and Fourier + ASW variants across the continual-learning scenarios.
+Compares H&T, Fourier, ASW, and Fourier + ASW variants across the continual-learning scenarios.
 
-![LSR Ablation By Scenario](lsr-ablation-by-scenario.png)
+![H&T Ablation By Scenario](h-and-t-ablation-by-scenario.png)
 
 ### Selected Learning Curves
 
@@ -59,22 +59,22 @@ Shows selected learning curves over training progress.
 
 ### From-Scratch Classic Final Accuracy
 
-Final accuracy for the from-scratch classic, non-LSR methods.
+Final accuracy for the from-scratch classic, non-H&T methods.
 
-![From-Scratch Classic Final Accuracy](from_scratch_classic_no_lsr_2000_final_accuracy.png)
+![From-Scratch Classic Final Accuracy](from_scratch_classic_no_ht_2000_final_accuracy.png)
 
 ### From-Scratch Classic Learning Curves
 
-Learning curves for the from-scratch classic, non-LSR methods.
+Learning curves for the from-scratch classic, non-H&T methods.
 
-![From-Scratch Classic Learning Curves](from_scratch_classic_no_lsr_2000_learning_curves.png)
+![From-Scratch Classic Learning Curves](from_scratch_classic_no_ht_2000_learning_curves.png)
 
 ## CSV Result Tables
 
 - [paper_vs_gmvandeven_vs_from_scratch.csv](paper_vs_gmvandeven_vs_from_scratch.csv)
 - [paper_vs_ours_splitMNIST_common_methods.csv](paper_vs_ours_splitMNIST_common_methods.csv)
 - [splitMNIST_2000_all_scenarios_summary.csv](splitMNIST_2000_all_scenarios_summary.csv)
-- [from_scratch_classic_no_lsr_2000_summary.csv](from_scratch_classic_no_lsr_2000_summary.csv)
+- [from_scratch_classic_no_ht_2000_summary.csv](from_scratch_classic_no_ht_2000_summary.csv)
 
 ## Notes
 

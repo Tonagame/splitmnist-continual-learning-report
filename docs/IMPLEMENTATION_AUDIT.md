@@ -51,17 +51,17 @@ Implemented from scratch:
 | LwF | Done | Teacher snapshot + logit distillation |
 | A-GEM | Done | Replay memory + gradient projection |
 | Separate Networks | Done | Task-CL only |
-| LSR-lite variants | Done | Replay + labels + logits + feature anchoring + optional Fourier / ASW |
+| H&T variants | Done | Replay + labels + logits + feature anchoring + optional Fourier / ASW |
 | CSV logging | Done | `summary.csv`, `learning_curve.csv`, metrics JSON |
 | Graph generation | Done | Aggregation and comparison scripts |
 
-## LSR-lite Positioning
+## H&T Positioning
 
-LSR-lite should be described carefully.
+H&T should be described carefully.
 
 Correct:
 
-> LSR-lite combines exemplar replay, LwF-style distillation, and feature
+> H&T combines exemplar replay, LwF-style distillation, and feature
 > anchoring.
 
 Partly correct but needs nuance:
@@ -70,12 +70,12 @@ Partly correct but needs nuance:
 
 Important distinction:
 
-LSR-lite does not train a generative model and does not generate synthetic old
+H&T does not train a generative model and does not generate synthetic old
 samples. It stores real old training examples.
 
 Detailed explanation:
 
-`LSR_LITE_EXPLANATION.md`
+`H_AND_T_EXPLANATION.md`
 
 ## What We Fixed
 
@@ -175,9 +175,9 @@ Graphs and CSVs:
 
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.png`
 - `../assets/paper_vs_gmvandeven_vs_from_scratch.csv`
-- `../assets/from_scratch_classic_no_lsr_2000_summary.csv`
-- `../assets/from_scratch_classic_no_lsr_2000_final_accuracy.png`
-- `../assets/from_scratch_classic_no_lsr_2000_learning_curves.png`
+- `../assets/from_scratch_classic_no_ht_2000_summary.csv`
+- `../assets/from_scratch_classic_no_ht_2000_final_accuracy.png`
+- `../assets/from_scratch_classic_no_ht_2000_learning_curves.png`
 
 ## Final Assessment
 

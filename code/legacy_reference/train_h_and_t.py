@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Prototype runner for LSR-lite on task-based continual-learning experiments.
+"""Prototype runner for H&T on task-based continual-learning experiments.
 
-This script intentionally keeps the experimental LSR code separate from the
+This script intentionally keeps the experimental H&T code separate from the
 repository's established methods. It reuses the repository data/model/eval
 utilities, while adding a real-sample replay buffer that stores labels, teacher
 logits, and penultimate features at insertion time.
@@ -28,7 +28,7 @@ from models import define_models as define
 from params.param_values import set_default_values
 
 
-class LSRBuffer:
+class HAndTBuffer:
     """Class-balanced exemplar buffer with stored teacher signals."""
 
     def __init__(self, samples_per_class):
@@ -65,7 +65,7 @@ class LSRBuffer:
 
 
 def build_args():
-    parser = argparse.ArgumentParser(description="Run the LSR-lite prototype.")
+    parser = argparse.ArgumentParser(description="Run the H&T prototype.")
     parser.add_argument("--experiment", type=str, default="splitMNIST")
     parser.add_argument("--scenario", type=str, default="class", choices=["task", "domain", "class"])
     parser.add_argument("--contexts", type=int, default=5)
@@ -74,7 +74,7 @@ def build_args():
     parser.add_argument("--acc-n", type=int, default=1024)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--data-dir", type=str, default="./store/datasets", dest="d_dir")
-    parser.add_argument("--results-dir", type=str, default="./results/lsr-lite-class", dest="r_dir")
+    parser.add_argument("--results-dir", type=str, default="./results/h-and-t-class", dest="r_dir")
     parser.add_argument("--model-dir", type=str, default="./results/models", dest="m_dir")
     parser.add_argument("--budget", type=int, default=100, help="stored exemplars per class")
     parser.add_argument("--distill-weight", type=float, default=1.0)
@@ -232,10 +232,10 @@ def main():
         betas=(0.9, 0.999),
     )
 
-    buffer = LSRBuffer(samples_per_class=args.budget)
+    buffer = HAndTBuffer(samples_per_class=args.budget)
     final_losses = {}
     adaptive_factors = []
-    method = "LSR-lite"
+    method = "H&T"
     if args.fourier:
         method += "+Fourier"
     if args.asw:
@@ -319,7 +319,7 @@ def main():
                     args.eval_history_file, eval_history_method, global_iteration, context, history_acc
                 )
             progress.set_description(
-                "<LSR{}> | Context: {}/{} | loss: {:.3f} |".format(
+                "<H&T{}> | Context: {}/{} | loss: {:.3f} |".format(
                     "{}{}".format("+FFT" if args.fourier else "", "+ASW" if args.asw else ""),
                     context,
                     args.contexts,

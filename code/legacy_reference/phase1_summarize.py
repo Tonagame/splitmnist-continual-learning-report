@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 METHODS = [
     "None", "EWC", "LwF", "A-GEM",
-    "LSR-lite", "LSR-lite + Fourier", "LSR-lite + ASW",
-    "LSR-lite + Fourier + ASW", "Joint",
+    "H&T", "H&T + Fourier", "H&T + ASW",
+    "H&T + Fourier + ASW", "Joint",
 ]
 
 
@@ -29,10 +29,10 @@ def find_result_files(results):
         "EWC": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--PReg*-offline.txt")),
         "LwF": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--current-KD2.0.txt")),
         "A-GEM": latest(results.glob("acc-splitMNIST5-class--F-784x400x400_c10--i2000-lr0.001-b128-adam-all--buffer-A-GEM*.txt")),
-        "LSR-lite": latest(results.glob("acc-splitMNIST5-class--LSR-lite--i2000-b128-bud100-kd1.0-feat1.0.txt")),
-        "LSR-lite + Fourier": latest(results.glob("acc-splitMNIST5-class--LSR-lite-Fourier--i2000-b128-bud100-kd1.0-feat1.0-fft0.1.txt")),
-        "LSR-lite + ASW": latest(results.glob("acc-splitMNIST5-class--LSR-lite-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.txt")),
-        "LSR-lite + Fourier + ASW": latest(results.glob("acc-splitMNIST5-class--LSR-lite-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.txt")),
+        "H&T": latest(results.glob("acc-splitMNIST5-class--H&T--i2000-b128-bud100-kd1.0-feat1.0.txt")),
+        "H&T + Fourier": latest(results.glob("acc-splitMNIST5-class--H&T-Fourier--i2000-b128-bud100-kd1.0-feat1.0-fft0.1.txt")),
+        "H&T + ASW": latest(results.glob("acc-splitMNIST5-class--H&T-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.txt")),
+        "H&T + Fourier + ASW": latest(results.glob("acc-splitMNIST5-class--H&T-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.txt")),
         "Joint": latest(results.glob("acc-splitMNIST5-Joint-class--F-784x400x400_c10--i10000-lr0.001-b128-adam-all.txt")),
     }
 
@@ -47,8 +47,8 @@ def load_status(results):
 
 def load_asw_stats(results, method):
     pattern = {
-        "LSR-lite + ASW": "metrics-splitMNIST5-class--LSR-lite-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.csv",
-        "LSR-lite + Fourier + ASW": "metrics-splitMNIST5-class--LSR-lite-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.csv",
+        "H&T + ASW": "metrics-splitMNIST5-class--H&T-ASW--i2000-b128-bud100-kd1.0-feat0.5-asw0.5-2.0-eps1e-08.csv",
+        "H&T + Fourier + ASW": "metrics-splitMNIST5-class--H&T-Fourier-ASW--i2000-b128-bud100-kd1.0-feat0.5-fft0.05-asw0.5-2.0-eps1e-08.csv",
     }.get(method)
     if not pattern:
         return {}
@@ -168,14 +168,14 @@ def write_report(results, rows, status):
         "",
         f"Closest method to Joint: {closest['method'] if closest else 'n/a'}",
         f"Best improvement over None: {best['method'] if best else 'n/a'}",
-        f"Fourier helped vs LSR-lite: {acc.get('LSR-lite + Fourier', float('nan')) - acc.get('LSR-lite', float('nan')) if 'LSR-lite + Fourier' in acc and 'LSR-lite' in acc else 'n/a'}",
-        f"ASW helped vs LSR-lite: {acc.get('LSR-lite + ASW', float('nan')) - acc.get('LSR-lite', float('nan')) if 'LSR-lite + ASW' in acc and 'LSR-lite' in acc else 'n/a'}",
-        f"Fourier + ASW helped vs Fourier alone: {acc.get('LSR-lite + Fourier + ASW', float('nan')) - acc.get('LSR-lite + Fourier', float('nan')) if 'LSR-lite + Fourier + ASW' in acc and 'LSR-lite + Fourier' in acc else 'n/a'}",
+        f"Fourier helped vs H&T: {acc.get('H&T + Fourier', float('nan')) - acc.get('H&T', float('nan')) if 'H&T + Fourier' in acc and 'H&T' in acc else 'n/a'}",
+        f"ASW helped vs H&T: {acc.get('H&T + ASW', float('nan')) - acc.get('H&T', float('nan')) if 'H&T + ASW' in acc and 'H&T' in acc else 'n/a'}",
+        f"Fourier + ASW helped vs Fourier alone: {acc.get('H&T + Fourier + ASW', float('nan')) - acc.get('H&T + Fourier', float('nan')) if 'H&T + Fourier + ASW' in acc and 'H&T + Fourier' in acc else 'n/a'}",
         "",
         "## ASW Stats",
         "",
     ]
-    for method in ["LSR-lite + ASW", "LSR-lite + Fourier + ASW"]:
+    for method in ["H&T + ASW", "H&T + Fourier + ASW"]:
         stats = load_asw_stats(results, method)
         if stats:
             lines.append(f"- {method}: mean={stats.get('asw_mean')}, min={stats.get('asw_min')}, max={stats.get('asw_max')}")
