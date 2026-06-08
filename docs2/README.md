@@ -11,6 +11,7 @@ The original [`docs/`](../docs/) folder is still kept as the full project archiv
 2. [AI Documentation](ai-documentation.md)
 3. [Takeaways](takeaways.md)
 4. [Results And Comparison](results-and-comparison.md)
+5. [Haim Takeaway](haim-takeaway.md)
 
 ## Suggested Reading Order
 
