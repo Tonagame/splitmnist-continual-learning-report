@@ -1,4 +1,4 @@
-"""Shared building blocks for the clean-room Split MNIST experiments.
+"""Shared building blocks for the Split MNIST experiments.
 
 What this file does
 -------------------

@@ -6,7 +6,7 @@ It includes:
 
 - a GitHub Pages report,
 - Markdown documentation,
-- clean-room Python code,
+- Python implementation code,
 - graphs,
 - CSV result files,
 - reflective writing,
@@ -54,9 +54,9 @@ Source files:
 
 ### 2. Then We Ran Our Code And Compared Everything
 
-After that, we ran our clean-room implementation and compared it against both the paper and the previous local run of the original code.
+After that, we ran our own implementation and compared it against both the paper and the previous local run of the original code.
 
-![Paper vs original code vs our clean-room code](assets/paper_vs_gmvandeven_vs_from_scratch.png)
+![Paper vs original code vs our implementation](assets/paper_vs_gmvandeven_vs_from_scratch.png)
 
 Source files:
 

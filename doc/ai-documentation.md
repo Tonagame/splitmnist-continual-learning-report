@@ -75,7 +75,7 @@ AI helped structure the long experiments:
 - learning curves,
 - summaries.
 
-### 6. Clean-Room Implementation
+### 6. Independent Implementation
 
 When the requirement became clear that copied GitHub code should not be submitted, AI helped create the independent implementation under:
 

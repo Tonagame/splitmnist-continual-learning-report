@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare paper, GMvandeVen-code runs, and our clean-room runs."""
+"""Compare paper, GMvandeVen-code runs, and our implementation runs."""
 
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ def add_row(rows, scenario, method, source, accuracy_percent, note=""):
 
 
 def build_comparison() -> pd.DataFrame:
-    """Merge paper, GMvandeVen-run, and clean-room result tables."""
+    """Merge paper, GMvandeVen-run, and our implementation result tables."""
 
     rows = []
 
@@ -130,7 +130,7 @@ def apply_task_protocol_fix(our_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot(df: pd.DataFrame) -> None:
-    """Create the grouped paper-vs-code-vs-clean-room comparison graph."""
+    """Create the grouped paper-vs-code-vs-our-implementation graph."""
 
     scenarios = [scenario for scenario in SCENARIO_ORDER if scenario in set(df["scenario"].astype(str))]
     fig, axes = plt.subplots(len(scenarios), 1, figsize=(16, 5.2 * len(scenarios)), sharey=True)

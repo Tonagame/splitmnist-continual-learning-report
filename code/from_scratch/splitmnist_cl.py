@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CLI entry point for the clean-room Split MNIST continual-learning runner.
+"""CLI entry point for the Split MNIST continual-learning runner.
 
 The implementation is split by responsibility:
 
@@ -40,7 +40,7 @@ from methods.sequential import train_sequential
 def parse_args() -> argparse.Namespace:
     """Parse and validate all CLI options for one Split MNIST run."""
 
-    parser = argparse.ArgumentParser(description="Clean-room Split MNIST continual-learning runner")
+    parser = argparse.ArgumentParser(description="Split MNIST continual-learning runner")
     parser.add_argument("--method", required=True, help="none, joint, ewc, lwf, agem, separate, h-and-t variants")
     parser.add_argument("--scenario", default="class", choices=["class", "domain", "task"])
     parser.add_argument("--contexts", type=int, default=5)

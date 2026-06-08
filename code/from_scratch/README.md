@@ -1,4 +1,4 @@
-# Clean-Room Split MNIST Continual Learning Implementation
+# Split MNIST Continual Learning Implementation
 
 This folder contains a from-scratch PyTorch implementation for the project.
 It does not import or copy code from `GMvandeVen/continual-learning`.
