@@ -8,7 +8,7 @@ Use:
 
 `from_scratch/`
 
-This is the clean-room implementation required by the assignment. It does not import the GMvandeVen repository.
+This is the implementation required by the assignment. It does not import the GMvandeVen repository.
 
 Main files:
 
