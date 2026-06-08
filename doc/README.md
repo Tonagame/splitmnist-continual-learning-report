@@ -18,7 +18,6 @@ The project has three main parts:
 | [ai-documentation.md](ai-documentation.md) | Explains how AI/Codex was used during the project. |
 | [haim-takeaway.md](haim-takeaway.md) | Haim's personal reflection about the project. |
 | [takeaways_Tamir.md](takeaways_Tamir.md) | Tamir's personal reflection about the project. |
-| [takeaways.md](takeaways.md) | General takeaway notes from the project. |
 
 ## Suggested Reading Order
 
