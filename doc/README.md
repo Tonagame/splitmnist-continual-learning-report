@@ -6,7 +6,7 @@ It is meant to be simple to read before the project defense.
 The project has three main parts:
 
 - running the original paper code,
-- running our own clean-room code,
+- running our own code,
 - testing our own H&T hybrid method.
 
 ## Contents
