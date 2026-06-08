@@ -1,9 +1,9 @@
-# Docs2: Final Submission Pack
+# Doc: Final Submission Pack
 
-This folder is the updated Docs2 version of the original project documentation.
+This folder is the updated final version of the original project documentation.
 It is cleaner, shorter, and prepared for presentation and defense.
 
-The original [`docs/`](../docs/) folder is still kept as the full project archive. This `docs2/` folder contains only the four documents requested for the final package.
+This `doc/` folder contains the documents requested for the final package.
 
 ## Contents
 

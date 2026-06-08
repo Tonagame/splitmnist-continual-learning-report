@@ -80,12 +80,9 @@ All graph previews are collected in [`assets/README.md`](assets/README.md).
 
 ## Documentation Index
 
-- [`docs2/README.md`](docs2/README.md) - updated final submission pack. This is the cleaner Docs2 version of the original documentation archive.
-- [`docs/README.md`](docs/README.md)
-- [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md)
-- [`docs/REPRODUCTION_REPORT.md`](docs/REPRODUCTION_REPORT.md)
-- [`docs/CODE_EXPLANATION.md`](docs/CODE_EXPLANATION.md)
-- [`docs/METHODS_IMPLEMENTATION.md`](docs/METHODS_IMPLEMENTATION.md)
-- [`docs/PAPER_COMPARISON.md`](docs/PAPER_COMPARISON.md)
-- [`docs/IMPLEMENTATION_AUDIT.md`](docs/IMPLEMENTATION_AUDIT.md)
-- [`docs/H_AND_T_EXPLANATION.md`](docs/H_AND_T_EXPLANATION.md)
+- [`doc/README.md`](doc/README.md) - updated final submission pack. This is the cleaner final version of the original documentation archive.
+- [`doc/algorithmic-thinking-human.md`](doc/algorithmic-thinking-human.md)
+- [`doc/ai-documentation.md`](doc/ai-documentation.md)
+- [`doc/results-and-comparison.md`](doc/results-and-comparison.md)
+- [`doc/haim-takeaway.md`](doc/haim-takeaway.md)
+- [`doc/takeaways_Tamir.md`](doc/takeaways_Tamir.md)
