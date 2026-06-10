@@ -3,3 +3,5 @@ results_from_scratch_smoke/
 *.pyc
 __pycache__/
 ~$*.docx
+defense-cheatsheet.html
+defense-cheatsheet.css

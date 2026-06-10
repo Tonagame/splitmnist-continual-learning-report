@@ -80,7 +80,6 @@ All graph previews are collected in [`assets/README.md`](assets/README.md).
 
 ## Documentation Index
 
-- [`defense-cheatsheet.html`](defense-cheatsheet.html) - quick side-page for the Zoom defense, with short answers, code pointers, results, and graphs.
 - [`doc/README.md`](doc/README.md) - updated final submission pack. This is the cleaner final version of the original documentation archive.
 - [`doc/algorithmic-thinking-human.md`](doc/algorithmic-thinking-human.md)
 - [`doc/ai-documentation.md`](doc/ai-documentation.md)
